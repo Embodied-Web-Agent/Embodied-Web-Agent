@@ -24,7 +24,7 @@ export HOMEPAGE=http://98.80.38.242:1220
 
 6. Launch the evaluation
 ```bash
-python run.py \
+python run_embodied.py \ # or run_embodied_gemini.py or run_embodied_qwen.py
   --instruction_path agent/prompts/jsons/p_cot_embodied_web_agent.json \ # p_cot_embodied_web_agent_gemini.json for gemini and p_cot_embodied_web_agent_qwen.json for qwen
   --test_start_idx 1 \
   --test_end_idx 912 \

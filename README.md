@@ -1,5 +1,4 @@
-# EMBODIED WEB AGENTS: Bridging Physical-Digital
-Realms for Integrated Agent Intelligence
+# EMBODIED WEB AGENTS: Bridging Physical-Digital Realms for Integrated Agent Intelligence
 <!-- <p align="center">
 <a href="https://www.python.org/downloads/release/python-3109/"><img src="https://img.shields.io/badge/python-3.10-blue.svg" alt="Python 3.10"></a>
 <a href="https://pre-commit.com/"><img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white" alt="pre-commit"></a>
@@ -17,5 +16,11 @@ To operationalize this concept, we first develop the \textsc{Embodied Web Agents
 
 ![Overview](overview.png)
 
-
+## Web Environment
+Our website is hosted at [<a href="http://98.80.38.242:1220/">here]. However, you may choose to host the website by yourself. You can find very detailed instructions [<a href="https://github.com/Embodied-Web-Agent/Embodied-Web-Agent/tree/main/web_enviroments">Here]
+```
+cd web_enviroments
+bash build.sh
+bash host.sh
+```
 

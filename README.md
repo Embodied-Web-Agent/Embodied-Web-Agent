@@ -11,8 +11,8 @@
 [<a href="https://arxiv.org/abs/2401.13649">Paper</a>]
 [<a href="https://jykoh.com/vwa">Homepage</a>] 
 
-We introduce \textsc{Embodied Web Agents}, a novel paradigm for AI agents that fluidly bridge embodiment and web-scale reasoning. 
-To operationalize this concept, we first develop the \textsc{Embodied Web Agents} task environments, a unified simulation platform that integrates realistic 3D indoor and outdoor environments with functional web interfaces. Building upon this platform, we construct and release the \textsc{Embodied Web Agents} Benchmark, which encompasses a diverse suite of tasks including cooking, navigation, shopping, tourism, and geolocation guessing — all requiring coordinated reasoning across physical and digital realms for systematic assessment of cross-domain intelligence.
+We introduce Embodied Web Agents, a novel paradigm for AI agents that fluidly bridge embodiment and web-scale reasoning. 
+To operationalize this concept, we first develop the Embodied Web Agents task environments, a unified simulation platform that integrates realistic 3D indoor and outdoor environments with functional web interfaces. Building upon this platform, we construct and release the Embodied Web Agents Benchmark, which encompasses a diverse suite of tasks including cooking, navigation, shopping, tourism, and geolocation guessing — all requiring coordinated reasoning across physical and digital realms for systematic assessment of cross-domain intelligence.
 
 ![Overview](overview.png)
 

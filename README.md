@@ -8,7 +8,7 @@ Realms for Integrated Agent Intelligence
 <a href="https://beartype.readthedocs.io"><img src="https://raw.githubusercontent.com/beartype/beartype-assets/main/badge/bear-ified.svg" alt="bear-ified"></a>
 </p> -->
 
-[<a href="[https://jykoh.com/vwa](http://98.80.38.242:1220/)">Benchmark Web Environment</a>] 
+[<a href="http://98.80.38.242:1220/">Benchmark Web Environment</a>] 
 [<a href="https://arxiv.org/abs/2401.13649">Paper</a>]
 [<a href="https://jykoh.com/vwa">Homepage</a>] 
 

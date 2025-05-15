@@ -1,0 +1,74 @@
+name: Lint
+on:
+  - push
+  - pull_request
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+env:
+  os: ubuntu-20.04
+  ruby: '3.0'
+jobs:
+  rubocop:
+    name: RuboCop
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ env.ruby }}
+        bundler-cache: true
+    - name: Run rubocop
+      run: bundle exec rubocop --format fuubar
+  erblint:
+    name: ERB Lint
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ env.ruby }}
+        bundler-cache: true
+    - name: Run erblint
+      run: bundle exec erblint .
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ env.ruby }}
+        bundler-cache: true
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: yarn-${{ env.os }}-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          yarn-${{ env.os }}-
+    - name: Install node modules
+      run: bundle exec bin/yarn install
+    - name: Create dummy database configuration
+      run: cp config/example.database.yml config/database.yml
+    - name: Run eslint
+      run: bundle exec rails eslint
+  brakeman:
+    name: Brakeman
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ env.ruby }}
+        bundler-cache: true
+    - name: Run brakeman
+      run: bundle exec brakeman -q

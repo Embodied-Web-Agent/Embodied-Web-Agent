@@ -1,0 +1,31 @@
+<% set_title(t(".title")) %>
+
+<%= render "sidebar_header", :title => t(".title") %>
+
+<div>
+  <p><%= t(".introduction") %></p>
+</div>
+
+<div id="query-nearby" class="query-results">
+  <h3><%= t(".nearby") %></h3>
+  <div class="text-center loader">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden"><%= t("browse.start_rjs.loading") %></span>
+    </div>
+  </div>
+  <div class="mx-n3">
+    <ul class="query-results-list list-group list-group-flush"></ul>
+  </div>
+</div>
+
+<div id="query-isin" class="query-results">
+  <h3><%= t(".enclosing") %></h3>
+  <div class="text-center loader">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden"><%= t("browse.start_rjs.loading") %></span>
+    </div>
+  </div>
+  <div class="mx-n3">
+    <ul class="query-results-list list-group list-group-flush"></ul>
+  </div>
+</div>

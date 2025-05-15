@@ -1,0 +1,12 @@
+<% @title = t(".title") %>
+<% content_for :heading do %>
+  <h1><%= t(".heading") %></h1>
+<% end %>
+
+<% unless @redactions.empty? %>
+  <ul id="redaction_list">
+    <%= render @redactions %>
+  </ul>
+<% else %>
+  <p><%= t ".empty" %></p>
+<% end %>

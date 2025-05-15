@@ -1,0 +1,4766 @@
+[
+  {
+    "id": 0,
+    "name": "Mediterranean Tomato-Toast Dish",
+    "ingredients": [
+      "Tomato",
+      "Bread"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the tomato.",
+      "Place the sliced tomato into a bowl.",
+      "Slice the bread",
+      "Heat the pan on the stove burner.",
+      "Transfer the bread to the pan.",
+      "Cook it until tender.",
+      "Place the tomato on a plate.",
+      "Serve with bread on the side."
+    ],
+    "image": "Tomato-Bagel-Recipe-2-scaled.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 1,
+    "name": "Veggie Delight Sandwich",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato",
+      "Bread",
+      "Cheese"
+    ],
+    "equipment": [
+      "Knife",
+      "Bowl",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Place the sliced apple, lettuce, and tomato into the bowl.",
+      "Add cheese to the bowl.",
+      "Slice the bread.",
+      "Serve the bread on a plate."
+    ],
+    "image": "ultimate-grilled-veggie-sandwich.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 2,
+    "name": "Veggie Toast Meal",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and lettuce.",
+      "Slice the bread into small pieces.",
+      "Crack the egg and add it into the pan.",
+      "Place the bread into the pan.",
+      "Cook the ingredients in the pan.",
+      "Transfer the everything into the bowl."
+    ],
+    "image": "spring-veggie-toast-web8-640x960.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 3,
+    "name": "Veggie Mixture Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple, bread, and tomato into small pieces.",
+      "Crack the egg and add it to the bowl.",
+      "Place the sliced apple, bread, lettuce, and tomato into the bowl."
+    ],
+    "image": "604fbe122a4366755be0ba845392c3ce.png",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 4,
+    "name": "Toasted Apple & Lettuce Sandwich",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Plate",
+      "Knife",
+      "Toaster"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the tomato.",
+      "Place the lettuce on the plate.",
+      "Add sliced tomato on top of the lettuce.",
+      "Arrange the toasted bread and sliced apple on the plate."
+    ],
+    "image": "sandwich-2-1000x750.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 5,
+    "name": "Mixed Veggie Stir-Fry",
+    "ingredients": [
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the potato and tomato.",
+      "Place the sliced potato into the pan.",
+      "Cook the ingredients in the pan.",
+      "Transfer all ingredients into the bowl for serving."
+    ],
+    "image": "Vegetable-Stir-Fry-2.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 6,
+    "name": "Mediterranean Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato",
+      "Chicken Breast"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, bread, and tomato.",
+      "Cook the chicken breast in the pan until thoroughly cooked.",
+      "Place the sliced apple, bread, tomato, and cooked chicken breast into the bowl."
+    ],
+    "image": "Mediterranean-Bowl.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 7,
+    "name": "Cooked Potato in Whole",
+    "ingredients": [
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Place the potato into the pan for cooking.",
+      "Cook the potato in the pan.",
+      "Once cooked, transfer the potato to the bowl for serving."
+    ],
+    "image": "Unknown.jpeg",
+    "diet_type": "vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 8,
+    "name": "Apple and Lettuce Mix",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Microwave"
+    ],
+    "recipe": [
+      "Slice the apple, bread, and lettuce.",
+      "Place the sliced apple, bread, lettuce, and tomato in the bowl.",
+      "Microwave the bowl.",
+      "Put tomato on it"
+    ],
+    "image": "213c074cd558be0035c5ddd324a6689f.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 9,
+    "name": "Simple Potato and Apple Mash",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Place the sliced apple and potato into the bowl.",
+      "Mash the contents in the bowl."
+    ],
+    "image": "exps16902_RDS2321893D06_13_2b_WEB.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 10,
+    "name": "Apple Salad with Toasted Bread",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Place the sliced apple, lettuce, and tomato in the bowl.",
+      "Toast the bread slices.",
+      "Serve the salad with toasted bread."
+    ],
+    "image": "Holiday-Salad-with-Blue-Cheese-Toast.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 11,
+    "name": "Garden Fresh Omelette",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "CounterTop",
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the lettuce.",
+      "Slice the tomato.",
+      "Crack the egg.",
+      "Mix the egg with sliced lettuce and tomato in the bowl.",
+      "Serve it with sliced apple and bread on the side."
+    ],
+    "image": "TEXT-200x300.png",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 12,
+    "name": "Lettuce Salad",
+    "ingredients": [
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the lettuce.",
+      "Place the sliced lettuce into the bowl."
+    ],
+    "image": "Unknown.jpeg",
+    "diet_type": "vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 13,
+    "name": "Simple Apple and Potato Mash",
+    "ingredients": [
+      "Apple",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Place the sliced apple and potato into the pan and cook them.",
+      "Transfer the cooked apple and potato mash to the bowl for serving."
+    ],
+    "image": "1010193.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 14,
+    "name": "Rustic Vegetable Medley Breakfast",
+    "ingredients": [
+      "Apple",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple and tomato into bite-sized pieces.",
+      "Place the sliced apple and tomato into the pan."
+    ],
+    "image": "4458556.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 15,
+    "name": "Tomato and Apple Salad with Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, tomato, and lettuce.",
+      "Place the sliced apple, tomato, and lettuce in the bowl.",
+      "Slice the bread and place it in the pan.",
+      "Turn on the stove burner and cook the bread slices in the pan until toasted.",
+      "Turn off the stove burner.",
+      "Serve the toasted bread on the plate alongside the salad from the bowl."
+    ],
+    "image": "Apple-Sald-2-390x585.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 16,
+    "name": "Rustic Apple and Potato Breakfast Hash",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg",
+      "Potato",
+      "Lettuce",
+      "Tomato",
+      "bacon"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Crack the egg.",
+      "Wash and slice lettuce and tomato.",
+      "Cook sliced potato in the pan.",
+      "Add sliced apple to the pan.",
+      "Add the cracked egg and cook until done.",
+      "Prepare the plate with lettuce and tomato slices.",
+      "Transfer the hot mixture from the pan to the plate.",
+      "Serve with a side of sliced bread.",
+      "Add bacon to the plate."
+    ],
+    "image": "IMG_5817.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 17,
+    "name": "Rustic Vegetable Medley",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the apple, bread, and potato.",
+      "Place sliced apple, bread, and potato into the pan.",
+      "Cook the potato in the pan on the stove.",
+      "Cook the apple and bread separately in the microwave.",
+      "Slice the tomato.",
+      "Combine all ingredients in the bowl."
+    ],
+    "image": "image_e3ed7a47-e12a-47e0-88d2-b5cf8a.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 18,
+    "name": "Simple Apple and Potato Frittata",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Crack the egg into a bowl and mix it with the sliced apple and potato.",
+      "Pour the mixture into a pan and cook it on the stove until set. Serve on a plate."
+    ],
+    "image": "Potato-Frittata-9238-768x1152.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 19,
+    "name": "Apple and Tomato Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Knife",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple into thin pieces.",
+      "Slice the tomato.",
+      "Slice the lettuce.",
+      "Slice the bread.",
+      "Place everything into the pan.",
+      "Cook everything in the pan until it's lightly toasted.",
+      "Place the cooked toast on a plate."
+    ],
+    "image": "apple-toast2-scaled-e1635894589359.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 20,
+    "name": "Mediterranean Bread Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Chicken breast"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the lettuce.",
+      "Slice the tomato.",
+      "Place the bread into the Pan.",
+      "Cook it in the Pan.",
+      "Transfer everything into the Bowl.",
+      "Add chicken."
+    ],
+    "image": "Studio-Session-128-2-533x800.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 21,
+    "name": "Apple-Potato Skillet",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the potato.",
+      "Slice the apple.",
+      "Slice the tomato.",
+      "Put the sliced potato, apple, and tomato in the pan.",
+      "Cook the potato  in the pan.",
+      "Transfer everything to the bowl."
+    ],
+    "image": "Simply-Roasted-Apples-and-Potatoes-b.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 22,
+    "name": "Cooked Potatoes Slices",
+    "ingredients": [
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the potato.",
+      "Put the sliced potato into the pan.",
+      "Cook the potato in the pan.",
+      "Transfer the cooked potato into the bowl."
+    ],
+    "image": "Unknown.jpeg",
+    "diet_type": "vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 23,
+    "name": "Garden Vegetable Stir-Fry",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice apple.",
+      "Slice bread.",
+      "Slice potato.",
+      "Slice tomato.",
+      "Slice lettuce.",
+      "place the sliced ingredients (Apple, Bread, Potato, Tomato, Lettuce) into the pan.",
+      "Cook potato and bread in the pan.",
+      "plate the ingredients."
+    ],
+    "image": "Vegetable-Stir-Fry-2.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 24,
+    "name": "Rustic Apple and Bread Saut\u00e9",
+    "ingredients": [
+      "Apple",
+      "Bread"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Place the bread into the pan.",
+      "Cook the bread in the pan until golden brown.",
+      "Transfer the ingredients into a bowl for serving."
+    ],
+    "image": "Stemilt-Apple-Saute-Yogurt-Brown-Sug.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 25,
+    "name": "Mediterranean Vegetable Stir-fry",
+    "ingredients": [
+      "Potato",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the potato.",
+      "Slice the tomato.",
+      "Slice the lettuce.",
+      "Place the sliced potato in the pan.",
+      "Turn on the stove burner.",
+      "Cook the vegetables in the pan.",
+      "Turn off the stove burner.",
+      "Transfer the vegetables to the plate."
+    ],
+    "image": "Mediterranean-stir-fry-main-1200x120.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 26,
+    "name": "Potato and Egg Stir Fry",
+    "ingredients": [
+      "Potato",
+      "Egg",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Retrieve the Potato from the CounterTop and slice it.",
+      "Retrieve the Egg from the Fridge and crack it.",
+      "Retrieve the Lettuce from the Sink and slice it.",
+      "Place the sliced Potato, cracked Egg, and sliced Lettuce into the Pan.",
+      "Cook the ingredients in the Pan on the StoveBurner.",
+      "Serve the cooked dish on the Plate."
+    ],
+    "image": "Potatoes-and-Eggs-Skillet-Recipe-2-7.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 27,
+    "name": "Mediterranean Breakfast Skillet",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple, potato, tomato, and lettuce.",
+      "Crack the egg.",
+      "Place the sliced potato and egg into the pan.",
+      "Cook the potato and egg in the pan.",
+      "Place the cooked potato and egg into a bowl.",
+      "Add the sliced apple, tomato, and lettuce into the bowl."
+    ],
+    "image": "Homemade-Shakshuka-with-Baked-Sweet-.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 28,
+    "name": "Vegetable Mixture Delight",
+    "ingredients": [
+      "Apple",
+      "Tomato",
+      "Lettuce",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, tomato, and lettuce.",
+      "Crack the egg and add it to the pan.",
+      "Cook the ingredients in the pan.",
+      "Transfer everything into a bowl for serving."
+    ],
+    "image": "recipe-string-vegetables-with-sesame.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 29,
+    "name": "Homemade Potato and Apple Medley",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and tomato.",
+      "Place the pan on the stove burner.",
+      "Put the sliced potato in the pan.",
+      "Cook the potato in the pan on the stove burner.",
+      "Put everything in the plate."
+    ],
+    "image": "potato-medley-recipe-700x986.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 30,
+    "name": "Country-Style Breakfast Hash",
+    "ingredients": [
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice potato.",
+      "Crack egg.",
+      "place the sliced potato and cracked egg into the pan.",
+      "Turn on the StoveBurne and cook each ingredient in the pan.",
+      "Once cooked, pick up the cooked ingredients from the pan, and place them onto the plate."
+    ],
+    "image": "20161022_184001.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 31,
+    "name": "Apple and Egg Breakfast Bowl",
+    "ingredients": [
+      "Bread",
+      "Egg",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the bread.",
+      "Crack the egg.",
+      "Place the sliced bread in the pan.",
+      "Cook the bread in the pan.",
+      "Place the cracked egg in the pan.",
+      "Cook the egg in the pan.",
+      "Place the cooked bread and cooked egg into the bowl.",
+      "Add lettuce to the bowl.",
+      "Serve with a plate underneath the bowl."
+    ],
+    "image": "Apple_Egg_Cheese_Bake1Logo-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 32,
+    "name": "Apple Bread with Fried Egg and Potato",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato",
+      "Egg",
+      "Butter"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Crack the egg.",
+      "Cook the sliced potato and cracked egg in the pan.",
+      "Place cooked ingredients on a plate.",
+      "Buy butter from online and spread on the bread."
+    ],
+    "image": "Apple-Bread1E-800x1200.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 33,
+    "name": "Spanish Potato Omelette",
+    "ingredients": [
+      "Potato",
+      "Egg",
+      "Tomato"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the potato.",
+      "Crack the egg into the pan.",
+      "Slice the tomato.",
+      "Place the sliced potato into the pan with the egg.",
+      "Cook the mixture on the stove burner until the potato is cooked and the egg is set."
+    ],
+    "image": "spanish-pot-omelet-800x1000.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 34,
+    "name": "Warm Potato and Apple Salad",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the potato.",
+      "Slice the tomato.",
+      "Slice the lettuce.",
+      "Place the potato in the pan.",
+      "Cook the potato.",
+      "Place the cooked potato in the bowl.",
+      "Place the sliced apple in the bowl.",
+      "Place the sliced tomato in the bowl.",
+      "Place the sliced lettuce in the bowl."
+    ],
+    "image": "IMG_7988.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 35,
+    "name": "Fresh Lettuce Salad",
+    "ingredients": [
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the bread.",
+      "Slice the lettuce.",
+      "Place the sliced bread and lettuce into the bowl.",
+      "Serve the salad bowl on the Plate_f7062da2."
+    ],
+    "image": "lettuce-salad-IMG_7067.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 36,
+    "name": "Simple Scrambled Eggs with Saut\u00e9ed Potato and Apple Slices",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the potato and saut\u00e9 it in the pan.",
+      "Crack the egg into the bowl and scramble, then serve everything on the plate."
+    ],
+    "image": "scrambled-eggs.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 37,
+    "name": "Scrambled Egg",
+    "ingredients": [
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Crack the egg into the bowl.",
+      "Cook the egg.",
+      "Serve the scrambled egg in a bowl."
+    ],
+    "image": "Sliced-Hasselback-Potatoes-4.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 38,
+    "name": "Vegetable Mixture Delight",
+    "ingredients": [
+      "Apple",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, tomato, and lettuce.",
+      "Transfer everything into a bowl for serving."
+    ],
+    "image": "recipe-string-vegetables-with-sesame.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 39,
+    "name": "Toasted Apple & Lettuce Sandwich",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Plate",
+      "Knife",
+      "Toaster"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Place the lettuce on the plate.",
+      "Arrange the toasted bread and sliced apple on the plate with the lettuce."
+    ],
+    "image": "sandwich-2-1000x750.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 40,
+    "name": "Delight Sandwich",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Chicken Breast"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Buy chicken breast from online.",
+      "Slice the apple, bread, lettuce, and tomato.",
+      "Toast the sliced bread.",
+      "Place the sliced apple, lettuce, tomato in the bowl.",
+      "Assemble the sandwich by placing the toasted bread slices with the apple, lettuce, tomato slices in between in the bowl."
+    ],
+    "image": "yrn76qt0ajs51.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 41,
+    "name": "Mediterranean Breakfast Skillet",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg",
+      "Tomato",
+      "Lettuce",
+      "salt",
+      "pepper"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the apple, potato, tomato, and lettuce.",
+      "Crack the egg.",
+      "Preheat the pan on the stove.",
+      "Place the sliced potato into the pan and cook it.",
+      "Add the cracked egg into the pan and cook.",
+      "Season with salt and pepper.",
+      "Place the cooked potato and egg into a bowl.",
+      "Add the sliced apple, tomato, and lettuce into the bowl."
+    ],
+    "image": "Homemade-Shakshuka-with-Baked-Sweet-.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 42,
+    "name": "Apple Bread Medley",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple and lettuce.",
+      "Place the sliced apple and lettuce into the bowl.",
+      "Slice the bread.",
+      "Cook the sliced bread in the pan on the stove burner until golden brown.",
+      "Combine the cooked bread with the apple and lettuce in the bowl."
+    ],
+    "image": "49583caccd5a38352ea0cee3d5a10bf3.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 43,
+    "name": "Apple Bread Medley",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Place the sliced apple into the bowl.",
+      "Crack the egg and place it into the pan.",
+      "Slice the bread.",
+      "Cook the egg and sliced bread in the pan on the stove burner.",
+      "Combine the cooked egg and bread with the apple in the bowl."
+    ],
+    "image": "49583caccd5a38352ea0cee3d5a10bf3.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 44,
+    "name": "Crispy Apple and Tomato Bread",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple and tomato.",
+      "Place the sliced apple and tomato into a bowl.",
+      "Place a slice of bread into a pan.",
+      "Toast the bread on the stove until crispy.",
+      "Place the toasted bread into the bowl with the sliced apple and tomato."
+    ],
+    "image": "2-ingredient-apple-bread-2.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 45,
+    "name": "Apple Buttered-Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Butter"
+    ],
+    "equipment": [
+      "Bowl",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Put the sliced apple and bread into the bowl.",
+      "Transfer the contents from the bowl to the plate.",
+      "Put butter on top of the dish."
+    ],
+    "image": "Apple-butter-french-toast.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 46,
+    "name": "Potato Saut\u00e9",
+    "ingredients": [
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Pick up the potato and slice it.",
+      "Place the sliced potato into the pan.",
+      "Cook the potato in the pan.",
+      "Transfer the cooked potato to a bowl."
+    ],
+    "image": "Sauteed-Potatoes-tall-FS-26-1024x153.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 47,
+    "name": "Apple-Potato Pan Fry",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the potato.",
+      "Pick up the potato and place it in the pan.",
+      "Cook the sliced potato in the pan.",
+      "Pick up the apple slices and place them in the pan with the potato.",
+      "Add sliced bread to the pan.",
+      "Cook everything together until golden brown.",
+      "Transfer the apple, potato, and bread to the bowl."
+    ],
+    "image": "Roasted-Apples-Potatoes-by-The-Whole.png",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 48,
+    "name": "Apple Slices",
+    "ingredients": [
+      "Apple"
+    ],
+    "equipment": [
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Place the sliced apple in the bowl."
+    ],
+    "image": "SES-how-to-keep-apples-from-turning-brown-7495453-hero-01-9b001252f20d4f6d9d0bbf4511d62183.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 49,
+    "name": "Vegetable Stir Fry Lunch",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and egg.",
+      "Place the sliced ingredients into the pan and cook them.",
+      "Transfer the cooked ingredients to the bowl."
+    ],
+    "image": "Vegetable-Stir-Fry-2.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 50,
+    "name": "Breakfast Potato Bowl",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, potato, tomato, and lettuce.",
+      "Place the sliced apple, potato, tomato, and lettuce into the bowl.",
+      "Transfer the sliced potato into the pan.",
+      "Cook the potato in the pan.",
+      "Once cooked, mix the cooked potato with the other ingredients in the bowl."
+    ],
+    "image": "Mexican-Breakfast-Bowl-Pic-5.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 51,
+    "name": "Apple and Tomato Sandwich",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Place the sliced apple on the bread and serve them on a plate.",
+      "Put tomato slices on top of the bread."
+    ],
+    "image": "String-Beans-Tomato-and-Apple-1.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 52,
+    "name": "Fresh Garden Salad",
+    "ingredients": [
+      "Egg",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Crack the egg and cook it in the pan.",
+      "Slice the lettuce, and tomato.",
+      "Mix the egg, lettuce, and tomato in the bowl."
+    ],
+    "image": "garden-salad-2.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 53,
+    "name": "Rustic Vegetables",
+    "ingredients": [
+      "Apple",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple and tomato.",
+      "Place the sliced apple and tomato into the bowl.",
+      "Serve in the bowl."
+    ],
+    "image": "il_570xN.2797722509_coj7.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 54,
+    "name": "Savory Breakfast Skillet",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato",
+      "Egg",
+      "Lettuce",
+      "Potato",
+      "Cheese"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate",
+      "StoveBurner",
+      "Knife",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple, bread, tomato, and lettuce.",
+      "Crack the egg and place in a bowl.",
+      "Cook sliced apple and potato in the pan on the stove.",
+      "Add the egg to the pan and scramble with the potato and apple.",
+      "Place the cooked items and fresh sliced tomato and lettuce and bread on a plate.",
+      "Drizzle cheese sauce over the dish."
+    ],
+    "image": "country-breakfast-skillet-recipe-305.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 55,
+    "name": "Simple Vegetable Omelette",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and potato, then break the egg into a bowl.",
+      "Cook the sliced potato in the pan until soft, then add the egg, cooking until the egg is set.",
+      "Serve the omelette with the sliced apple on a plate."
+    ],
+    "image": "vegetarian-omelette-with-bell-pepper-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 56,
+    "name": "Veggie Delight Bowl",
+    "ingredients": [
+      "Apple",
+      "Tomato",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, tomato, and lettuce.",
+      "Place the sliced apple, tomato, and lettuce into the bowl.",
+      "Slice the bread and add it to the bowl.",
+      "Transfer the bread to the pan and stir-fry until cooked.",
+      "Serve everything in the bowl."
+    ],
+    "image": "604fbe122a4366755be0ba845392c3ce.png",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 57,
+    "name": "Vegetable and Egg Stir-Fry",
+    "ingredients": [
+      "Potato",
+      "Tomato",
+      "Lettuce",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "SLice the potato.",
+      "Slice the tomato.",
+      "Slice the lettuce.",
+      "Crack an egg in the bowl.",
+      "place the sliced potato into the pan.",
+      "Cook the potato in the pan.",
+      "Add the cracked egg to the pan and cook it together with the potato.",
+      "Once cooked, transfer everything into the bowl."
+    ],
+    "image": "egg-stir-fry-peppers-16-1082x1536.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 58,
+    "name": "Potato Stir Fry Lunch",
+    "ingredients": [
+      "Apple",
+      "Potato"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Place the sliced apple in the bowl.",
+      "Slice the potato.",
+      "Place the sliced potato in the pan.",
+      "Cook the potato in the pan.",
+      "Pick up the cooked apple and potato mixture and place it in the Bowl."
+    ],
+    "image": "Yummy-Spicy-Potato-Stir-Fry-744x558.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 59,
+    "name": "Apple Bread with Fried Egg and Potato",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato",
+      "Egg",
+      "Butter",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Crack the egg.",
+      "Slice the lettuce.",
+      "Cook sliced potato and cracked egg in the pan.",
+      "Arrange sliced lettuce in a bowl.",
+      "Place cooked ingredients and sliced apple, bread on a plate.",
+      "Buy butter from online and spread it on the bread.",
+      "Serve with lettuce on the side."
+    ],
+    "image": "Apple-Bread1E-800x1200.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 60,
+    "name": "Farmer's Breakfast Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Crack the egg.",
+      "Go to the position near the Pan and place it on the StoveBurner.",
+      "Turn on the StoveBurner.",
+      "Cook the cracked egg in the Pan.",
+      "place the sliced apple, lettuce, and tomato into the bowl.",
+      "put the cooked egg on a plate.",
+      "Toast the bread.",
+      "Add the toasted bread to the Plate."
+    ],
+    "image": "Savory-Breakfast-Bowls-1-650x975.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 61,
+    "name": "Garden Salad",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Pick up the Apple and slice it.",
+      "Place the sliced Apple into the Bowl.",
+      "Pick up the Lettuce and slice it.",
+      "Place the sliced Lettuce into the Bowl.",
+      "Pick up the Egg and break it.",
+      "Cook the egg.",
+      "Place the cooked egg into the Bowl."
+    ],
+    "image": "garden-side-salad-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 62,
+    "name": "Potato and Egg Stir-Fry",
+    "ingredients": [
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Bowl"
+    ],
+    "recipe": [
+      "Pick up Potato and slice it.",
+      "Place the sliced Potato in the Pan.",
+      "Pick up Egg and break it.",
+      "Place the broken Egg in the Pan.",
+      "Toggle on the StoveBurner.",
+      "Cook the ingredients in the Pan.",
+      "Place the cooked ingredients into the Bowl."
+    ],
+    "image": "egg-stir-fry-peppers-16.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 63,
+    "name": "Delight Sandwich",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, bread, lettuce, and tomato.",
+      "Toast the sliced bread.",
+      "Place the sliced apple, lettuce, and tomato in the bowl.",
+      "Assemble the sandwich by placing the toasted bread slices with the apple, lettuce, and tomato slices in between in the bowl."
+    ],
+    "image": "yrn76qt0ajs51.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 64,
+    "name": "Veggie Delight Mixture Salad",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato",
+      "Bread",
+      "Olive Oil"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Place the sliced apple, lettuce, and tomato in the bowl.",
+      "Drizzle with olive oil.",
+      "Slice the bread and lightly toast it in the pan.",
+      "Serve the salad with toasted bread on the side."
+    ],
+    "image": "Veggie-Delight-Salad-Recipe-1.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 65,
+    "name": "Rustic Vegetable Medley Stir-fry",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, potato, tomato, and lettuce.",
+      "Place the sliced potato in the pan.",
+      "Cook the potato in the pan.",
+      "Transfer the ingredients to the plate.",
+      "Serve the dish."
+    ],
+    "image": "vegetable-stir-fry-recipe-2-edited-6.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 66,
+    "name": "Fresh Garden Salad with Toast",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Knife",
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice apple",
+      "Slice lettuce",
+      "Slice tomato",
+      "Crack egg",
+      "Place egg in pan",
+      "Cook egg",
+      "Slice bread",
+      "Place bread in pan",
+      "Toast bread",
+      "Add apple to bowl",
+      "Add lettuce to bowl",
+      "Add tomato to bowl",
+      "Add egg to bowl",
+      "Serve bread on plate"
+    ],
+    "image": "garden-green-salad-360x539.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 67,
+    "name": "Garden Fresh Omelette",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg",
+      "Cheese"
+    ],
+    "equipment": [
+      "CounterTop",
+      "Bowl",
+      "Pan",
+      "StoveBurner",
+      "PepperShaker",
+      "SaltShaker"
+    ],
+    "recipe": [
+      "Slice the apple",
+      "Slice the bread",
+      "Slice the lettuce",
+      "Slice the tomato",
+      "Crack the egg",
+      "Mix the egg with sliced lettuce, tomato, and cheese in the bowl.",
+      "Cook the mixture in the pan until golden.",
+      "Place the cooked omelette on a plate.",
+      "Arrange the sliced apple and bread slices artistically on the plate."
+    ],
+    "image": "TEXT-200x300.png",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 68,
+    "name": "Protein Breakfast Bowl",
+    "ingredients": [
+      "Apple",
+      "Tomato",
+      "Potato",
+      "Egg",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, tomato, potato, and lettuce.",
+      "Crack the egg.",
+      "Place the sliced potato and cracked egg in the pan.",
+      "Cook the potato and egg using the stove burner.",
+      "Place the cooked potato and egg, along with sliced apple, tomato, and lettuce, in the bowl.",
+      "Serve the breakfast bowl on the plate."
+    ],
+    "image": "Breakfast-Bowls-with-Bananas-Berries.png",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 69,
+    "name": "Mashed Potato",
+    "ingredients": [
+      "Potato"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the potato.",
+      "Cook the sliced potato in the pan."
+    ],
+    "image": "mashed-potatoes-recipe-500x500.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 70,
+    "name": "Tomato Dish",
+    "ingredients": [
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the potato.",
+      "Slice the tomato.",
+      "Place the sliced potato in the pan.",
+      "Cook the potato in the pan using the stove burner.",
+      "Serve the cooked potato and tomato on a plate."
+    ],
+    "image": "How-To-String-Tomatoes-In-Greenhouse.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 71,
+    "name": "Veggie Medley Plate",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Chicken"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, bread, lettuce, and tomato.",
+      "Place the sliced ingredients into the bowl.",
+      "Transfer the chicken to the pan.",
+      "Cook the chicken in the pan.",
+      "Once cooked, place all ingredients on a plate for serving."
+    ],
+    "image": "4458556.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 72,
+    "name": "Simple Apple and Potato Hash",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Cook the potato in a pan.",
+      "Serve the apple and potato in a bowl."
+    ],
+    "image": "Sweet-Potato-Kale-and-Apple-Hash-by-.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 73,
+    "name": "Simple Breakfast Medley",
+    "ingredients": [
+      "Apple",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Crack the egg.",
+      "Place the sliced apple and cracked egg into the pan.",
+      "Cook the egg in the pan.",
+      "Transfer the ingredients onto the plate for serving."
+    ],
+    "image": "Glazed-Fruit-Medley_exps31558_TH2379-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 74,
+    "name": "Saut\u00e9ed Apple and Tomato Salad",
+    "ingredients": [
+      "Apple",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the Tomato.",
+      "Slice the Lettuce.",
+      "Slice the Apple.",
+      "Place the Apple and Tomato into the Bowl.",
+      "Add sliced Lettuce to the Bowl and mix well."
+    ],
+    "image": "5456742.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 75,
+    "name": "Fresh Salad Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Olive oil"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread into croutons.",
+      "Toast the sliced bread in the pan to make croutons.",
+      "Slice the lettuce.",
+      "Slice the tomato.",
+      "Combine the sliced apple, lettuce, and tomato in a bowl.",
+      "Drizzle olive oil over the salad mixture.",
+      "Add toasted croutons on top."
+    ],
+    "image": "fresh-salad-bowl-fresh-raw-vegetable.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 76,
+    "name": "Apple Egg Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Crack the egg into the bowl.",
+      "Cook the egg in the pan."
+    ],
+    "image": "bd5b047e93c35064349ede5debf78741.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 77,
+    "name": "Fresh Veggie Medley Sandwich",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, bread, lettuce, and tomato.",
+      "Place the sliced apple, lettuce, and tomato into the bowl.",
+      "Toast the sliced bread in the pan until golden brown.",
+      "Assemble the sandwich by layering the apple, lettuce, and tomato between the toasted bread slices."
+    ],
+    "image": "4458556.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 78,
+    "name": "Pan-Fried Potatoes",
+    "ingredients": [
+      "Potato"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "pick up the potato.",
+      "put the potato in the pan.",
+      "Slice the potato in the pan.",
+      "Go to the position near the StoveBurner_0a801165 and turn it on.",
+      "Cook the sliced potato in the pan.",
+      "transfer the cooked potato onto the plate."
+    ],
+    "image": "Pan_Fried_Breakfast_Potatoes2_f_impr.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 79,
+    "name": "Mashed Sliced Potato",
+    "ingredients": [
+      "Potato"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Take the potato out of the countertop.",
+      "Slice the potato.",
+      "Cook the sliced potato in a pan.",
+      "Transfer the cooked potato to a bowl."
+    ],
+    "image": "Unknown.jpeg",
+    "diet_type": "vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 80,
+    "name": "Potato and Apple Salad",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "and slice the potato.",
+      "place the sliced potato in the pan, and cook it.",
+      "slice the apple.",
+      "slice the tomato.",
+      "slice the lettuce.",
+      "Put the cooked potato, sliced apple, sliced tomato, and sliced lettuce into the bowl.",
+      "Transfer the salad from the bowl to the plate for serving."
+    ],
+    "image": "IMG_7988.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 81,
+    "name": "Simple Saut\u00e9ed Apple and Potato",
+    "ingredients": [
+      "Apple",
+      "Potato"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple and the potato.",
+      "Saut\u00e9 the sliced apple and potato in the pan until they are cooked.",
+      "Serve the saut\u00e9ed mixture in a bowl."
+    ],
+    "image": "Simply-Roasted-Apples-and-Potatoes-b.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 82,
+    "name": "Fried Apple and Potato",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate",
+      "StoveBurner",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and lettuce.",
+      "Crack the egg.",
+      "Cook the potato with the egg in the pan on the stove burner.",
+      "Serve the mixture on the plate."
+    ],
+    "image": "Fried-Apples.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 83,
+    "name": "Veggie Medley Plate",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, bread, lettuce, tomato, and potato.",
+      "Place the sliced ingredients into the bowl.",
+      "Transfer the sliced potato to the pan.",
+      "Cook the potato in the pan.",
+      "Once cooked, place all ingredients on a plate for serving."
+    ],
+    "image": "4458556.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 84,
+    "name": "Mediterranean Vegetable Skillet",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the Apple.",
+      "Slice the Potato.",
+      "Break the Egg.",
+      "Slice the Tomato.",
+      "Place the Pan on the StoveBurner.",
+      "Put the cracked Egg and potato in the Pan.",
+      "Cook the egg and potato.",
+      "Place all ingredients on the Plate."
+    ],
+    "image": "Mediterranean-Roasted-Vegetables-1-e.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 85,
+    "name": "Veggie Fruit Bowl",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato",
+      "Chicken Breast"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and tomato.",
+      "Buy chicken breast from online.",
+      "Place the potato into the pan.",
+      "Cook the ingredients on the stove burner until they are tender.",
+      "Transfer everything to a bowl for serving."
+    ],
+    "image": "dn8ghapexa371.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 86,
+    "name": "Veggie Fruit Bowl",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple, potato, tomato, and lettuce.",
+      "Place the potato into the pan.",
+      "Cook the ingredients on the stove burner until they are tender.",
+      "Transfer the cooked ingredients to a bowl for serving."
+    ],
+    "image": "dn8ghapexa371.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 87,
+    "name": "Scrambled Egg with Apple and Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and the bread.",
+      "Crack the egg and scramble it in the pan.",
+      "Put the sliced apple and toast on the bowl."
+    ],
+    "image": "Scrambled-eggs-recipe-9-scaled.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 88,
+    "name": "Rustic Breakfast Platter",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Put the apple in the bowl.",
+      "Slice the bread.",
+      "Put the bread in the bowl.",
+      "Crack an egg.",
+      "Place the egg in the pan.",
+      "Slice a potato.",
+      "Put the potato in the pan.",
+      "Cook the potato and the egg.",
+      "Put the potato and egg in a plate.",
+      "Pick up the contents of the bowl and place them on the plate."
+    ],
+    "image": "DSC_4518.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 89,
+    "name": "Country Breakfast",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the potato.",
+      "Crack the egg into a bowl.",
+      "Place the pan on the stove burner.",
+      "Transfer the sliced potato into the pan and cook it.",
+      "Once the potato is cooked, add the cracked egg into the pan and cook it.",
+      "Serve the cooked mixture in a bowl."
+    ],
+    "image": "1024f53f729a4b6e4e09a9c5bb0cb668.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 90,
+    "name": "Apple and Egg Breakfast Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Crack the egg.",
+      "Place the sliced bread in the pan.",
+      "Cook the bread in the pan.",
+      "Place the cracked egg in the pan.",
+      "Cook the egg in the pan.",
+      "Place the sliced apple, cooked bread, and cooked egg into the bowl.",
+      "Add lettuce to the bowl.",
+      "Serve with a plate underneath the bowl."
+    ],
+    "image": "Apple_Egg_Cheese_Bake1Logo-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 91,
+    "name": "Apple Bread Delight",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Butter",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Knife",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the lettuce.",
+      "Slice the tomato.",
+      "Arrange the apple slices, bread slices, lettuce, and tomato on a plate.",
+      "Buy butter from online and spread it on the bread."
+    ],
+    "image": "IMG_3324.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 92,
+    "name": "Fresh Garden Salad with Toast",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato",
+      "Bread"
+    ],
+    "equipment": [
+      "Knife",
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice apple",
+      "Slice lettuce",
+      "Slice tomato",
+      "Slice bread",
+      "Place bread in pan",
+      "Toast bread",
+      "Add apple to bowl",
+      "Add lettuce to bowl",
+      "Add tomato to bowl",
+      "Serve bread on plate"
+    ],
+    "image": "garden-green-salad-360x539.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 93,
+    "name": "Spanish Tortilla",
+    "ingredients": [
+      "Potato",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "slice the Potato.",
+      "Put the sliced Potato into the Pan.",
+      "slice the Tomato.",
+      "crack the Egg into the Bowl.",
+      "Pour the cracked Egg from the Bowl into the Pan.",
+      "Teleport to the StoveBurner and turn it on.",
+      "Cook the ingredients in the Pan.",
+      "transfer the cooked Spanish Tortilla with tomato to the Plate."
+    ],
+    "image": "Authentic-Spanish-Tortilla-Recipe-To.webp",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 94,
+    "name": "Simple Scrambled Eggs with Potato",
+    "ingredients": [
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the potato and crack the egg.",
+      "Cook the sliced potato in the pan.",
+      "Cook the cracked egg in the pan with the potato."
+    ],
+    "image": "IMG_8597-potato-egg-scramble-720x720.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 95,
+    "name": "Potato and Egg Stir Fry",
+    "ingredients": [
+      "Potato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Retrieve the Potato from the CounterTop and slice it.",
+      "Retrieve the Lettuce from the Sink and slice it.",
+      "Place the sliced Potato and sliced Lettuce into the Pan.",
+      "Cook the ingredients in the Pan on the StoveBurner."
+    ],
+    "image": "Potatoes-and-Eggs-Skillet-Recipe-2-7.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 96,
+    "name": "Sliced Apple",
+    "ingredients": [
+      "Apple"
+    ],
+    "equipment": [
+      "Bowl"
+    ],
+    "recipe": [
+      "Take the apple out of the fridge.",
+      "Slice the apple.",
+      "Place the sliced apple into the bowl."
+    ],
+    "image": "16_100waystouseHoney_97c8ef98-658a-4ebb-ac2c-2a0682119def.webp.png",
+    "diet_type": "vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 97,
+    "name": "Potato and Apple Medley Mash",
+    "ingredients": [
+      "Apple",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Cook the sliced potato in the pan.",
+      "Mash the potato and apple together in the bowl."
+    ],
+    "image": "maxresdefault.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 98,
+    "name": "Homemade Apple and Tomato Medley",
+    "ingredients": [
+      "Apple",
+      "Tomato"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and tomato.",
+      "Put things to the plate."
+    ],
+    "image": "Apple-Strings-587x1536.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 99,
+    "name": "Veggie Delight Bowl",
+    "ingredients": [
+      "Apple",
+      "Tomato",
+      "Bread",
+      "Lettuce",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, tomato, lettuce, and bread.",
+      "Crack the egg into the bowl.",
+      "Place the sliced apple, tomato, lettuce, and bread into the bowl.",
+      "Heat the pan on the stove.",
+      "Transfer the egg to the pan and stir-fry until cooked.",
+      "Serve everything in the bowl."
+    ],
+    "image": "604fbe122a4366755be0ba845392c3ce.png",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 100,
+    "name": "Country-Style Breakfast Hash",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice apple.",
+      "Slice potato.",
+      "Crack egg.",
+      "place the sliced potato, and cracked egg into the pan.",
+      "Turn on the StoveBurner and cook each ingredient in the pan.",
+      "place everything onto the plate."
+    ],
+    "image": "20161022_184001.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 101,
+    "name": "Savory Breakfast Skillet",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato",
+      "Egg",
+      "Lettuce",
+      "Potato"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate",
+      "StoveBurner",
+      "Knife",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple, bread, tomato, and lettuce.",
+      "Crack the egg and place in a bowl.",
+      "Cook the sliced apple, potato, and egg in the pan.",
+      "Place all items on a plate.",
+      "Add fresh sliced tomato, lettuce, and cheese."
+    ],
+    "image": "country-breakfast-skillet-recipe-305.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 102,
+    "name": "Rustic Apple and Potato Breakfast Hash",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the potato.",
+      "Crack the egg.",
+      "Cook the sliced potato in the pan.",
+      "Add the sliced apple into the pan.",
+      "Add the cracked egg and cook together until done.",
+      "Transfer the mixture to a bowl."
+    ],
+    "image": "IMG_5817.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 103,
+    "name": "Potato Saut\u00e9",
+    "ingredients": [
+      "Apple",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Pick up the apple and slice it.",
+      "Pick up the potato and slice it.",
+      "Place the sliced potato into the pan.",
+      "Cook the potato in the pan.",
+      "Transfer the apple and potato to a bowl."
+    ],
+    "image": "Sauteed-Potatoes-tall-FS-26-1024x153.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 104,
+    "name": "Breakfast Potato Bowl",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and tomato.",
+      "Break the egg to make it ready for cooking.",
+      "Place the sliced apple, potato, and tomato into the bowl.",
+      "Transfer the sliced potato and cracked egg into the pan.",
+      "Cook the potato and egg in the pan.",
+      "Once cooked, mix the cooked potato and egg with the other ingredients in the bowl.",
+      "Serve the stir fry with egg in the bowl."
+    ],
+    "image": "Mexican-Breakfast-Bowl-Pic-5.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 105,
+    "name": "Fresh Apple and Lettuce Salad",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the lettuce.",
+      "Slice the tomato.",
+      "Arrange the lettuce on the bottom of the bowl.",
+      "Add the sliced apple on top of the lettuce.",
+      "Finally, add the sliced tomato over the apple."
+    ],
+    "image": "213c074cd558be0035c5ddd324a6689f.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 106,
+    "name": "Stir-fry Delight",
+    "ingredients": [
+      "Potato",
+      "Tomato",
+      "Lettuce",
+      "Apple"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the potato, tomato, lettuce, and apple.",
+      "Place the pan on the stove burner.",
+      "Add the sliced potato to the pan and cook until golden brown.",
+      "Serve the potato in a bowl.",
+      "Top with sliced apple, lettuce tomato for a fresh crunch."
+    ],
+    "image": "beef-and-bean-stir-fry-skillet.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 107,
+    "name": "Simple Potato and Apple Hash",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Cook the potato in the pan.",
+      "Serve the mixture in a bowl."
+    ],
+    "image": "bacon-sweet-potato-hash-2-683x1024.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 108,
+    "name": "Fresh Lettuce Salad",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the lettuce.",
+      "Place the sliced apple, bread, and lettuce into the bowl.",
+      "Serve the salad bowl on the Plate."
+    ],
+    "image": "lettuce-salad-IMG_7067.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 109,
+    "name": "Simple Fried Apple and Potato",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Cook the sliced apple and potato in the pan on the stove burner.",
+      "Serve the cooked apple and potato on the plate."
+    ],
+    "image": "fried-apples-recipe-3-of-6.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 110,
+    "name": "Veggie Mixture Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple, bread, and tomato into small pieces.",
+      "Place the sliced apple, bread, lettuce, and tomato into the bowl."
+    ],
+    "image": "604fbe122a4366755be0ba845392c3ce.png",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 111,
+    "name": "Warm Potato and Apple Salad",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato",
+      "Chicken Breast"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice Apple",
+      "Slice Potato",
+      "Slice Tomato",
+      "Place Potato in Pan",
+      "Cook Potato",
+      "Place Cooked Potato in Bowl",
+      "Place Sliced Apple in Bowl",
+      "Place Sliced Tomato in Bowl",
+      "Place Chicken Breast in Bowl"
+    ],
+    "image": "IMG_7988.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 112,
+    "name": "Sliced Apple Salad",
+    "ingredients": [
+      "Apple"
+    ],
+    "equipment": [
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Place the sliced apple into the bowl."
+    ],
+    "image": "images.jpeg",
+    "diet_type": "vegetarian",
+    "difficulty": "novice"
+  },
+  {
+    "id": 113,
+    "name": "Mixed Veggie Stir-Fry",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Remove the apple from the fridge and slice it.",
+      "Slice the potato and tomato.",
+      "Place the potato into the pan.",
+      "Cook the ingredients in the pan.",
+      "Transfer all the ingredients into the bowl for serving."
+    ],
+    "image": "Vegetable-Stir-Fry-2.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 114,
+    "name": "Apple and Egg Breakfast Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Crack the egg into a bowl.",
+      "Cook the sliced bread and egg in the pan."
+    ],
+    "image": "maxresdefault.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 115,
+    "name": "Mediterranean Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, bread, tomato, and lettuce.",
+      "Place the sliced apple, bread, tomato, and lettuce into the bowl."
+    ],
+    "image": "Mediterranean-Bowl.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 116,
+    "name": "Apple Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Remove the apple from the fridge, slice it, and place it in the bowl.",
+      "Take the egg, crack it, and place it in the pan.",
+      "Slice the bread.",
+      "Place the sliced bread in the pan with the egg and cook them on the stove.",
+      "Once the bread and egg are cooked, place them on a plate, add the apple slices on top, and serve."
+    ],
+    "image": "4579994.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 117,
+    "name": "Warm Apple Potato Salad",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, and place it in the bowl.",
+      "Slice the potato and put it into the pan.",
+      "Cook the sliced potato in the pan until it's ready.",
+      "Add the cooked potato to the bowl with the apple.",
+      "Slice the lettuce and add it to the bowl."
+    ],
+    "image": "IMG_7988.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 118,
+    "name": "Rustic Vegetable Medley",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, bread, and potato.",
+      "Place sliced apple, bread, and potato into the pan.",
+      "Cook the apple, bread, and potato in the pan on the stove.",
+      "Slice the tomato.",
+      "Combine all ingredients in the bowl."
+    ],
+    "image": "image_e3ed7a47-e12a-47e0-88d2-b5cf8a.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 119,
+    "name": "Mediterranean Tomato-Toast Dish",
+    "ingredients": [
+      "Apple",
+      "Tomato",
+      "Bread"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple and tomato.",
+      "Place the sliced apple and tomato into a bowl.",
+      "Slice the bread.",
+      "Heat the pan on the stove burner.",
+      "Transfer the bread to the pan.",
+      "Cook it until tender.",
+      "Place the apple and tomato on a plate.",
+      "Serve with bread on the side."
+    ],
+    "image": "Tomato-Bagel-Recipe-2-scaled.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 120,
+    "name": "Apple Lettuce Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Egg",
+      "Cheese"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and bread.",
+      "Crack the egg into the pan and cook it.",
+      "Place the sliced apple, lettuce, and bread in the bowl.",
+      "Add the cooked egg and cheese to the bowl."
+    ],
+    "image": "4J6QN.png",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 121,
+    "name": "Veggie Delight Plate",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, bread, lettuce, and tomato.",
+      "Crack the egg into the pan.",
+      "Place the pan on the stove burner.",
+      "Add the bread to the pan with the egg.",
+      "Cook the mixture on the stove until everything is heated through and slightly crispy.",
+      "Transfer everything to a plate using the spatula."
+    ],
+    "image": "protein-packed-veggie-delight-plate_.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 122,
+    "name": "Fresh Apple and Lettuce Salad",
+    "ingredients": [
+      "Apple",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the lettuce.",
+      "Combine all ingredients in a bowl."
+    ],
+    "image": "213c074cd558be0035c5ddd324a6689f.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 123,
+    "name": "Simple Breakfast Hash",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Crack the egg. Cook the potato and egg in the pan.",
+      "Combine eveything into a bowl."
+    ],
+    "image": "breakfast-hash-1-768x1152.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 124,
+    "name": "Veggie Mix with Potato Stir-Fry",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Chicken Breast"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Buy Chicken Breast from online.",
+      "Slice the apple, potato, and chicken breast.",
+      "Place the potato into the pan.",
+      "Cook the mixture in the pan.",
+      "Transfer everything the bowl."
+    ],
+    "image": "Vegetable-Stir-Fry-2.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 125,
+    "name": "Potato Delight",
+    "ingredients": [
+      "Egg",
+      "Potato",
+      "Lettuce",
+      "Bowl",
+      "Pan"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the potato and lettuce into smaller pieces.",
+      "Break the egg into the pan.",
+      "Cook the egg until it's scrambled.",
+      "Add the sliced potato  into the pan and stir-fry together.",
+      "Once all ingredients are cooked, transfer them into the bowl."
+    ],
+    "image": "1-shoestring-potatoes-61b-P8170061-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 126,
+    "name": "Fresh Garden Salad",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Mix the sliced apple, lettuce, and tomato in the bowl.",
+      "Serve the salad on the plate."
+    ],
+    "image": "garden-salad-2.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 127,
+    "name": "Veggie Delight Plate",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, bread, lettuce, and tomato.",
+      "Place the pan on the stove burner.",
+      "Add the bread to the pan.",
+      "Cook it on the stove until everything is heated through and slightly crispy.",
+      "Transfer the mixture to a plate using the spatula."
+    ],
+    "image": "protein-packed-veggie-delight-plate_.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 128,
+    "name": "Garden Vegetable Stir-Fry",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice apple.",
+      "Slice bread.",
+      "Slice tomato.",
+      "Slice lettuce.",
+      "place the sliced ingredients (Apple, Bread, Tomato, Lettuce) into the pan.",
+      "Cook bread in the pan.",
+      "plate the ingredients."
+    ],
+    "image": "Vegetable-Stir-Fry-2.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 129,
+    "name": "Simple Potato and Egg Scramble",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the potato.",
+      "Crack an Egg. Cook the sliced potato and egg in the pan."
+    ],
+    "image": "BBCC0ECA-F273-435D-A7E2-FE35BA698B61.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 130,
+    "name": "Rustic Apple and Bread Saut\u00e9",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the potato.",
+      "Place the  bread, and potato into the pan.",
+      "Cook the bread, and potato in the pan until golden brown.",
+      "Transfer the ingredients into a bowl for serving."
+    ],
+    "image": "Stemilt-Apple-Saute-Yogurt-Brown-Sug.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 131,
+    "name": "Apple Lettuce Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple and lettuce.",
+      "Place the sliced apple and lettuce in the bowl.",
+      "Slice the bread and add the slices to the bowl."
+    ],
+    "image": "4J6QN.png",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 132,
+    "name": "Apple and Egg Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and the bread.",
+      "Crack the egg into the bowl.",
+      "Cook the sliced apple and bread in the pan, then serve on a plate."
+    ],
+    "image": "k55wz50qedd71.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 133,
+    "name": "Rustic Vegetable Medley Breakfast",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and tomato into bite-sized pieces.",
+      "Place the sliced apple, potato, and tomato into the pan.",
+      "Turn on the stove burner.",
+      "Cook the potatoes in the pan until they are tender."
+    ],
+    "image": "4458556.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 134,
+    "name": "Tomato and Apple Salad with Toast",
+    "ingredients": [
+      "Bread",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the tomato and lettuce.",
+      "Place the sliced tomato and lettuce in the bowl.",
+      "Slice the bread and place it in the pan.",
+      "Turn on the stove burner and cook the bread slices in the pan until toasted.",
+      "Turn off the stove burner.",
+      "Serve the toasted bread on the plate alongside the salad from the bowl."
+    ],
+    "image": "Apple-Sald-2-390x585.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 135,
+    "name": "Fresh Veggie Delight",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Crack the egg.",
+      "Mix the sliced apple, lettuce, tomato, and egg in a bowl.",
+      "Slice the bread and serve it alongside the salad in the bowl."
+    ],
+    "image": "6819d3c617c7530d7a925ed94f9353ee.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 136,
+    "name": "Fresh Apple Salad",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato",
+      "Egg",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl",
+      "Knife",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the potato.",
+      "Crack the egg and cook it.",
+      "Mix all sliced ingredients in a bowl.",
+      "Add the cooked egg on top of the salad."
+    ],
+    "image": "Apple-Salad-Facebook.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 137,
+    "name": "Potato Delight",
+    "ingredients": [
+      "Egg",
+      "Potato",
+      "Lettuce",
+      "Bowl",
+      "Pan"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and lettuce into smaller pieces.",
+      "Place the sliced potato into the pan.",
+      "Cook the potato in the pan until tender.",
+      "transfer everything into the bowl."
+    ],
+    "image": "1-shoestring-potatoes-61b-P8170061-1.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 138,
+    "name": "Apple and Potato Hash",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Cook the sliced apple and potato in the pan until golden brown.",
+      "Serve the cooked hash on a plate."
+    ],
+    "image": "caramelized-sweet-potato-hash-browns.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 139,
+    "name": "Mediterranean Bread Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the lettuce.",
+      "Slice the tomato.",
+      "Place the bread into the Pan.",
+      "Cook it in the Pan.",
+      "Transfer the mixture into the Bowl."
+    ],
+    "image": "Studio-Session-128-2-533x800.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 140,
+    "name": "Fresh Veggie Medley Sandwich",
+    "ingredients": [
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the bread, lettuce, and tomato.",
+      "Place the sliced lettuce and tomato into the bowl.",
+      "Toast the sliced bread in the pan until golden brown.",
+      "Assemble the sandwich by layering the lettuce and tomato between the toasted bread slices."
+    ],
+    "image": "4458556.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 141,
+    "name": "Pan-Fried Potatoes",
+    "ingredients": [
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "put the potato in the pan.",
+      "Slice the potato in the pan.",
+      "Put the tomato in the pan.",
+      "Slice the tomato in the pan.",
+      "Teleport to the position near the StoveBurner and turn it on.",
+      "Cook the sliced potato in the pan.",
+      "transfer the cooked potato and tomato onto the plate."
+    ],
+    "image": "Pan_Fried_Breakfast_Potatoes2_f_impr.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 142,
+    "name": "Fresh Salad Bowl",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the lettuce.",
+      "Slice the tomato.",
+      "Combine all sliced ingredients in a bowl."
+    ],
+    "image": "fresh-salad-bowl-fresh-raw-vegetable.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 143,
+    "name": "Apple and Bread Delight",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Knife",
+      "Plate",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the lettuce.",
+      "Place sliced apple, bread, and lettuce on the plate."
+    ],
+    "image": "Fresh-Apple-Bread-1-768x1152.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 144,
+    "name": "Potato and Apple Salad",
+    "ingredients": [
+      "Apple",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "slice the apple.",
+      "slice the tomato.",
+      "slice the lettuce.",
+      "Put the sliced apple, sliced tomato, and sliced lettuce into the bowl.",
+      "Transfer the salad from the bowl to the plate for serving."
+    ],
+    "image": "IMG_7988.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 145,
+    "name": "Veggie Toast Meal",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Bread"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and lettuce.",
+      "Slice the bread into small pieces.",
+      "Place the bread into the pan.",
+      "Cook the ingredients in the pan.",
+      "Transfer everything into the bowl."
+    ],
+    "image": "spring-veggie-toast-web8-640x960.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 146,
+    "name": "Potato and Egg Skillet",
+    "ingredients": [
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Retrieve the potato from the sink and slice it.",
+      "Retrieve the egg from the fridge and crack it.",
+      "Place the sliced potato into the pan.",
+      "Place the cracked egg into the pan with the potato.",
+      "Turn on the stove burner and cook the potato and egg mixture.",
+      "Once cooked, transfer the potato and egg mixture onto a plate."
+    ],
+    "image": "e701858665656024283c037b40f9c53e.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 147,
+    "name": "Tomato Dish",
+    "ingredients": [
+      "Tomato"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the tomato.",
+      "Serve the tomato on a plate."
+    ],
+    "image": "How-To-String-Tomatoes-In-Greenhouse.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 148,
+    "name": "Vegetable Stir Fry with Apple",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Place the sliced apple and potato into the bowl.",
+      "Cook the potatoes in the pan."
+    ],
+    "image": "Vegetable-Stir-Fry-PIN-3-800x1200.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 149,
+    "name": "Simple Breakfast Medley",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Crack the egg.",
+      "Place the sliced apple, sliced potato, and cracked egg into the pan.",
+      "Cook the potato, and egg in the pan.",
+      "Transfer the ingredients onto the plate for serving."
+    ],
+    "image": "Glazed-Fruit-Medley_exps31558_TH2379-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 150,
+    "name": "Apple and Tomato Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple into thin pieces.",
+      "Slice the tomato.",
+      "Slice the bread.",
+      "Place everything into the pan.",
+      "Cook the bread in the pan until it's lightly toasted.",
+      "Serve on a plate."
+    ],
+    "image": "apple-toast2-scaled-e1635894589359.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 151,
+    "name": "Apple Salad with Toasted Bread",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Crack and cook the egg in the pan.",
+      "Place the sliced apple, lettuce, and tomato in the bowl.",
+      "Add the cooked egg to the salad.",
+      "Toast the bread slices.",
+      "Serve the salad with toasted bread."
+    ],
+    "image": "Holiday-Salad-with-Blue-Cheese-Toast.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 152,
+    "name": "Veggie Delight Mixture Salad",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato",
+      "Bread",
+      "Chicken Breast"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Place the sliced apple, lettuce, and tomato in the bowl.",
+      "Cook the chicken breast in the pan and slice it.",
+      "Add the sliced chicken into the bowl.",
+      "Slice the bread and lightly toast it in the pan.",
+      "Serve the salad with toasted bread on the side."
+    ],
+    "image": "Veggie-Delight-Salad-Recipe-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 153,
+    "name": "Fresh Veggie Delight",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg",
+      "Avacado"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Buy an avocado online.",
+      "Mix the sliced apple, lettuce, tomato, and avocado in a bowl.",
+      "Slice the bread and serve it alongside the salad in the bowl."
+    ],
+    "image": "6819d3c617c7530d7a925ed94f9353ee.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 154,
+    "name": "Veggie Delight Sandwich",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Knife",
+      "Bowl",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple, lettuce, and tomato.",
+      "Place the sliced apple, lettuce, and tomato into the bowl.",
+      "Crack the egg and add it to the bowl.",
+      "Slice the bread and add to the bowl.",
+      "Serve the bread on a plate."
+    ],
+    "image": "ultimate-grilled-veggie-sandwich.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 155,
+    "name": "Rustic Breakfast Platter",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice an apple.",
+      "Put apple in bowl.",
+      "Slice the bread.",
+      "Put bread in bowl.",
+      "Crack an egg.",
+      "Put egg in pan.",
+      "Cook egg.",
+      "Pu egg in plate.",
+      "Pick up the contents of the bowl and place them on the plate."
+    ],
+    "image": "DSC_4518.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 156,
+    "name": "Apple-Potato Pan Fry",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the potato.",
+      "Put the sliced potato into the pan.",
+      "Cook the potato in the pan.",
+      "Add the sliced apple to the pan.",
+      "Transfer the cooked apple and potato to the bowl."
+    ],
+    "image": "Roasted-Apples-Potatoes-by-The-Whole.png",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 157,
+    "name": "Simple Potato and Apple Stir-Fry",
+    "ingredients": [
+      "Apple",
+      "Potato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the potato.",
+      "Cook both the sliced apple and potato in a pan."
+    ],
+    "image": "maxresdefault.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 158,
+    "name": "Mediterranean Vegetable Skillet",
+    "ingredients": [
+      "Apple",
+      "Egg",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the Apple.",
+      "Break the Egg.",
+      "Pick up the Tomato.",
+      "Slice the Tomato.",
+      "Place the Pan on the StoveBurner.",
+      "Cook the egg in the Pan.",
+      "Place everything on the Plate."
+    ],
+    "image": "Mediterranean-Roasted-Vegetables-1-e.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 159,
+    "name": "Apple Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Remove the apple from the fridge, slice it, and place it in the bowl.",
+      "Remove the lettuce from the fridge, slice it, and add it to the bowl with the apple.",
+      "Slice the bread.",
+      "Place the sliced bread in the pan and toast it on the stove.",
+      "Once the bread is toasted, place it on a plate, add the apple and lettuce mixture on top, and finish with the cheese."
+    ],
+    "image": "4579994.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 160,
+    "name": "Rustic Vegetables",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and tomato.",
+      "Place the sliced apple, potato, and tomato into the bowl.",
+      "Transfer the sliced potato into the pan.",
+      "Cook the sliced potato in the pan on the stove burner.",
+      "Serve everything in the bowl."
+    ],
+    "image": "il_570xN.2797722509_coj7.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 161,
+    "name": "Fresh Apple Salad",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Slice the tomato.",
+      "Mix all the sliced ingredients in a bowl."
+    ],
+    "image": "Apple-Salad-Facebook.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 162,
+    "name": "Vegetable and Egg Stir-Fry",
+    "ingredients": [
+      "Potato",
+      "Lettuce",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the potato.",
+      "Slice the lettuce.",
+      "Crack an egg.",
+      "Place the sliced potato into the pan.",
+      "Cook the potato in the pan.",
+      "Add the cracked egg to the pan and cook it together with the vegetables.",
+      "Once cooked, transfer everything into the bowl."
+    ],
+    "image": "egg-stir-fry-peppers-16-1082x1536.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 163,
+    "name": "Garden Salad",
+    "ingredients": [
+      "Apple",
+      "Lettuce",
+      "Tomato"
+    ],
+    "equipment": [
+      "Bowl",
+      "Knife"
+    ],
+    "recipe": [
+      "Pick up the Apple and slice it.",
+      "Place the sliced Apple into the Bowl.",
+      "Pick up the Lettuce and slice it.",
+      "Place the sliced Lettuce into the Bowl.",
+      "Add the tomato by placing it into the Bowl."
+    ],
+    "image": "garden-side-salad-1.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 164,
+    "name": "Apple Egg Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and the bread.",
+      "Crack the egg into the bowl.",
+      "Cook the egg in the pan and serve it on the sliced bread topped with apple."
+    ],
+    "image": "bd5b047e93c35064349ede5debf78741.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 165,
+    "name": "Veggie Mix with Potato Stir-Fry",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, potato, and lettuce.",
+      "Place the potato into the pan.",
+      "Cook the mixture in the pan.",
+      "Transfer everything to the bowl."
+    ],
+    "image": "Vegetable-Stir-Fry-2.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 166,
+    "name": "Warm Apple Salad",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Take the egg out of the fridge and crack it.",
+      "Cook the egg in the pan until cooked.",
+      "Place the sliced apple and bread in the bowl.",
+      "Add the cooked egg to the bowl."
+    ],
+    "image": "heirloom-apple-salad-new-11.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 167,
+    "name": "Rustic Vegetable Medley Stir-fry",
+    "ingredients": [
+      "Potato",
+      "Tomato",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the potato, tomato, and lettuce.",
+      "Place the sliced potato in the pan.",
+      "Cook the potato in the pan.",
+      "Transfer the ingredients to the plate.",
+      "Serve the dish."
+    ],
+    "image": "vegetable-stir-fry-recipe-2-edited-6.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 168,
+    "name": "Warm Apple Potato Salad",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Lettuce",
+      "Olive oil"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple, and place it in the bowl.",
+      "Slice the potato and put it into the pan.",
+      "Turn on the stove, cook the sliced potato until it's ready, then turn off the stove.",
+      "Add the cooked potato to the bowl with the apple.",
+      "Slice the lettuce and add it to the bowl.",
+      "Spread olive oil over the bowl."
+    ],
+    "image": "IMG_7988.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 169,
+    "name": "Apple Bread Delight",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Butter"
+    ],
+    "equipment": [
+      "Knife",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple.",
+      "Slice the bread.",
+      "Arrange the apple slices and bread slices on a plate."
+    ],
+    "image": "IMG_3324.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 170,
+    "name": "Apple and Lettuce Mix",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Place the sliced apple and bread in the bowl.",
+      "Add the lettuce."
+    ],
+    "image": "213c074cd558be0035c5ddd324a6689f.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 171,
+    "name": "Simple Apple and Potato Dish",
+    "ingredients": [
+      "Apple",
+      "Potato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and potato.",
+      "Cook the potato in the pan.",
+      "Serve the apple and potato in the bowl."
+    ],
+    "image": "Simply-Roasted-Apples-and-Potatoes-b.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 172,
+    "name": "Potato Stir Fry Lunch",
+    "ingredients": [
+      "Potato"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the potato.",
+      "Place the sliced potato in the pan.",
+      "Cook the potato in the pan.",
+      "Pick up the cooked potato and place it in the Bowl."
+    ],
+    "image": "Yummy-Spicy-Potato-Stir-Fry-744x558.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 173,
+    "name": "Farmer's Breakfast Bowl",
+    "ingredients": [
+      "Bread",
+      "Lettuce",
+      "Tomato",
+      "Egg"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan",
+      "StoveBurner",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the lettuce and tomato.",
+      "Crack the egg.",
+      "Teleport to the position near the Pan and place it on the StoveBurner.",
+      "Turn on the StoveBurner.",
+      "Cook the cracked egg in the Pan.",
+      "Get a bowl and place the sliced lettuce and tomato into it.",
+      "Get a Plate and put the cooked egg on it.",
+      "Toast the bread.",
+      "Add the toasted bread to the Plate."
+    ],
+    "image": "Savory-Breakfast-Bowls-1-650x975.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 174,
+    "name": "Potato and Egg Stir-Fry",
+    "ingredients": [
+      "Potato",
+      "Lettuce",
+      "Egg"
+    ],
+    "equipment": [
+      "Pan",
+      "StoveBurner",
+      "Bowl"
+    ],
+    "recipe": [
+      "Pick up Potato and slice it.",
+      "Place the sliced Potato in the Pan.",
+      "Pick up Lettuce and slice it.",
+      "Pick up Egg and break it.",
+      "Place the broken Egg in the Pan.",
+      "Toggle on the StoveBurner.",
+      "Cook the ingredients in the Pan_28d9d830.",
+      "Place the ingredients into the Bowl."
+    ],
+    "image": "egg-stir-fry-peppers-16.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "hard"
+  },
+  {
+    "id": 175,
+    "name": "Peanut Butter Apple Toast",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Peanut Butter"
+    ],
+    "equipment": [
+      "Bowl",
+      "Plate"
+    ],
+    "recipe": [
+      "Slice the apple and the bread.",
+      "Mix the slices of apple with peanut butter in a bowl.",
+      "Place the apple and the bread in a plate.",
+      "Put peanut butter on top of it"
+    ],
+    "image": "maxresdefault.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 176,
+    "name": "Warm Apple Salad",
+    "ingredients": [
+      "Apple",
+      "Bread",
+      "Lettuce"
+    ],
+    "equipment": [
+      "Bowl",
+      "Pan"
+    ],
+    "recipe": [
+      "Slice the apple and bread.",
+      "Slice the lettuce.",
+      "Cook the Bread in the pan until cooked.",
+      "Place the sliced apple, bread, and lettuce in the bowl."
+    ],
+    "image": "heirloom-apple-salad-new-11.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 177,
+    "name": "Stir-fry Delight",
+    "ingredients": [
+      "Potato",
+      "Tomato",
+      "Egg",
+      "Apple"
+    ],
+    "equipment": [
+      "Pan",
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the potato, tomato, and apple.",
+      "Crack the egg into the pan.",
+      "Place the pan on the stove burner.",
+      "Add the sliced potato to the pan and cook until golden brown.",
+      "Stir in the egg until cooked.",
+      "Serve the mixture in a bowl.",
+      "Top with sliced apple and tomato for a fresh crunch."
+    ],
+    "image": "beef-and-bean-stir-fry-skillet.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "intermediate"
+  },
+  {
+    "id": 300,
+    "name": "Apple Salad with Cheese",
+    "ingredients": [
+      "Apple",
+      "Cheese"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the apple.",
+      "Buy Cheese from online."
+    ],
+    "image": "1760-Apple-Almond-Cheddar-Salad.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 301,
+    "name": "Bread with butter",
+    "ingredients": [
+      "Bread",
+      "Butter"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the bread.",
+      "Buy butter from online."
+    ],
+    "image": "bread-with-butter.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 302,
+    "name": "Apple Salad with Olive Oil",
+    "ingredients": [
+      "Apple",
+      "Olive Oil"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the apple.",
+      "Buy Olive Oil from online."
+    ],
+    "image": "c8dc88c7b0d33577d3a255cfbcb90963.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 303,
+    "name": "Lettuce Avacado Salad",
+    "ingredients": [
+      "Lettuce",
+      "Avacado"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the lettuce.",
+      "Buy avacado from online.",
+      "Place the sliced lettuce into the bowl."
+    ],
+    "image": "lettuce-avocado-salad-holding.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 304,
+    "name": "Apple Chicken Breast Salad",
+    "ingredients": [
+      "Apple",
+      "Chicken Breast"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the apple.",
+      "Buy chicken breast from online."
+    ],
+    "image": "Apple-Chicken-Salad-12-scaled.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 305,
+    "name": "Lettuce Chicken Salad",
+    "ingredients": [
+      "Lettuce",
+      "Chicken"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the lettuce.",
+      "Buy chicken from online."
+    ],
+    "image": "Chicken-Cobb-Salad-1-1.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 306,
+    "name": "Tomato Salad with Olive Oil",
+    "ingredients": [
+      "Tomato",
+      "Olive Oil"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the tomato.",
+      "Buy Olive Oil from online."
+    ],
+    "image": "Tomato-Olive-Salad-Process-1024x1536.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 307,
+    "name": "Stir-fry Bread with Oil",
+    "ingredients": [
+      "Bread",
+      "Olive Oil"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the bread.",
+      "Buy Olive Oil from online.",
+      "Cook the bread."
+    ],
+    "image": "Stir-Fry-5-1.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 308,
+    "name": "Scambled potato with butter",
+    "ingredients": [
+      "Potato",
+      "Butter"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the potato.",
+      "Cook the potato.",
+      "Buy butter from online."
+    ],
+    "image": "Chive.-Butter-Smashed-Potatoes4-1024.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 309,
+    "name": "Tomato Salad with Cheese",
+    "ingredients": [
+      "Tomato",
+      "Cheese"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the tomato.",
+      "Buy Cheese from online."
+    ],
+    "image": "0af60f06d9b9e06ba250b4fa8bb70122.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 310,
+    "name": "Apple Avacado Salad",
+    "ingredients": [
+      "Apple",
+      "Avacado"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the apple.",
+      "Buy avacado from online."
+    ],
+    "image": "14852840aa51c603e6dc2acb46c2b4dd.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 311,
+    "name": "Sliced Potato with Cheese",
+    "ingredients": [
+      "Potato",
+      "Cheese"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the potato.",
+      "Buy Cheese from online.",
+      "Cook the potato."
+    ],
+    "image": "039done-1024x719.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 312,
+    "name": "Lettuce Salmon Salad",
+    "ingredients": [
+      "Potato",
+      "Salmon"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the lettuce.",
+      "Buy salmon from online."
+    ],
+    "image": "940326-1-eng-GB_salmon-768x960.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 313,
+    "name": "Scambled Egg with peanut butter",
+    "ingredients": [
+      "Egg",
+      "Peanut Butter"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the egg.",
+      "Cook the egg.",
+      "Buy peanut butter from online."
+    ],
+    "image": "7607026.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 314,
+    "name": "Scambled Egg with butter",
+    "ingredients": [
+      "Egg",
+      "Butter"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the egg.",
+      "Cook the egg.",
+      "Buy butter from online."
+    ],
+    "image": "scrambled-eggs-58a701ac5f9b58a3c91cb.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 315,
+    "name": "Egg Cheese",
+    "ingredients": [
+      "Egg",
+      "Cheese"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the egg.",
+      "Buy Cheese from online.",
+      "Cook the Egg."
+    ],
+    "image": "egg-roll-wrap-string-cheese-frigoche.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 316,
+    "name": "Potato with Avacado",
+    "ingredients": [
+      "Potato",
+      "Avacado"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the potato.",
+      "Cook the potato.",
+      "Buy avacado from online."
+    ],
+    "image": "Avocado-and-Egg-Potato-Salad-1.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 317,
+    "name": "Tomato Avacado Salad",
+    "ingredients": [
+      "Tomato",
+      "Avacado"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the tomato.",
+      "Buy avacado from online."
+    ],
+    "image": "Tomato_Cucumber_Avocado_SaladCU.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 318,
+    "name": "Egg with Avacado",
+    "ingredients": [
+      "Egg",
+      "Avacado"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the egg.",
+      "Cook the egg.",
+      "Buy avacado from online."
+    ],
+    "image": "avocado-egg-bake-small-4.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 319,
+    "name": "Apple Salmon Salad",
+    "ingredients": [
+      "Apple",
+      "Salmon"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the apple.",
+      "Buy salmon from online."
+    ],
+    "image": "Marinated-Salmon-Apple-Salad-2-1-500.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 320,
+    "name": "Lettuce Salad with Cheese",
+    "ingredients": [
+      "Lettuce",
+      "Cheese"
+    ],
+    "equipment": [
+      "Bowl"
+    ],
+    "recipe": [
+      "Slice the lettuce.",
+      "Buy Cheese from online.",
+      "Place the sliced lettuce into the bowl."
+    ],
+    "image": "Strawberry-Goat-Cheese-Salad-FI.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 321,
+    "name": "Tomato Salmon Salad",
+    "ingredients": [
+      "Tomato",
+      "Salmon"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the tomato.",
+      "Buy salmon from online."
+    ],
+    "image": "Smoked-Salmon-Salad-Feature-500x500.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 322,
+    "name": "Bread with Avacado",
+    "ingredients": [
+      "Bread",
+      "Avacado"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the bread.",
+      "Buy avacado from online."
+    ],
+    "image": "Avocado-Bread-Recipe-4-891x1024.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 323,
+    "name": "Lettuce Chicken Breast Salad",
+    "ingredients": [
+      "Lettuce",
+      "Chicken Breast"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the lettuce.",
+      "Buy chicken breast from online."
+    ],
+    "image": "delicious-lettuce-chicken-salad-reci.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 324,
+    "name": "Lettuce Salad with Olive Oil",
+    "ingredients": [
+      "Lettuce",
+      "Olive Oil"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the lettuce.",
+      "Buy Olive Oil from online."
+    ],
+    "image": "fresh-lettuce-salad-onion-tomato-oli.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 325,
+    "name": "Fried Potato with Oil",
+    "ingredients": [
+      "Potato",
+      "Olive Oil"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the potato.",
+      "Buy Olive Oil from online.",
+      "Cook the potato."
+    ],
+    "image": "fries.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 326,
+    "name": "Fried Eggs with Oil",
+    "ingredients": [
+      "Egg",
+      "Olive Oil"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the egg.",
+      "Buy Olive Oil from online.",
+      "Cook the egg."
+    ],
+    "image": "l-intro-1673362769.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 327,
+    "name": "Cheese Bread",
+    "ingredients": [
+      "Bread",
+      "Cheese"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the bread.",
+      "Buy Cheese from online."
+    ],
+    "image": "maxresdefault.jpg",
+    "diet_type": "vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 328,
+    "name": "Tomato Chicken Salad",
+    "ingredients": [
+      "Tomato",
+      "Chicken"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the tomato.",
+      "Buy chicken from online."
+    ],
+    "image": "Grilled-Chicken-and-Tomato-Salad-Fea.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  },
+  {
+    "id": 329,
+    "name": "Bread with peanut butter",
+    "ingredients": [
+      "Bread",
+      "Peanut Butter"
+    ],
+    "equipment": [],
+    "recipe": [
+      "Slice the bread.",
+      "Buy peanut butter from online."
+    ],
+    "image": "bread-with-butter.jpg",
+    "diet_type": "non-vegetarian",
+    "difficulty": "simple"
+  }
+]

@@ -1,0 +1,12 @@
+[Config file]: config_files/0.json
+[Unhandled Error] AssertionError()
+Traceback (most recent call last):
+  File "/Users/hongyining/Documents/web-agent/webarena/run.py", line 271, in test
+    assert os.path.exists(_c["storage_state"])
+AssertionError
+[Config file]: config_files/1.json
+[Unhandled Error] AssertionError()
+Traceback (most recent call last):
+  File "/Users/hongyining/Documents/web-agent/webarena/run.py", line 271, in test
+    assert os.path.exists(_c["storage_state"])
+AssertionError

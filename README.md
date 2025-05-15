@@ -17,7 +17,7 @@ To operationalize this concept, we first develop the Embodied Web Agents task en
 ![Overview](overview.png)
 
 ## Web Environment
-Our website is hosted at [<a href="http://98.80.38.242:1220/">here</a>]. However, you may choose to host the website by yourself. You can find very detailed instructions [<a href="https://github.com/Embodied-Web-Agent/Embodied-Web-Agent/tree/main/web_enviroments">Here</a>]
+Our website is hosted at [<a href="http://98.80.38.242:1220/">here</a>]. However, you may choose to host the website by yourself. You can find very detailed instructions [<a href="https://github.com/Embodied-Web-Agent/Embodied-Web-Agent/tree/main/web_enviroments">here</a>]
 ```
 cd web_enviroments
 bash build.sh

@@ -1,0 +1,7 @@
+openai
+pandas
+pillow
+openpyxl
+streamlit
+dotenv
+google-generativeai

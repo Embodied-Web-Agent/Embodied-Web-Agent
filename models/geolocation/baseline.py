@@ -36,7 +36,9 @@ def call_gpt(client, system_message, image_messages, max_tokens=400, temperature
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default='gpt')
+    parser.add_argument('--model_family', type=str, default='gpt')
+    parser.add_argument('--num_samples', type=int, default=200)
+    parser.add_argument('--output_dir', type=str, default='single_views')
     return parser.parse_args()
 
 def main():

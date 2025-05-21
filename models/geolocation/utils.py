@@ -171,7 +171,13 @@ def encode_image(image):
     return base64.b64encode(buffer.getvalue()).decode("utf-8")
 
 '''Run VisualWebArena for web search'''
-def run_vwa(web_query):
+def run_vwa(web_query, max_tries=2, model_family="gpt"):
+    visualwebarena_dir = os.path.abspath("../../../visualwebarena")
+    env = os.environ.copy()
+    env["PYTHONPATH"] = visualwebarena_dir
+
+    raw_path = os.path.join(visualwebarena_dir, f"config_files/vwa/geo_task_{model_family}.raw.json")
+
     vwa_task = [
         {
             "sites": ["wikipedia"],
@@ -199,42 +205,51 @@ def run_vwa(web_query):
         }
     ]
 
-    visualwebarena_dir = os.path.abspath("../../../visualwebarena")
-    raw_path = os.path.join(visualwebarena_dir, "config_files/vwa/geo_task.raw.json")
-    output_dir = f"output/geo_query_{uuid.uuid4().hex[:8]}"
-    output_path = os.path.join(visualwebarena_dir, output_dir)
-
     # Save the raw.json config file for vwa execution
     with open(raw_path, "w") as f:
         json.dump(vwa_task, f, indent=2)
 
-    env = os.environ.copy()
-    env["PYTHONPATH"] = visualwebarena_dir
-
     # Generate json config file: python ../../../visualwebarena/scripts/generate_test_data.py
-    subprocess.run(
-        ["python", "scripts/generate_test_data.py"],
-        cwd=visualwebarena_dir,
-        env=env
-    )
-
-    # Run web search task in vwa: 
     subprocess.run([
-        "python", "run.py",
-        "--instruction_path", "agent/prompts/jsons/p_som_cot_id_actree_3s.json",
-        "--test_start_idx", "0",
-        "--test_end_idx", "1",
-        "--result_dir", output_dir,
-        "--test_config_base_dir", "config_files/vwa/geo_task",
-        "--model", "gpt-4o",
-        "--action_set_tag", "som",
-        "--observation_type", "image_som"
+        "python", "scripts/generate_test_data.py",
+         "--model_family", model_family
     ], cwd=visualwebarena_dir, env=env)
 
-    # Get web search results and parse
-    html_path = os.path.join(output_path, "render_0.html")
-    vwa_result = extract_parsed_answer_from_html(html_path)
-    return vwa_result
+    for attempt in range(max_tries):
+        query_id = uuid.uuid4().hex[:8]
+        output_dir = f"output/{model_family}/geo_query_{query_id}"
+        output_path = os.path.join(visualwebarena_dir, output_dir)
+
+        try:
+            # Run web search task in vwa: 
+            subprocess.run([
+                "python", "run.py",
+                "--instruction_path", "agent/prompts/jsons/p_som_cot_id_actree_3s.json",
+                "--test_start_idx", "0",
+                "--test_end_idx", "1",
+                "--result_dir", output_dir,
+                "--test_config_base_dir", f"config_files/vwa/geo_task_{model_family}",
+                "--model", "gpt-4o",
+                "--action_set_tag", "som",
+                "--observation_type", "image_som"
+            ], cwd=visualwebarena_dir, env=env, timeout=240)
+        except subprocess.TimeoutExpired:
+            print("[VWA ERROR] Timed out")
+            return "ERROR: VWA subprocess timed out", False
+
+        # Get web search results and parse
+        html_path = os.path.join(output_path, "render_0.html")
+        try:
+            vwa_result, success = extract_parsed_answer_from_html(html_path)
+        except Exception as e:
+            vwa_result, success = f"ERROR: {str(e)}", False
+
+        if success:
+            return vwa_result, query_id
+        
+        print(f"[VWA Retry {attempt+1}] Failed with: {vwa_result}")
+
+    return vwa_result, query_id
 
 '''Get vwa answer from html doc'''
 def extract_parsed_answer_from_html(html_path):
@@ -247,10 +262,24 @@ def extract_parsed_answer_from_html(html_path):
     )
 
     if not match:
-        raise ValueError("Could not find parsed_action answer in HTML.")
+        return "ERROR: No parsed_action found", False
 
     answer = match.group(1).strip()
-    return answer
+
+    # Treat empty parsed_action as failure
+    if answer == "":
+        return "ERROR: Empty parsed_action", False
+    
+    # Check for known error messages from VWA
+    known_failures = [
+        "Same typing action for 5 times",
+        "Failed to parse actions for 3 times",
+    ]
+    for fail_msg in known_failures:
+        if fail_msg.lower() in answer.lower():
+            return answer, False
+    
+    return answer, True
 
 
 def clean_brackets(text):

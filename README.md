@@ -24,3 +24,5 @@ bash build.sh
 bash host.sh
 ```
 
+## Running Tasks
+For running the baseline models for different tasks, Please go to the [<a href="https://github.com/Embodied-Web-Agent/Embodied-Web-Agent/tree/main/models">models</a>], and go into the indoor / outdoor / geolocation folders respectively. You will see detailed instructions there.

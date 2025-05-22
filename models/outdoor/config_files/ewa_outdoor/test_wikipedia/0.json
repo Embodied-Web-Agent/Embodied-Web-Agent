@@ -1,0 +1,41 @@
+{
+  "sites": [
+    "wikipedia"
+  ],
+  "task_id": 0,
+  "require_login": false,
+  "storage_state": "./.auth/wiki_state.json",
+  "start_url": "http://98.80.38.242:8888/wikipedia_en_all_maxi_2022-05/A/User:The_other_Kiwix_guy/Landing",
+  "geolocation": null,
+  "intent_template": "",
+  "instantiation_dict": {
+    "place1": "",
+    "place2": ""
+  },
+  "intent": "Search for the information about Wyndham New Yorker Hotel about when it was built and who built and designed it. And I need to know the history of the hotel.",
+  "require_reset": false,
+  "viewport_size": {
+    "width": 1280
+  },
+  "eval": {
+    "eval_types": [
+      "string_match"
+    ],
+    "reference_answers": {
+      "must_include": [
+        "January 2, 1930",
+        "Mack Kanner",
+        "Sugarman and Berger"
+      ]
+    },
+    "reference_url": "https://en.wikipedia.org/wiki/Wyndham_New_Yorker_Hotel",
+    "program_html": [],
+    "string_note": "",
+    "reference_answer_raw_annotation": "January 2, 1930"
+  },
+  "intent_template_id": 0,
+  "reasoning_difficulty": "medium",
+  "visual_difficulty": "easy",
+  "comments": "",
+  "overall_difficulty": "medium"
+}

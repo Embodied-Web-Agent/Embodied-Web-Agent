@@ -1,0 +1,39 @@
+{
+  "sites": [
+    "store"
+  ],
+  "task_id": 0,
+  "require_login": true,
+  "storage_state": "./.auth/store_state.json",
+  "start_url": "http://98.80.38.242:1207/",
+  "geolocation": null,
+  "intent_template": "What is the price range for products in the {{region}}?",
+  "instantiation_dict": {
+    "region": "first row of this page"
+  },
+  "intent": "I would like to buy the chicken breast.",
+  "require_reset": false,
+  "viewport_size": {
+    "width": 1280
+  },
+  "eval": {
+    "eval_types": [
+      "string_match"
+    ],
+    "reference_answers": {
+      "must_include": [
+        "2.50",
+        "49.99"
+      ]
+    },
+    "reference_url": "",
+    "program_html": [],
+    "string_note": "",
+    "reference_answer_raw_annotation": "$2.50 - $49.99"
+  },
+  "intent_template_id": 0,
+  "reasoning_difficulty": "easy",
+  "visual_difficulty": "easy",
+  "comments": "",
+  "overall_difficulty": "easy"
+}

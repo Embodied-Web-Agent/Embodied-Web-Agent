@@ -1,0 +1,40 @@
+{
+  "sites": [
+    "map"
+  ],
+  "task_id": 0,
+  "require_login": true,
+  "storage_state": "./.auth/map_state.json",
+  "start_url": "https://www.openstreetmap.org/directions#map=19/34.069435/-118.443003&layers=N",
+  "geolocation": null,
+  "intent_template": "How can I get to {{place1}} from {{place2}}?",
+  "instantiation_dict": {
+    "place1": "the Dickson Plaza",
+    "place2": "Parking Structure 5 at UCLA"
+  },
+  "intent": "How can I get to the Dickson Plaza from Parking Structure 5 at UCLA?",
+  "require_reset": false,
+  "viewport_size": {
+    "width": 1280
+  },
+  "eval": {
+    "eval_types": [
+      "string_match"
+    ],
+    "reference_answers": {
+      "must_include": [
+        "2.50",
+        "49.99"
+      ]
+    },
+    "reference_url": "",
+    "program_html": [],
+    "string_note": "",
+    "reference_answer_raw_annotation": "$2.50 - $49.99"
+  },
+  "intent_template_id": 0,
+  "reasoning_difficulty": "easy",
+  "visual_difficulty": "easy",
+  "comments": "",
+  "overall_difficulty": "easy"
+}

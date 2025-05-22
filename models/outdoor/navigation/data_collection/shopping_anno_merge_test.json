@@ -1,0 +1,143 @@
+[
+    {
+        "general": {
+            "annotation_status": "Annotated",
+            "annotator": "rui",
+            "comments": "",
+            "difficulty": {
+                "overall_difficulty": "hard",
+                "reasoning_difficulty": "hard",
+                "visual_difficulty": "medium"
+            },
+            "endpoint_coordinate": "(40.735892, -73.993567)",
+            "startpoint_coordinate": "(40.731866, -73.982422)",
+            "generated_instruction": "",
+            "generated_name": "",
+            "geocode_name": "",
+            "geocode_types": [
+                "street_number"
+            ],
+            "task_id": 0,
+            "task_type": "shopping"
+        },
+        "embodied": [
+            {
+                "sub_task_id": 2,
+                "intent_template": "",
+                "instantiation_dict": {},
+                "start": "",
+                "end": "",
+                "intermediate": "",
+                "intent": "I need to get from CVS Pharmacy, 65, 5th Avenue, Manhattan, New York to Whole Foods Market, 4, East 14th Street, Manhattan, New York.",
+                "intent_template_id": "",
+                "eval": {
+                    "eval_types": [
+                        "success_rate"
+                    ],
+                    "reference_answer_raw_annotation": "trajectory",
+                    "reference_answers": "trajectory"
+                },
+                "subtask_type": "embodied"
+            }
+        ],
+        "web": [
+            {
+                "sub_task_id": 1,
+                "sites": [
+                    "map"
+                ],
+                "require_login": false,
+                "storage_state": "",
+                "start_url": "http://www.openstreetmap.org/directions#map=7/41.652/-73.246&layers=Y",
+                "geolocation": "",
+                "intent_template": "",
+                "instantiation_dict": {},
+                "intent": "I need to get from CVS Pharmacy, 65, 5th Avenue, Manhattan, New York to Whole Foods Market, 4, East 14th Street, Manhattan, New York.",
+                "require_reset": false,
+                "viewport_size": {
+                    "width": 1280
+                },
+                "intent_template_id": "",
+                "eval": {
+                    "eval_types": [
+                        "url_match"
+                    ],
+                    "reference_answers": null,
+                    "reference_url": "https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=40.7356855%2C-73.993496%3B40.7347925%2C-73.9913589#map=18/40.735440/-73.992287&layers=Y",
+                    "program_html": [],
+                    "url_note": "EXACT"
+                },
+                "subtask_type": "web"
+            },
+            {
+                "sites": [
+                  "store"
+                ],
+                "sub_task_id": 0,
+                "require_login": false,
+                "storage_state": "./.auth/store_state.json",
+                "start_url": "http://98.80.38.242:1207/?storeId=4",
+                "geolocation": null,
+                "intent_template": "Buy {{item}} with the lowest price.",
+                "instantiation_dict": {
+                  "item": "one 500g cheese"
+                },
+                "intent": "Buy one 500g cheese with the lowest price.",
+                "require_reset": false,
+                "viewport_size": {
+                  "width": 1280
+                },
+                "eval": {
+                  "eval_types": [
+                    "url_match"
+                  ],
+                  "reference_answers": {
+                    "must_include": [
+                    ]
+                  },
+                  "reference_url": "http://98.80.38.242:1207/?storeId=2&product=19&size=500g",
+                  "program_html": [],
+                  "string_note": "",
+                  "reference_answer_raw_annotation": ""
+                },
+                "intent_template_id": 0,
+                "subtask_type": "web"
+              },
+              {
+                "sites": [
+                  "wikipedia"
+                ],
+                "sub_task_id": 3,
+                "require_login": false,
+                "storage_state": "./.auth/wiki_state.json",
+                "start_url": "http://98.80.38.242:8888/wikipedia_en_all_maxi_2022-05/A/User:The_other_Kiwix_guy/Landing",
+                "geolocation": null,
+                "intent_template": "",
+                "instantiation_dict": {
+                },
+                "intent": "Tell me how much calories are in 500g mozzarella cheese.",
+                "require_reset": false,
+                "viewport_size": {
+                  "width": 1280
+                },
+                "eval": {
+                  "eval_types": [
+                    "string_match"
+                  ],
+                  "reference_answers": {
+                    "must_include": [
+                      "1500 kcal",
+                      "1500"
+                    ]
+                  },
+                  "reference_url": "http://98.80.38.242:8888/wikipedia_en_all_maxi_2022-05/A/Mozzarella",
+                  "program_html": [],
+                  "string_note": "",
+                  "reference_answer_raw_annotation": ""
+                },
+                "intent_template_id": 0,
+                "subtask_type": "web"
+              }
+        ]
+    }
+]

@@ -1,0 +1,122 @@
+[
+    {
+        "coordinate": [
+            40.7690255,
+            -73.98162549999999
+        ],
+        "geocode_name": "1",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "1 Central Park West, New York, NY 10023",
+        "generated_instruction": "Head towards the grand urban oasis that spans over 840 acres in the heart of the city, featuring meandering paths, a large lake, and iconic bridges. It's a historical landscape designed in the mid-19th century, providing a serene escape from the bustling metropolis."
+    },
+    {
+        "coordinate": [
+            40.7541734,
+            -73.9817482
+        ],
+        "geocode_name": "11",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "11 W 42nd St, New York, NY 10036",
+        "generated_instruction": "Make your way to the vibrant and bustling hub known for its bright neon lights and electric atmosphere, often referred to as 'The Crossroads of the World'. This iconic square is surrounded by theaters, shopping, and the famous New Year's Eve ball drop."
+    },
+    {
+        "coordinate": [
+            40.7482494,
+            -73.9850743
+        ],
+        "geocode_name": "350",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "350 5th Ave, New York, NY 10118",
+        "generated_instruction": "I'm in New York City and I'd like to go to the Art Deco skyscraper from the 1930s that held the title of world's tallest building for nearly 40 years. It has 102 stories and is an enduring symbol of the city's ambition."
+    },
+    {
+        "coordinate": [
+            40.7488622,
+            -73.986175
+        ],
+        "geocode_name": "20",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "20 W 34th St, New York, NY 10001",
+        "generated_instruction": "Proceed to the magnificent Beaux-Arts landmark known for its grand interior, including a stunning celestial dome and a bustling concourse filled with travelers. This historic train station is a vital transit hub and a marvel of early 20th-century architecture."
+    },
+    {
+        "coordinate": [
+            40.7730513,
+            -73.9833806
+        ],
+        "geocode_name": "2",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "2 Lincoln Center Plaza, New York, NY 10023",
+        "generated_instruction": "Travel to the cultural complex renowned for its striking modernist architecture, which hosts a variety of performing arts institutions. It's a hub for music, dance, and opera, surrounded by a beautiful outdoor plaza and fountain."
+    },
+    {
+        "coordinate": [
+            40.7772227,
+            -73.9546737
+        ],
+        "geocode_name": "200",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "200 E 84th St, New York, NY 10028",
+        "generated_instruction": "Visit the prestigious museum known for its extensive collection of art from ancient to modern times, housed in a distinctive building that encourages exploration and reflection. Its steps are often filled with visitors admiring the artistic treasures within."
+    },
+    {
+        "coordinate": [
+            40.7597568,
+            -73.9753786
+        ],
+        "geocode_name": "10",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "10 E 53rd St, New York, NY 10022",
+        "generated_instruction": "Go to the stunning example of mid-century modern architecture, known for its striking glass and steel facade, which houses a globally celebrated collection of modern art. It's a focal point for art lovers and hosts various exhibitions throughout the year."
+    },
+    {
+        "coordinate": [
+            40.7611958,
+            -73.98378939999999
+        ],
+        "geocode_name": "750 7th Avenue",
+        "geocode_types": [
+            "premise"
+        ],
+        "generated_name": "750 7th Ave, New York, NY 10019",
+        "generated_instruction": "Navigate to the iconic building that serves as a major center for international diplomacy, featuring distinctive architecture and a vast complex of offices and meeting rooms. It's a symbol of global cooperation and peace."
+    },
+    {
+        "coordinate": [
+            40.7530356,
+            -73.9785114
+        ],
+        "geocode_name": "1",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "1 Vanderbilt Ave, New York, NY 10017",
+        "generated_instruction": "Head towards the towering skyscraper that stands out in the skyline for its modern design and impressive height, acting as a new transit hub connecting commuters from various parts of the city. It also features stunning public spaces and restaurants."
+    },
+    {
+        "coordinate": [
+            40.7097107,
+            -74.011059
+        ],
+        "geocode_name": "1",
+        "geocode_types": [
+            "street_number"
+        ],
+        "generated_name": "1 Liberty Pl, New York, NY 10006",
+        "generated_instruction": "Make your way to the tallest building in the Western Hemisphere, which serves as a powerful symbol of resilience and hope. It features a stunning glass facade and an observatory that offers breathtaking views of the city."
+    }
+]

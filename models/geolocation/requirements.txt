@@ -5,3 +5,4 @@ openpyxl
 streamlit
 dotenv
 google-generativeai
+datasets

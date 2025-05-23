@@ -1,7 +1,6 @@
 import pandas as pd
 from openai import OpenAI
 import google.generativeai as genai
-from google.generativeai import GenerativeModel
 import argparse
 from dotenv import load_dotenv
 import os
@@ -12,6 +11,7 @@ from concurrent.futures import ProcessPoolExecutor
 import uuid
 from datetime import datetime
 from functools import partial
+from datasets import load_dataset
 
 from utils import get_session_token, get_pano_meta
 from standpoint import StandpointNode
@@ -29,6 +29,7 @@ def parse_args():
     parser.add_argument('--num_samples', type=int, default=200)
     parser.add_argument('--output_dir', type=str, default='interactive_views')
     parser.add_argument('--run_forced', type=bool, default=True)
+    parser.add_argument('--data', type=str, default='filtered')
     return parser.parse_args()
 
 
@@ -167,9 +168,14 @@ def main():
     run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
     print(f"Run ID: {run_id}")
 
-    all_initial = pd.read_excel("data_source/Breadth.xlsx").drop(['economies development status', 'Population', 'CountryGroup', 'lat', 'lng'], axis=1)
-    sampled = all_initial.sample(n=args.num_samples, random_state=1) 
+    if args.data == 'filtered':
+        dataset = load_dataset("evelynhong/embodied-web-agent-geoguessr", split="train")
+        sampled = dataset.to_pandas()
+    elif args.data == 'breadth':
+        all_initial = pd.read_excel("data_source/Breadth.xlsx").drop(['economies development status', 'Population', 'CountryGroup', 'lat', 'lng'], axis=1)
+        sampled = all_initial.sample(n=args.num_samples, random_state=1) 
 
+    print(f"Sampled {len(sampled)} rows.")
     rows = list(sampled.itertuples(index=False, name=None))
 
     # with ProcessPoolExecutor(max_workers=5) as pool:

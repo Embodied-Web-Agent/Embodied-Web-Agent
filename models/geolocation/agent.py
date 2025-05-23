@@ -2,6 +2,9 @@ import re
 from openai import OpenAI
 import google.generativeai as genai
 from google.generativeai import GenerativeModel
+import time
+import random
+from google.api_core.exceptions import RetryError, ServiceUnavailable
 
 from utils import parse_prediction, clean_brackets, run_vwa
 from prompt import *
@@ -45,7 +48,7 @@ class Agent:
         return action
 
     def generate_web_query(self, image_messages, web_context):
-        if self.model_family == 'gpt':
+        if self.model_family == 'gpt' or self.model_family == 'qwen':
             # Only include text entries
             query_history_entries = [entry["text"] for entry in web_context if isinstance(entry, dict) and entry.get("type") == "text"]
         elif self.model_family == 'gemini':
@@ -69,7 +72,11 @@ class Agent:
         return confidence
     
     def generate_prediction(self, full_context):
-        response = self.call_vlm(GENERATE_PREDICTION, context=full_context)
+        if self.model == 'qwen':
+            generate_prediction_prompt = GENERATE_PREDICTION_QWEN
+        else: 
+            generate_prediction_prompt = GENERATE_PREDICTION
+        response = self.call_vlm(generate_prediction_prompt, context=full_context)
         prediction = parse_prediction(response)
         return response, prediction
     
@@ -100,13 +107,28 @@ class Agent:
         )
         return (response.choices[0].message.content)
     
-    def call_gemini(self, prompt, model, max_tokens=400, temperature=0.7, context=None):
+    def call_gemini(self, prompt, model, max_tokens=400, temperature=0.7, context=None, retries=3, backoff_base=2.0):
         content = [prompt]
         if context:
             content += context
         content = [c for c in content if c is not None]
-        response = self.client.generate_content(content)
-        return response.text
+        
+        for attempt in range(1, retries + 1):
+            try:
+                response = self.client.generate_content(contents=content)
+                return response.text
+
+            # Typical transient Gemini transport errors
+            except (RetryError, ServiceUnavailable) as e:
+                if attempt == retries:
+                    raise e
+                delay = backoff_base * attempt + random.uniform(0, 1)
+                print(f"[Gemini] attempt {attempt} failed ({e}); retrying in {delay:.1f}s")
+                time.sleep(delay)
+
+            except Exception:
+                # Any other unexpected error
+                raise
 
     def parse(self, output, kind):
         if kind == 'action':

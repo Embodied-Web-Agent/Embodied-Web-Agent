@@ -19,7 +19,7 @@ def determine_threshold(distance):
             return threshold_names[i]
     return "beyond continent level"
 
-def visualize(result_dir):
+def visualize(result_dir, mode):
     output_path = os.path.join(result_dir, "result.json")
 
     if not os.path.exists(output_path):
@@ -41,13 +41,14 @@ def visualize(result_dir):
     distance_level = determine_threshold(distance)
 
     st.title(f"Standpoint {standpoint_id}")
-    st.subheader("Navigation Summary")
 
-    st.markdown(f"**Total Adjacent Standpoints:** {result['num_adjacent_standpoints']}")
-    st.markdown(f"**Visited Standpoints:** {len(result['adjacent_standpoints_visited'])}")
-    st.markdown("**Move History:**")
-    for step in result["full_move_history"]:
-        st.markdown(f"- {step}")
+    if mode == "Interactive":
+        st.subheader("Navigation Summary")
+        st.markdown(f"**Total Adjacent Standpoints:** {result['num_adjacent_standpoints']}")
+        st.markdown(f"**Adjacent Standpoints Visited:** {len(result['adjacent_standpoints_visited'])}")
+        st.markdown("**Move History:**")
+        for step in result["full_move_history"]:
+            st.markdown(f"- {step}")
 
     st.subheader("Image Observations")
     folders = [f for f in os.listdir(result_dir) if os.path.isdir(os.path.join(result_dir, f))]
@@ -81,10 +82,15 @@ def visualize(result_dir):
 
 if __name__=="__main__":
     st.set_page_config(layout="wide")
-    result_id = st.text_input("Enter Standpoint ID", "405")
+    st.title("GeoGuessr Result Viewer")
 
-    result_dir = os.path.join("interactive_views", result_id)
-    if os.path.exists(result_dir):
-        visualize(result_dir)
-    else:
-        st.warning(f"Directory not found: {result_dir}")
+    mode = st.selectbox("Select Mode", ["Interactive", "Baseline"])
+    run_dir = st.text_input("Path to run directory", "./interactive_views/gpt/20250521_002451")
+    result_id = st.text_input("Enter Standpoint ID", "1")
+
+    if run_dir and result_id:
+        result_dir = os.path.join(run_dir, result_id)
+        if os.path.exists(result_dir):
+            visualize(result_dir, mode)
+        else:
+            st.warning(f"Directory not found: {result_dir}")

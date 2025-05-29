@@ -2,9 +2,11 @@
 # Exported from translatewiki.net
 # Export driver: phpyaml
 # Author: Bjakupi
+# Author: Dimitar
 # Author: Eraldkerciku
 # Author: Euriditi
 # Author: Fanjiayi
+# Author: Gravitystorm
 # Author: GretaDoci
 # Author: Kosovastar
 # Author: Liridon
@@ -31,9 +33,6 @@ sq:
         create: Publiko
       message:
         create: Dërgo
-      client_application:
-        create: Regjistrohu
-        update: Përditëso
       trace:
         create: Ngarko
         update: Ruaj Ndryshimet
@@ -124,19 +123,9 @@ sq:
       name: Kontroll nga Larg
       description: Kontrollo nga larg (JOSM, Potlatch, Merkaartor)
   accounts:
-    edit:
+    show:
       title: Redakto llogarinë
-      my settings: Preferencat e mia
       current email address: Adresa e Tanishme e Emailit
-      openid:
-        link text: çfarë është kjo?
-      public editing:
-        heading: Redaktim publik
-        enabled: I aktivizuar. Jo anonim dhe mund të redaktojë të dhënat.
-        enabled link text: çfarë është kjo?
-        disabled: I çaktivizuar dhe nuk mund të redaktojë të dhënat, të gjitha redaktimet
-          e mëparshme janë anonime.
-        disabled link text: pse nuk mund të redaktoj?
       contributor terms:
         heading: Kushtet e kontribuesit
         agreed: Ti je pajtuar me kushtet e reja për kontribues.
@@ -154,9 +143,18 @@ sq:
       success_confirm_needed: Informacioni i përdoruesit u përditësua me sukses. Kontrolloni
         emailin tuaj për një shënim për të konfirmuar adresën e re të emailit tuaj.
       success: Informacioni i përdoruesit u përditësua me sukses.
+    terms:
+      show:
+        title: Kushtet
+        heading: Kushtet
+        legale_select: 'Vendi i banimit:'
+        legale_names:
+          france: Francë
+          italy: Itali
+          rest_of_world: Pjesa tjetër e botës
+      update:
+        terms accepted: Faleminderit për pranimin kushteve të reja për kontribues!
   browse:
-    created: Krijuar
-    closed: Mbyllur
     version: Versioni
     in_changeset: Grupi i Ndryshimeve
     anonymous: Anonim
@@ -166,36 +164,16 @@ sq:
     view_history: Shiko Historikun
     view_details: Shiko Detajet
     location: 'Vendndodhja:'
-    changeset:
-      title: 'Grupi i Ndryshimeve: %{id}'
-      belongs_to: Autori
-      node: Nyjet (%{count})
-      node_paginated: Nyjet (%{x}-%{y} nga %{count})
-      way: Mënyrat (%{count})
-      way_paginated: Mënyrat (%{x}-%{y} nga %{count})
-      relation: Marrëdhëniet (%{count})
-      relation_paginated: Marrëdhëniet (%{x}-%{y} nga %{count})
-      comment: Komentet (%{count})
-      changesetxml: Grupi i ndryshimeve në XML
-      osmchangexml: osmNdrsyhimi XML
-      feed:
-        title: 'Grupi i ndryshimeve: %{id}'
-        title_comment: Grupi i ndryshimeve %{id} - %{comment}
-      join_discussion: Identifikohuni për t'iu bashkuar diskutimit
-      discussion: Diskutim
     node:
       title_html: 'Nyja: %{name}'
-      history_title_html: 'Historiku i nyjës: %{name}'
     way:
       title_html: 'Drejtimi: %{name}'
-      history_title_html: 'Historiku i Rrugës: %{name}'
       nodes: Nyjet
       also_part_of_html:
         one: pjesë e rrugës %{related_ways}
         other: pjesë e rrugëve %{related_ways}
     relation:
       title_html: 'Lidhja: %{name}'
-      history_title_html: 'Historiku i lidhjes: %{name}'
       members: Anëtarët
     relation_member:
       entry_role_html: '%{type} %{name} është si %{role}'
@@ -204,16 +182,7 @@ sq:
         way: Rruga
         relation: Lidhja
     containing_relation:
-      entry_html: Lidhja %{relation_name}
       entry_role_html: Lidhja %{relation_name} (sikur %{relation_role})
-    not_found:
-      sorry: 'Na vjen keq, %{type} #%{id} nuk mund të gjendet.'
-      type:
-        node: nyjë
-        way: rrugë
-        relation: lidhje
-        changeset: grupi i ndryshimeve
-        note: shënim
     timeout:
       sorry: Na vjen keq, të dhënat për %{type} me id %{id}, morën shumë kohë për
         tu tërhequr.
@@ -245,30 +214,33 @@ sq:
       wikidata_link: Artikulli %{page} në Wikidata
       wikipedia_link: Artikulli %{page} nē Wikipedia
       telephone_link: Thirr %{phone_number}
-    query:
+  feature_queries:
+    show:
       title: Tiparet e Pyetësorit
       introduction: Kliko në hartë për të gjetur tipare në afërsi.
       nearby: Tiparet në afërsi
       enclosing: Tipare të bashkangjitura
+  old_elements:
+    index:
+      node:
+        title_html: 'Historiku i nyjës: %{name}'
+      way:
+        title_html: 'Historiku i Rrugës: %{name}'
+      relation:
+        title_html: 'Historiku i lidhjes: %{name}'
+  changeset_comments:
+    feeds:
+      comment:
+        comment: 'Koment i ri mbi ndryshimet #%{changeset_id} nga %{author}'
+        commented_at_by_html: Përditësuar %{when} më parë nga %{user}
+      show:
+        title_all: Diskutimi mbi ndryshimet në OpenStreetMap
+        title_particular: 'Diskutimi mbi grupin e ndryshimeve #%{changeset_id} të
+          OpenStreetMap'
   changesets:
-    changeset_paging_nav:
-      showing_page: Faqe %{page}
-      next: Tjetra »
-      previous: « Mëparshëm
-    changeset:
-      anonymous: Anonim
-      no_edits: (nuk ka redaktime)
-      view_changeset_details: Shikoni detajet e ndryshimeve
-    changesets:
-      id: ID
-      saved_at: Të ruajtura në
-      user: Përdoruesi
-      comment: Koment
-      area: Zona
     index:
       title: Ndryshimet
       title_user: Ndryshime fjalish nga %{user}
-      title_friend: Ndryshime nga miqtë e mi
       title_nearby: Ndryshime nga përdorues të zonës
       empty: Asnjë ndryshim nuk u gjet.
       empty_area: Asnjë ndryshim në këtë zonë.
@@ -276,26 +248,35 @@ sq:
       no_more: Nuk u gjetën më ndryshime.
       no_more_area: Nuk ka më ndryshime në këtë zonë.
       no_more_user: Nuk ka më ndryshime nga ky përdorues.
-      load_more: Ngarko më shumë
+      feed:
+        title: 'Grupi i ndryshimeve: %{id}'
+        title_comment: Grupi i ndryshimeve %{id} - %{comment}
+        created: Krijuar
+        closed: Mbyllur
+        belongs_to: Autori
+    show:
+      title: 'Grupi i Ndryshimeve: %{id}'
+      discussion: Diskutim
+      join_discussion: Identifikohuni për t'iu bashkuar diskutimit
+      changesetxml: Grupi i ndryshimeve në XML
+      osmchangexml: osmNdrsyhimi XML
+    paging_nav:
+      nodes_paginated: Nyjet (%{x}-%{y} nga %{count})
+      ways_paginated: Mënyrat (%{x}-%{y} nga %{count})
+      relations_paginated: Marrëdhëniet (%{x}-%{y} nga %{count})
     timeout:
       sorry: Na vjen keq, lista e ndryshimeve që ju kërkuat zgjati shumë për t'u rikuperuar.
-  changeset_comments:
-    comment:
-      comment: 'Koment i ri mbi ndryshimet #%{changeset_id} nga %{author}'
-      commented_at_by_html: Përditësuar %{when} më parë nga %{user}
-    index:
-      title_all: Diskutimi mbi ndryshimet në OpenStreetMap
-      title_particular: 'Diskutimi mbi grupin e ndryshimeve #%{changeset_id} të OpenStreetMap'
   dashboards:
     contact:
       km away: '%{count}km larg'
       m away: '%{count}m larg'
+      latest_edit_html: 'Redaktimi i fundit %{ago}:'
+      no_edits: (nuk ka redaktime)
+      view_changeset_details: Shikoni detajet e ndryshimeve
     popup:
       your location: Vendndodhja e jote
       nearby mapper: Hartuesi aty pranë
-      friend: Mik
     show:
-      no friends: Akoma nuk ke shtuar ndonjë mik.
       nearby users: Përdoruesit e tjerë aty pranë
       no nearby users: Nuk ka përdorues tjerë aty pranë, të cilët pranojnë të hartografojnë.
   diary_entries:
@@ -306,16 +287,12 @@ sq:
       use_map_link: Përdor Hartën
     index:
       title: Ditarët e përdoruesëve
-      title_friends: Ditarët e miqve
       title_nearby: Ditarët e përdoruesve këtu pranë
       user_title: Ditari i %{user}
       in_language_title: Shënimet në Ditar në %{language}
-      new: Shënim i ri në Ditar
-      new_title: Shkruani një shënim të ri në ditarin tuaj
       no_entries: Nuk ka shënime në ditar
+    page:
       recent_entries: 'Shënimet më të fundit në ditar:'
-      older_entries: Shënimet e Vjetra
-      newer_entries: Shënimet më të reja
     edit:
       title: Redakto Shënimin në Ditar
       marker_text: Vendndodhja e shënimit në ditar
@@ -347,8 +324,6 @@ sq:
       confirm: Konfirmo
     location:
       location: 'Vendndodhja:'
-      view: Shfaq
-      edit: Redakto
     feed:
       user:
         title: OpenStreetMap shënime ditari për %{user}
@@ -360,20 +335,9 @@ sq:
       all:
         title: Shënimet e ditarit të OpenStreetMap
         description: Shënimet e fundit në ditar nga përdoruesit e OpenStreetMap
-    comments:
-      post: Posto
-      when: Kur
-      comment: Koment
-      newer_comments: Komentet më të fundit
-      older_comments: Komentet e vjetra
-  friendships:
-    make_friend:
-      success: '%{name} është tani mik i juaj.'
-      failed: Na vjen keq, nuk arritëm të shtojmë %{name} si mik.
-      already_a_friend: Ju tashmë jeni miq me %{name}.
-    remove_friend:
-      success: '%{name} u hoq nga miqtë tuaj.'
-      not_a_friend: '%{name} nuk është një nga miqtë tuaj.'
+    navigation:
+      new: Shënim i ri në Ditar
+      new_title: Shkruani një shënim të ri në ditarin tuaj
   geocoder:
     search_osm_nominatim:
       prefix:
@@ -829,33 +793,29 @@ sq:
         level2: Kufi vendi
         level4: Kufi i njësisë federale
         level5: Kufi regjional
-      types:
-        cities: Qytetet
-        towns: Qyteza
-        places: Vende
-    results:
-      no_results: Nuk është gjetur asnjë rezultat
-      more_results: Më shumë rezultate
+  searches:
+    queries:
+      create:
+        no_results: Nuk është gjetur asnjë rezultat
+        more_results: Më shumë rezultate
   issues:
     index:
       select_status: Përzgjidh statsin
       select_type: Selekto llojin
-      select_last_updated_by: Përzgjidh at te rinuar të fundit
-      not_updated: Nuk është ri- freskuar
       search: Kërko
       search_guidance: Probleme të kërkimit
-      user_not_found: Përdoruesi nuk ekziston
-      status: Statusi
-      link_to_reports: Shiko raportimet
-      reports_count:
-        one: 1 Raport
-        other: '%{count} raportet'
       states:
         ignored: Injoruar
         open: E hapur
+    page:
+      user_not_found: Përdoruesi nuk ekziston
+      status: Statusi
+      reports_count:
+        one: 1 Raport
+        other: '%{count} raportet'
     show:
-      report_created_at: E raportuar së pari tek %{datetime}
-      last_updated_at: Herën e fundit i ri- freskuar%{datetime}nga%{displayname}
+      report_created_at_html: E raportuar së pari tek %{datetime}
+      last_updated_at_html: Herën e fundit i ri- freskuar%{datetime}nga%{displayname}
       resolve: Zgjidh
       ignore: injoro
       reports_of_this_issue: Raportimet e këtij problemi
@@ -866,8 +826,6 @@ sq:
       ignored: Statusi i lëshimit është vendosur në 'Injoruar'
     reopen:
       reopened: Statusi i lëshimit është vendosur në 'të hapur'
-    comments:
-      reassign_param: Problemi i ri-caktimit
   reports:
     new:
       disclaimer:
@@ -898,24 +856,15 @@ sq:
     edit: Redakto
     history: Historia
     export: Eksporti
-    data: Të dhënat
-    export_data: Eksporto të dhënat
     user_diaries: Ditarët e përdoruesit
-    user_diaries_tooltip: Shfaq ditarët e përdoruesit
     edit_with: Redakto me %{editor}
-    tag_line: Harta e lirë e botës Wiki
     intro_header: Mirësevjen në OpenStreetMap!
     intro_text: OpenStreetMap është hartë e botës, e krijuar nga njerëz si ti dhe
       për përdorim të lirshëm në kuadrin e një licence të hapur.
-    intro_2_create_account: Krijo një llogari përdoruesi
     partners_partners: partnerët
     help: Ndihmë
     about: Rreth
     copyright: Të drejtat e autorit
-    community: Komuniteti
-    community_blogs: Blogjet e komunitetit
-    make_a_donation:
-      text: Dhuro
     learn_more: Mëso më shumë
     more: Më shumë
   user_mailer:
@@ -934,7 +883,6 @@ sq:
     note_comment_notification:
       greeting: Përshëndetje,
     changeset_comment_notification:
-      greeting: Përshëndetje,
       commented:
         partial_changeset_without_comment: pa koment
   confirmations:
@@ -956,21 +904,6 @@ sq:
       success: Konfirmohet ndryshimi i adresës së emailit!
       failure: Një adresë emaili tashmë është konfirmuar me këtë shenjë.
   messages:
-    inbox:
-      title: Kutia mbërritëse
-      my_inbox: Kutia ime mbërritëse
-      messages: Ti ke %{new_messages} dhe %{old_messages}
-      from: Prej
-      subject: Titulli
-      date: Data
-      no_messages_yet_html: Ti nuk ke mesazhe ende. Pse nuk kontakton ndonjërin nga
-        %{people_mapping_nearby_link}?
-      people_mapping_nearby: hartografët aty pranë
-    message_summary:
-      unread_button: Shëno si të palexuar
-      read_button: Shëno si të lexuar
-      reply_button: Përgjigje
-      destroy_button: Fshi
     new:
       title: Dërgo mesazh
       send_message_to_html: Dërgo një mesazh të ri për %{name}
@@ -983,11 +916,6 @@ sq:
       title: Nu ka mesazh të tillë
       heading: Nuk ka mesazh të tillë
       body: Na vjen keq, nuk ka mesazh me këtë id.
-    outbox:
-      title: Dalje
-      to: Për
-      subject: Titulli
-      date: Data
     show:
       reply_button: Përgjigje
       unread_button: Shëno si të palexuar
@@ -995,13 +923,37 @@ sq:
       wrong_user: 'TI je identifikuar si: "%{user}'', por mesazhi që ke kërkuar për
         të lexuar nuk ishte dërguar nga ose për atë përdorues. Të lutem identifikohu
         si përdorues i saktë për të lexuar atë.'
-    sent_message_summary:
-      destroy_button: Fshi
-    mark:
-      as_read: Mesazhi është shënuar si të lexuar
-      as_unread: Mesazhi është shënuar si i palexuar
+    read_marks:
+      create:
+        notice: Mesazhi është shënuar si të lexuar
+      destroy:
+        notice: Mesazhi është shënuar si i palexuar
+    mailboxes:
+      heading:
+        my_inbox: Kutia ime mbërritëse
+      messages_table:
+        from: Prej
+        to: Për
+        subject: Titulli
+        date: Data
+      message:
+        unread_button: Shëno si të palexuar
+        read_button: Shëno si të lexuar
+        destroy_button: Fshi
+    inboxes:
+      show:
+        title: Kutia mbërritëse
+        messages: Ti ke %{new_messages} dhe %{old_messages}
+        no_messages_yet_html: Ti nuk ke mesazhe ende. Pse nuk kontakton ndonjërin
+          nga %{people_mapping_nearby_link}?
+        people_mapping_nearby: hartografët aty pranë
+    outboxes:
+      show:
+        title: Dalje
+      message:
+        destroy_button: Fshi
   passwords:
-    lost_password:
+    new:
       title: Fjalëkalimi i humbur
       heading: Ke harruar fjalëkalimin?
       email address: 'Adresa e emailit:'
@@ -1009,18 +961,15 @@ sq:
       help_text: Shkruani adresën e emailit që keni përdorur për tu regjistruar, ne
         do të dërgojmë një lidhje të cilën mund të përdorni për të rivendosur fjalëkalimin
         tuaj.
-      notice email on way: Na vjen keq e keni humbur atë :-( por një email është në
-        rrugëtim kështu që ju mund të rivendosni atë së shpejti.
-      notice email cannot find: Na vjen keq, ne nuk arritë ta gjejmë adresën e emailit
-        të dhënë.
-    reset_password:
+    edit:
       title: Rivendos fjalëkalimin
       heading: Rivendos fjalëkalimin për %{user}
       reset: Rivendos fjalëkalimin
-      flash changed: Fjalëkalimi yt është ndryshuar.
       flash token bad: Nuk e gjet atë shenjë, kontrollo URL-në?
+    update:
+      flash changed: Fjalëkalimi yt është ndryshuar.
   profiles:
-    edit:
+    show:
       image: Imazhi
       gravatar:
         gravatar: Përdor Gravatar
@@ -1035,32 +984,28 @@ sq:
         në hartë!
   sessions:
     new:
-      title: Identifikohu
-      heading: Identifikohu
+      tab_title: Identifikohu
       email or username: 'Adresa e emailit ose emri i përdoruesit:'
       password: 'Fjalëkalimi:'
       remember: Më mbaj mend
       lost password link: Ke humbur fjalëkalimin?
       login_button: Identifikohu
-      register now: Regjistrohu tani
-      no account: Nuk ke llogari?
       auth failure: Na vjen keq, nuk mund të identifikohemi me ato detaje.
-      openid_logo_alt: Identifikohu me ndonjë ID të hapur
-      auth_providers:
-        openid:
-          title: Identifikohu me OpenID
-        github:
-          title: Identifikohuni me GitHub
-        wikipedia:
-          alt: Identifikohuni me një llogari të Wikipedia-s
     destroy:
       title: Çidentifikohu
       heading: Çidentifikohu nga OpenStreetMap
       logout_button: Çidentifikohu
+  shared:
+    pagination:
+      diary_comments:
+        older: Komentet e vjetra
+        newer: Komentet më të fundit
+      diary_entries:
+        older: Shënimet e Vjetra
+        newer: Shënimet më të reja
   site:
-    about:
-      next: Tjetra
     copyright:
+      title: Të drejtat autoriale dhe licensa
       foreign:
         title: Rreth këtij përkthimi
         html: Në rast të një konflikti ndërmjet kësaj faqeje të përkthyer dhe %{english_original_link},
@@ -1074,11 +1019,9 @@ sq:
         native_link: Versioni në THIS_LANGUAGE_NAME_HERE
         mapping_link: fillo hatrografimin
       legal_babble:
-        title_html: Të drejtat autoriale dhe licensa
         credit_title_html: Si të citoni OpenStreetMap
         credit_1_html: Ne kërkojmë që ju të përdorni kreditet e &ldquo;&copy; OpenStreetMap
           contributors&rdquo;.
-        more_title_html: Zbulo më shumë
         contributors_title_html: Kontribuuesit tanë
         contributors_intro_html: "  Licenca jonë CC BY-SA kërkon nga ju që &ldquo;të
           vlerësoni Autorin\n  Origjinal përkatës të mediumit apo masave që jeni duke
@@ -1090,16 +1033,11 @@ sq:
         contributors_footer_2_html: "  Përfshirja e të dhënave në OpenStreetMap nuk
           thekson se të ofruesi origjinal i të \n  dhënave përdor OpenStreetMap, ofron
           garancion, apo\n  pranon çfarëdo anekse."
-    edit:
+    not_public_flash:
       user_page_link: '{{GENDER:{{ROOTPAGENAME}}|faqja e përdoruesit|faqja e përdorueses}}'
     export:
       title: Eksporto
-      area_to_export: Zona për tu eksportuar
       manually_select: Zgjidh me dorë një zonë tjetër
-      format_to_export: Formati per eksportim
-      osm_xml_data: Të dhëna XML të OpenStreetMap
-      map_image: Imzhi i hartës (shfaq shtresën e parazgjedhur)
-      embeddable_html: HTML i inkorporueshëm
       licence: Licensa
       too_large:
         advice: 'Në qoftë se dështon eksporti i mësipërm, të lutem konsidero përdorimin
@@ -1122,17 +1060,6 @@ sq:
         other:
           title: Burime të tjera
           description: Burime shtesë të listuara në faqen e OpenStreetMap wiki
-      options: Opsionet
-      format: Formati
-      scale: Shkallë
-      max: max
-      image_size: Madhësia e imazhit
-      zoom: Zmadho
-      add_marker: Shto një shënues në hartë
-      latitude: 'Lat:'
-      longitude: 'Lon:'
-      output: Dalja
-      paste_html: Ngjite HTML për ta inkorporuar në uebfaqe
       export_button: Eksporto
     fixthemap:
       how_to_help:
@@ -1155,38 +1082,20 @@ sq:
         title: Mirësevini në OpenStreetMap
         description: Filloni me këtë udhëzues të thjeshtë që mbulon bazat e OpenStreetMap.
       beginners_guide:
-        url: http://wiki.openstreetmap.org/wiki/Sq:Beginners%27_guide
+        url: https://wiki.openstreetmap.org/wiki/Sq:Beginners%27_guide
         title: Udhëzues për fillestarë.
         description: Një udhëzues për fillestarë që mirëmbahet nga komuniteti.
-      help:
-        title: Forumi i Ndihmës
-        description: Bëni një pyetje ose shikoni përgjigjet në faqen e pyetjeve dhe
-          përgjigjeve të OpenStreetMap.
       mailing_lists:
         title: Listat E Postimeve
         description: Bëni një pyetje ose diskutoni çështje interesante në një gamë
           të gjerë të listës së postimeve të ditës apo rajonale.
     sidebar:
       search_results: Rezultatet e kërkimit
-      close: Mbyll
     search:
       search: Kërko
       from: Prej
       to: Për
       where_am_i: Ku është kjo?
-    key:
-      table:
-        entry:
-          centre: Qendër sportive
-          military: Zonë ushtarake
-          school:
-          - Shkollë
-          - Universitet
-          building: Ndërtesë
-          station: Stacioni hekurudhor
-          summit:
-          - Samit
-          - majë
     welcome:
       title: Mirësevjen
       whats_on_the_map:
@@ -1198,8 +1107,19 @@ sq:
       rules:
         title: Rregullat!
       start_mapping: Fillo hartografimin
-      add_a_note:
-        title: Nuk ke kohë për të redaktuar? Shto një shënim!
+    add_a_note:
+      title: Nuk ke kohë për të redaktuar? Shto një shënim!
+  map_keys:
+    show:
+      entries:
+        centre: Qendër sportive
+        military: Zonë ushtarake
+        school: Shkollë
+        university: Universitet
+        building: Ndërtesë
+        station: Stacioni hekurudhor
+        summit: Samit
+        peak: majë
   traces:
     visibility:
       private: Privat (ndahet vetëm si anonim, pika të parenditura)
@@ -1212,7 +1132,7 @@ sq:
       upload_trace: Ngarko GPS Percjellesin
       visibility_help: çfarë do të thotë kjo?
       help: Ndihmë
-      help_url: http://wiki.openstreetmap.org/wiki/Upload
+      help_url: https://wiki.openstreetmap.org/wiki/Upload
     create:
       upload_trace: Ngarko gjurmët e GPS
       trace_uploaded: Skeda e juaj GPX është ngarkuar dhe është në pritje për futje
@@ -1225,8 +1145,6 @@ sq:
       title: Duke redaktuar gjurmën %{name}
       heading: Duke redaktuar gjurmën %{name}
       visibility_help: çfarë do të thotë kjo?
-    trace_optionals:
-      tags: Etiketat
     show:
       title: Duke shfaqur gjurmën %{name}
       heading: Duke shfaqur gjurmën %{name}
@@ -1246,8 +1164,6 @@ sq:
       delete_trace: Fshi këtë gjurmë
       trace_not_found: Gjurma nuk u gjet!
       visibility: 'Dukshmëria:'
-    trace_paging_nav:
-      showing_page: Duke shfaqun faqen %{page}
     trace:
       pending: NE PRITJE
       count_points: '%{count} pikë'
@@ -1259,8 +1175,6 @@ sq:
       identifiable: E IDENTIFIKUESHME
       private: PRIVAT
       trackable: E GJURMUESHME
-      by: nga
-      in: në
     index:
       public_traces: Gjurmët publike të GPS
       public_traces_from: Gjurmët publike të GPS nga %{user}
@@ -1269,8 +1183,6 @@ sq:
       upload_trace: Ngarko një gjurmë
     destroy:
       scheduled_for_deletion: Gjurmë e planifikuar për fshirje
-    make_public:
-      made_public: Gjurmë e bërë publike
     offline_warning:
       message: Sistemi i ngarkimit të skedës GPX aktualisht është jashtë përdonimit
     offline:
@@ -1278,12 +1190,11 @@ sq:
       message: Ruajtja e skedës GPC dhe sistemi i ngarkimit aktualisht është jashtë
         përdonimit
   application:
-    require_admin:
-      not_an_admin: Ju duhet të jeni administrator për të kryer atë veprim.
-  oauth_clients:
-    show:
-      edit: Redakto detajet
-      confirm: A je i sigurt?
+    auth_providers:
+      github:
+        title: Identifikohuni me GitHub
+      wikipedia:
+        alt: Identifikohuni me një llogari të Wikipedia-s
   users:
     new:
       title: Krijo llogari
@@ -1293,20 +1204,6 @@ sq:
         header: E lirë dhe e redaktueshme
       display name description: Emri yt publik. Ti mund ta ndryshosh më vonë në preferenca.
       continue: Vazhdo
-      terms accepted: Faleminderit për pranimin kushteve të reja për kontribues!
-    terms:
-      title: Kushtet
-      heading: Kushtet
-      consider_pd: Përveç marrëveshjes së mësipërme, unë i konsideroj kontributet
-        e mia të jenë në Domeinin Publik
-      consider_pd_why: çfarë është kjo?
-      consider_pd_why_url: http://www.osmfoundation.org/wiki/License/Why_would_I_want_my_contributions_to_be_public_domain
-      decline: Nuk e pranoj
-      legale_select: 'Vendi i banimit:'
-      legale_names:
-        france: Francë
-        italy: Itali
-        rest_of_world: Pjesa tjetër e botës
     no_such_user:
       title: Nuk ka përdorues të tillë
       heading: Përdoruesi %{user} nuk ekziston
@@ -1319,7 +1216,6 @@ sq:
       my notes: Shënimet e mia
       my messages: Mesazhet e mia
       my profile: Profili im
-      my settings: Preferencat e mia
       my comments: Komentet e mia
       blocks on me: Blloqet mbi mua
       blocks by me: Bllokimet nga unë
@@ -1328,10 +1224,7 @@ sq:
       edits: Redaktimet
       traces: Gjurmët
       notes: Shënimet e hartës
-      remove as friend: Largo mikun
-      add as friend: Shto si mik
       mapper since: 'Hartues që prej:'
-      latest edit: 'Redaktimi i fundit %{ago}:'
       email address: 'Adresa e emailit:'
       created from: 'Krijuar nga:'
       status: 'Statusi:'
@@ -1358,50 +1251,41 @@ sq:
     go_public:
       flash success: Të gjitha redaktimet e tua tani janë publike dhe tani të lejohet
         t'i redaktosh ato.
-    index:
-      title: Përdoruesi
-      heading: Përdorues
-      showing:
-        one: Faqe %{page} (%{first_item} nga %{items})
-        other: Page %{page} (%{first_item}-%{last_item} nga %{items})
-      summary_html: '%{name} krijuar nga %{ip_address} më %{date}'
-      summary_no_ip_html: '%{name} krijuar më %{date}'
-      confirm: Konfirmo përdoruesit e zgjedhur
-      hide: Fshih përdoruesit e zgjedhur
-      empty: Asnjë përdorues që përputhet nuk u gjet
+    lists:
+      show:
+        title: Përdoruesi
+        heading: Përdorues
+      page:
+        confirm: Konfirmo përdoruesit e zgjedhur
+        hide: Fshih përdoruesit e zgjedhur
+        empty: Asnjë përdorues që përputhet nuk u gjet
+      user:
+        summary_html: '%{name} krijuar nga %{ip_address} më %{date}'
+        summary_no_ip_html: '%{name} krijuar më %{date}'
+    changeset_comments:
+      page:
+        when: Kur
+        comment: Koment
+    diary_comments:
+      page:
+        post: Posto
   user_role:
     filter:
       not_a_role: Vargu `%{role}' nuk është një rol i vlefshëm.
       already_has_role: Përdoruesi tashmë e ka rolin %{role}.
       doesnt_have_role: Përdoruesi nuk e ka rolin %{role}.
     grant:
-      title: Konfirmimi i dhënies së rolit
-      heading: Konfirmimi i dhënies së rolit
       are_you_sure: A jeni i sigurt që ju doni t'i jepni rolin `%{role}' përdoruesit
         `%{name}'?
-      confirm: Konfirmo
-      fail: Nuk mund t'i jepet roli `%{role}' përdoruesit `%{name}'. Ju lutemi, kontrolloni
-        që përdoruesi dhe roli të dyja të jenë të vlefshme.
     revoke:
-      title: Konfirmimi i revokimit të rolit
-      heading: Konfirmo revokimin e rolit
       are_you_sure: A je i sigurt që do ta revokosh rolin `%{role}' prej perdoruesit
         `%{name}'?
-      confirm: Konfirmo
-      fail: Nuk ia doli ta revokoj rolin `%{role}' prej perdoruesit `%{name}'. Të
-        lutem kontrollo përdoruesin dhe rolin nëse janë të dy të vlefshëm.
   user_blocks:
-    revoke:
-      revoke: Revoko!
-    show:
-      confirm: A jeni i sigurt?
     block:
       show: Shfaq
       edit: Redakto
-      revoke: Revoko!
-    blocks:
+    page:
       status: Statusi
-      revoker_name: Revokuar nga
   notes:
     show:
       title: 'Shënim: %{id}'
@@ -1411,6 +1295,8 @@ sq:
       hidden_title: 'Shënim i fshehur #%{note_name}'
     new:
       title: Shënim i ri
+    notes_paging_nav:
+      showing_page: Faqe %{page}
   javascripts:
     site:
       edit_tooltip: Redakto hartën

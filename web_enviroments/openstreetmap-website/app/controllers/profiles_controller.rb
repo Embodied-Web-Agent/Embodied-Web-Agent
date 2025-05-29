@@ -9,9 +9,12 @@ class ProfilesController < ApplicationController
   before_action :check_database_readable
   before_action :check_database_writable, :only => [:update]
 
-  def edit; end
+  def show; end
 
   def update
+    social_links_params = params.permit(:user => [:social_links_attributes => [:id, :url, :_destroy]])
+    current_user.assign_attributes(social_links_params[:user])
+
     if params[:user][:description] != current_user.description
       current_user.description = params[:user][:description]
       current_user.description_format = "markdown"
@@ -31,6 +34,7 @@ class ProfilesController < ApplicationController
 
     current_user.home_lat = params[:user][:home_lat]
     current_user.home_lon = params[:user][:home_lon]
+    current_user.home_location_name = params[:user][:home_location_name]
 
     if current_user.save
       flash[:notice] = t ".success"

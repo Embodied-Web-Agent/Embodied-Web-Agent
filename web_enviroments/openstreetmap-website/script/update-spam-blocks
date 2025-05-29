@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.join(File.dirname(__FILE__), "..", "config", "environment")
+require_relative File.join("..", "config", "environment")
 require "generator"
 
 addresses = User.count(
@@ -8,7 +8,7 @@ addresses = User.count(
     :status => %w[suspended deleted],
     :creation_time => Time.now.utc - 28.days..Time.now.utc
   },
-  :group => :creation_ip
+  :group => :creation_address
 )
 
 addresses.each do |address, count|

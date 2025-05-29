@@ -4,14 +4,14 @@ class UserTermsSeenTest < ActionDispatch::IntegrationTest
   def test_api_blocked
     user = create(:user, :terms_seen => false, :terms_agreed => nil)
 
-    get "/api/#{Settings.api_version}/user/preferences", :headers => auth_header(user.display_name, "test")
+    get "/api/#{Settings.api_version}/user/preferences", :headers => bearer_authorization_header(user)
     assert_response :forbidden
 
     # touch it so that the user has seen the terms
     user.terms_seen = true
     user.save
 
-    get "/api/#{Settings.api_version}/user/preferences", :headers => auth_header(user.display_name, "test")
+    get "/api/#{Settings.api_version}/user/preferences", :headers => bearer_authorization_header(user)
     assert_response :success
   end
 
@@ -24,14 +24,13 @@ class UserTermsSeenTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_template "sessions/new"
     post "/login", :params => { :username => user.email, :password => "test", :referer => "/diary/new" }
-    assert_response :redirect
     # but now we need to look at the terms
-    assert_redirected_to :controller => :users, :action => :terms, :referer => "/diary/new"
+    assert_redirected_to account_terms_path(:referer => "/diary/new")
     follow_redirect!
     assert_response :success
 
     # don't agree to the terms, but hit decline
-    post "/user/save", :params => { :decline => true, :referer => "/diary/new" }
+    put "/account/terms", :params => { :decline => true, :referer => "/diary/new" }
     assert_redirected_to "/diary/new"
     follow_redirect!
 
@@ -49,21 +48,14 @@ class UserTermsSeenTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_template "sessions/new"
     post "/login", :params => { :username => user.email, :password => "test", :referer => "/diary/new" }
-    assert_response :redirect
     # but now we need to look at the terms
-    assert_redirected_to :controller => :users, :action => :terms, :referer => "/diary/new"
+    assert_redirected_to account_terms_path(:referer => "/diary/new")
 
     # check that if we go somewhere else now, it redirects
     # back to the terms page.
     get "/traces/mine"
-    assert_redirected_to :controller => :users, :action => :terms, :referer => "/traces/mine"
+    assert_redirected_to account_terms_path(:referer => "/traces/mine")
     get "/traces/mine", :params => { :referer => "/diary/new" }
-    assert_redirected_to :controller => :users, :action => :terms, :referer => "/diary/new"
-  end
-
-  private
-
-  def auth_header(user, pass)
-    { "HTTP_AUTHORIZATION" => format("Basic %<auth>s", :auth => Base64.encode64("#{user}:#{pass}")) }
+    assert_redirected_to account_terms_path(:referer => "/diary/new")
   end
 end

@@ -2,36 +2,28 @@
   <h1><%= @message.title %></h1>
 <% end %>
 
-<% if current_user == @message.recipient %>
-  <div class='info-line clearfix'>
+<div class='mb-3 border-bottom border-secondary-subtle py-1 d-flex gap-1 flex-wrap'>
+  <% if current_user == @message.recipient %>
     <%= user_thumbnail_tiny @message.sender %>
-    <%= link_to @message.sender.display_name, user_path(@message.sender) %></td>
-    <div class='right'>
-      <%= l @message.sent_on, :format => :friendly %>
-    </div>
-  </div>
-
-  <div class="richtext text-break"><%= @message.body.to_html %></div>
-
-  <div>
-    <%= link_to t(".reply_button"), message_reply_path(@message), :class => "btn btn-primary" %>
-    <%= link_to t(".unread_button"), message_mark_path(@message, :mark => "unread"), :method => "post", :class => "btn btn-primary" %>
-    <%= link_to t(".destroy_button"), message_path(@message), :method => "delete", :class => "btn btn-danger" %>
-    <%= link_to t(".back"), inbox_messages_path, :class => "btn btn-link" %>
-  </div>
-<% else %>
-  <div class='info-line clearfix'>
+    <%= link_to @message.sender.display_name, @message.sender %>
+  <% else %>
     <%= user_thumbnail_tiny @message.recipient %>
-    <%= link_to @message.recipient.display_name, user_path(@message.recipient) %></td>
-    <div class='right'>
-      <%= l @message.sent_on, :format => :friendly %>
-    </div>
-  </div>
+    <%= link_to @message.recipient.display_name, @message.recipient %>
+  <% end %>
+  <span class="ms-auto">
+    <%= l @message.sent_on, :format => :friendly %>
+  </span>
+</div>
 
-  <div class="richtext text-break"><%= @message.body.to_html %></div>
+<div class="richtext text-break"><%= @message.body.to_html %></div>
 
-  <div>
+<div>
+  <%= link_to t(".reply_button"), new_message_reply_path(@message), :class => "btn btn-primary" %>
+  <% if current_user == @message.recipient %>
+    <%= link_to t(".unread_button"), message_read_mark_path(@message), :method => "delete", :class => "btn btn-primary" %>
     <%= link_to t(".destroy_button"), message_path(@message), :method => "delete", :class => "btn btn-danger" %>
-    <%= link_to t(".back"), outbox_messages_path, :class => "btn btn-link" %>
-  </div>
-<% end %>
+  <% else %>
+    <%= link_to t(".destroy_button"), message_path(@message), :method => "delete", :class => "btn btn-danger" %>
+  <% end %>
+  <%= link_to t(".back"), :back, :class => "btn btn-link" %>
+</div>

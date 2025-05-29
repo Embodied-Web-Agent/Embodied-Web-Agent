@@ -1,30 +1,16 @@
-$(document).ready(function () {
-  $(".inbox-mark-unread").on("ajax:success", function (event, data) {
-    $("#inboxanchor").remove();
-    $(".user-button").before(data.inboxanchor);
-
-    $("#inbox-count").replaceWith(data.inbox_count);
-
-    $(this).parents(".inbox-row").removeClass("inbox-row").addClass("inbox-row-unread");
+$(function () {
+  $(".messages-table .destroy-message").on("turbo:submit-end", function (event) {
+    if (event.detail.success) {
+      event.target.dataset.isDestroyed = true;
+    }
   });
 
-  $(".inbox-mark-read").on("ajax:success", function (event, data) {
-    $("#inboxanchor").remove();
-    $(".user-button").before(data.inboxanchor);
-
-    $("#inbox-count").replaceWith(data.inbox_count);
-
-    $(this).parents(".inbox-row-unread").removeClass("inbox-row-unread").addClass("inbox-row");
-  });
-
-  $(".inbox-destroy").on("ajax:success", function (event, data) {
-    $("#inboxanchor").remove();
-    $(".user-button").before(data.inboxanchor);
-
-    $("#inbox-count").replaceWith(data.inbox_count);
-
-    $(this).parents(".inbox-row, .inbox-row-unread").fadeOut(800, "linear", function () {
-      $(this).remove();
-    });
+  $(".messages-table tbody tr").on("turbo:before-morph-element", function (event) {
+    if ($(event.target).find("[data-is-destroyed]").length > 0) {
+      event.preventDefault(); // NB: prevent Turbo from morhping/removing this element
+      $(event.target).fadeOut(800, "linear", function () {
+        $(this).remove();
+      });
+    }
   });
 });

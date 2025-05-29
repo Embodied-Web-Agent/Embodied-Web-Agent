@@ -6,53 +6,52 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 env:
-  os: ubuntu-20.04
-  ruby: '3.0'
+  ruby: '3.2'
 jobs:
   rubocop:
     name: RuboCop
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ env.ruby }}
+        rubygems: 3.4.10
         bundler-cache: true
     - name: Run rubocop
       run: bundle exec rubocop --format fuubar
   erblint:
     name: ERB Lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ env.ruby }}
+        rubygems: 3.4.10
         bundler-cache: true
     - name: Run erblint
-      run: bundle exec erblint .
+      run: bundle exec erb_lint .
   eslint:
     name: ESLint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ env.ruby }}
+        rubygems: 3.4.10
         bundler-cache: true
     - name: Cache node modules
-      uses: actions/cache@v3
+      uses: actions/setup-node@v4
       with:
-        path: node_modules
-        key: yarn-${{ env.os }}-${{ hashFiles('yarn.lock') }}
-        restore-keys: |
-          yarn-${{ env.os }}-
+        cache: yarn
     - name: Install node modules
       run: bundle exec bin/yarn install
     - name: Create dummy database configuration
@@ -61,14 +60,43 @@ jobs:
       run: bundle exec rails eslint
   brakeman:
     name: Brakeman
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ env.ruby }}
+        rubygems: 3.4.10
         bundler-cache: true
     - name: Run brakeman
       run: bundle exec brakeman -q
+  annotate_models:
+    env:
+      RAILS_ENV: test
+    name: Rails Annotate Models
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ env.ruby }}
+        rubygems: 3.4.10
+        bundler-cache: true
+    - name: Configure rails
+      run: |
+        cp config/github.database.yml config/database.yml
+        cp config/example.storage.yml config/storage.yml
+    - name: Setup database
+      run: |
+        sudo systemctl start postgresql
+        sudo -u postgres createuser -s $(id -un)
+        createdb openstreetmap
+        bundle exec rails db:schema:load
+    - name: Run Annotate Models
+      run: bundle exec annotaterb models
+    - name: Fail if model annotations are out of date
+      run: git diff --exit-code

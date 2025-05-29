@@ -1,147 +1,43 @@
+//= require ./directions-endpoint
+//= require ./directions-route-output
 //= require_self
 //= require_tree ./directions
-//= require qs/dist/qs
 
 OSM.Directions = function (map) {
-  var awaitingGeocode; // true if the user has requested a route, but we're waiting on a geocode result
-  var awaitingRoute; // true if we've asked the engine for a route and are waiting to hear back
-  var chosenEngine;
+  let controller = null; // the AbortController for the current route request if a route request is in progress
+  let lastLocation = [];
+  let chosenEngine;
 
-  var popup = L.popup({ autoPanPadding: [100, 100] });
+  let sidebarReadyPromise = null;
 
-  var polyline = L.polyline([], {
-    color: "#03f",
-    opacity: 0.3,
-    weight: 10
-  });
+  const routeOutput = OSM.DirectionsRouteOutput(map);
 
-  var highlight = L.polyline([], {
-    color: "#ff0",
-    opacity: 0.5,
-    weight: 12
-  });
+  const endpointDragCallback = function (dragging) {
+    if (!routeOutput.isVisible()) return;
+    if (dragging && !chosenEngine.draggable) return;
+    if (dragging && controller) return;
 
-  var endpoints = [
-    Endpoint($("input[name='route_from']"), OSM.MARKER_GREEN),
-    Endpoint($("input[name='route_to']"), OSM.MARKER_RED)
+    getRoute(false, !dragging);
+  };
+  const endpointChangeCallback = function () {
+    getRoute(true, true);
+  };
+
+  const endpoints = [
+    OSM.DirectionsEndpoint(map, $("input[name='route_from']"), { icon: "MARKER_GREEN" }, endpointDragCallback, endpointChangeCallback),
+    OSM.DirectionsEndpoint(map, $("input[name='route_to']"), { icon: "MARKER_RED" }, endpointDragCallback, endpointChangeCallback)
   ];
 
-  var expiry = new Date();
+  const expiry = new Date();
   expiry.setYear(expiry.getFullYear() + 10);
 
-  var engines = OSM.Directions.engines;
-
-  engines.sort(function (a, b) {
-    var localised_a = I18n.t("javascripts.directions.engines." + a.id),
-        localised_b = I18n.t("javascripts.directions.engines." + b.id);
-    return localised_a.localeCompare(localised_b);
-  });
-
-  var select = $("select.routing_engines");
-
-  engines.forEach(function (engine, i) {
-    select.append("<option value='" + i + "'>" + I18n.t("javascripts.directions.engines." + engine.id) + "</option>");
-  });
-
-  function Endpoint(input, iconUrl) {
-    var endpoint = {};
-
-    endpoint.marker = L.marker([0, 0], {
-      icon: L.icon({
-        iconUrl: iconUrl,
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowUrl: OSM.MARKER_SHADOW,
-        shadowSize: [41, 41]
-      }),
-      draggable: true,
-      autoPan: true
-    });
-
-    endpoint.marker.on("drag dragend", function (e) {
-      var dragging = (e.type === "drag");
-      if (dragging && !chosenEngine.draggable) return;
-      if (dragging && awaitingRoute) return;
-      endpoint.setLatLng(e.target.getLatLng());
-      if (map.hasLayer(polyline)) {
-        getRoute(false, !dragging);
-      }
-    });
-
-    input.on("keydown", function () {
-      input.removeClass("error");
-    });
-
-    input.on("change", function (e) {
-      awaitingGeocode = true;
-
-      // make text the same in both text boxes
-      var value = e.target.value;
-      endpoint.setValue(value);
-    });
-
-    endpoint.setValue = function (value, latlng) {
-      endpoint.value = value;
-      delete endpoint.latlng;
-      input.removeClass("error");
-      input.val(value);
-
-      if (latlng) {
-        endpoint.setLatLng(latlng);
-      } else {
-        endpoint.getGeocode();
-      }
-    };
-
-    endpoint.getGeocode = function () {
-      // if no one has entered a value yet, then we can't geocode, so don't
-      // even try.
-      if (!endpoint.value) {
-        return;
-      }
-
-      endpoint.awaitingGeocode = true;
-
-      var viewbox = map.getBounds().toBBoxString(); // <sw lon>,<sw lat>,<ne lon>,<ne lat>
-
-      $.getJSON(OSM.NOMINATIM_URL + "search?q=" + encodeURIComponent(endpoint.value) + "&format=json&viewbox=" + viewbox, function (json) {
-        endpoint.awaitingGeocode = false;
-        endpoint.hasGeocode = true;
-        if (json.length === 0) {
-          input.addClass("error");
-          alert(I18n.t("javascripts.directions.errors.no_place", { place: endpoint.value }));
-          return;
-        }
-
-        endpoint.setLatLng(L.latLng(json[0]));
-
-        input.val(json[0].display_name);
-
-        if (awaitingGeocode) {
-          awaitingGeocode = false;
-          getRoute(true, true);
-        }
-      });
-    };
-
-    endpoint.setLatLng = function (ll) {
-      var precision = OSM.zoomPrecision(map.getZoom());
-      input.val(ll.lat.toFixed(precision) + ", " + ll.lng.toFixed(precision));
-      endpoint.hasGeocode = true;
-      endpoint.latlng = ll;
-      endpoint.marker
-        .setLatLng(ll)
-        .addTo(map);
-    };
-
-    return endpoint;
-  }
+  const modeGroup = $(".routing_modes");
+  const select = $("select.routing_engines");
 
   $(".directions_form .reverse_directions").on("click", function () {
-    var coordFrom = endpoints[0].latlng,
-        coordTo = endpoints[1].latlng,
-        routeFrom = "",
+    const coordFrom = endpoints[0].latlng,
+          coordTo = endpoints[1].latlng;
+    let routeFrom = "",
         routeTo = "";
     if (coordFrom) {
       routeFrom = coordFrom.lat + "," + coordFrom.lng;
@@ -149,204 +45,109 @@ OSM.Directions = function (map) {
     if (coordTo) {
       routeTo = coordTo.lat + "," + coordTo.lng;
     }
+    endpoints[0].swapCachedReverseGeocodes(endpoints[1]);
 
-    OSM.router.route("/directions?" + Qs.stringify({
-      from: $("#route_to").val(),
-      to: $("#route_from").val(),
+    OSM.router.route("/directions?" + new URLSearchParams({
       route: routeTo + ";" + routeFrom
     }));
   });
 
   $(".directions_form .btn-close").on("click", function (e) {
     e.preventDefault();
-    var route_from = endpoints[0].value;
-    if (route_from) {
-      OSM.router.route("/?query=" + encodeURIComponent(route_from) + OSM.formatHash(map));
-    } else {
-      OSM.router.route("/" + OSM.formatHash(map));
-    }
+    $(".describe_location").toggle(!endpoints[1].value);
+    $(".search_form input[name='query']").val(endpoints[1].value);
+    OSM.router.route("/" + OSM.formatHash(map));
   });
 
-  function formatDistance(m) {
-    if (m < 1000) {
-      return I18n.t("javascripts.directions.distance_m", { distance: Math.round(m) });
-    } else if (m < 10000) {
-      return I18n.t("javascripts.directions.distance_km", { distance: (m / 1000.0).toFixed(1) });
-    } else {
-      return I18n.t("javascripts.directions.distance_km", { distance: Math.round(m / 1000) });
-    }
-  }
+  function setEngine(id) {
+    const engines = OSM.Directions.engines;
+    const desired = engines.find(engine => engine.id === id);
+    if (!desired || (chosenEngine && chosenEngine.id === id)) return;
+    chosenEngine = desired;
 
-  function formatHeight(m) {
-    return I18n.t("javascripts.directions.distance_m", { distance: Math.round(m) });
-  }
+    const modes = engines
+      .filter(engine => engine.provider === chosenEngine.provider)
+      .map(engine => engine.mode);
+    modeGroup
+      .find("input[id]")
+      .prop("disabled", function () {
+        return !modes.includes(this.id);
+      })
+      .prop("checked", function () {
+        return this.id === chosenEngine.mode;
+      });
 
-  function formatTime(s) {
-    var m = Math.round(s / 60);
-    var h = Math.floor(m / 60);
-    m -= h * 60;
-    return h + ":" + (m < 10 ? "0" : "") + m;
-  }
-
-  function findEngine(id) {
-    return engines.findIndex(function (engine) {
-      return engine.id === id;
-    });
-  }
-
-  function setEngine(index) {
-    chosenEngine = engines[index];
-    select.val(index);
+    const providers = engines
+      .filter(engine => engine.mode === chosenEngine.mode)
+      .map(engine => engine.provider);
+    select
+      .find("option[value]")
+      .prop("disabled", function () {
+        return !providers.includes(this.value);
+      });
+    select.val(chosenEngine.provider);
   }
 
   function getRoute(fitRoute, reportErrors) {
     // Cancel any route that is already in progress
-    if (awaitingRoute) awaitingRoute.abort();
+    if (controller) controller.abort();
 
-    // go fetch geocodes for any endpoints which have not already
-    // been geocoded.
-    for (var ep_i = 0; ep_i < 2; ++ep_i) {
-      var endpoint = endpoints[ep_i];
-      if (!endpoint.hasGeocode && !endpoint.awaitingGeocode) {
-        endpoint.getGeocode();
-        awaitingGeocode = true;
-      }
-    }
-    if (endpoints[0].awaitingGeocode || endpoints[1].awaitingGeocode) {
-      awaitingGeocode = true;
-      return;
-    }
+    const points = endpoints.map(p => p.latlng);
 
-    var o = endpoints[0].latlng,
-        d = endpoints[1].latlng;
-
-    if (!o || !d) return;
+    if (!points[0] || !points[1]) return;
     $("header").addClass("closed");
 
-    var precision = OSM.zoomPrecision(map.getZoom());
-
-    OSM.router.replace("/directions?" + Qs.stringify({
+    OSM.router.replace("/directions?" + new URLSearchParams({
       engine: chosenEngine.id,
-      route: o.lat.toFixed(precision) + "," + o.lng.toFixed(precision) + ";" +
-             d.lat.toFixed(precision) + "," + d.lng.toFixed(precision)
+      route: points.map(p => `${p.lat},${p.lng}`).join(";")
     }));
 
-    // copy loading item to sidebar and display it. we copy it, rather than
-    // just using it in-place and replacing it in case it has to be used
-    // again.
-    $("#sidebar_content").html($(".directions_form .loader_copy").html());
+    $("#directions_loader").prop("hidden", false);
+    $("#directions_error").prop("hidden", true).empty();
+    $("#directions_route").prop("hidden", true);
     map.setSidebarOverlaid(false);
-
-    awaitingRoute = chosenEngine.getRoute([o, d], function (err, route) {
-      awaitingRoute = null;
-
-      if (err) {
-        map.removeLayer(polyline);
-
-        if (reportErrors) {
-          $("#sidebar_content").html("<p class=\"search_results_error\">" + I18n.t("javascripts.directions.errors.no_route") + "</p>");
-        }
-
-        return;
-      }
-
-      polyline
-        .setLatLngs(route.line)
-        .addTo(map);
-
+    controller = new AbortController();
+    chosenEngine.getRoute(points, controller.signal).then(async function (route) {
+      await sidebarLoaded();
+      $("#directions_route").prop("hidden", false);
+      routeOutput.write(route);
       if (fitRoute) {
-        map.fitBounds(polyline.getBounds().pad(0.05));
+        routeOutput.fit();
       }
-
-      var distanceText = $("<p>").append(
-        I18n.t("javascripts.directions.distance") + ": " + formatDistance(route.distance) + ". " +
-        I18n.t("javascripts.directions.time") + ": " + formatTime(route.time) + ".");
-      if (typeof route.ascend !== "undefined" && typeof route.descend !== "undefined") {
-        distanceText.append(
-          $("<br>"),
-          I18n.t("javascripts.directions.ascend") + ": " + formatHeight(route.ascend) + ". " +
-          I18n.t("javascripts.directions.descend") + ": " + formatHeight(route.descend) + ".");
+    }).catch(async function (error) {
+      if (error.name === "AbortError") return;
+      await sidebarLoaded();
+      routeOutput.remove();
+      if (reportErrors) {
+        $("#directions_error")
+          .prop("hidden", false)
+          .html("<div class=\"alert alert-danger\">" + OSM.i18n.t("javascripts.directions.errors.no_route") + "</div>");
       }
-
-      var turnByTurnTable = $("<table class='mb-3'>");
-      var directionsCloseButton = $("<button type='button' class='btn-close'>")
-        .attr("aria-label", I18n.t("javascripts.close"));
-
-      $("#sidebar_content")
-        .empty()
-        .append(
-          $("<div class='d-flex'>").append(
-            $("<h2 class='flex-grow-1 text-break'>")
-              .text(I18n.t("javascripts.directions.directions")),
-            $("<div>").append(directionsCloseButton)),
-          distanceText,
-          turnByTurnTable
-        );
-
-      // Add each row
-      route.steps.forEach(function (step) {
-        var ll = step[0],
-            direction = step[1],
-            instruction = step[2],
-            dist = step[3],
-            lineseg = step[4];
-
-        if (dist < 5) {
-          dist = "";
-        } else if (dist < 200) {
-          dist = String(Math.round(dist / 10) * 10) + "m";
-        } else if (dist < 1500) {
-          dist = String(Math.round(dist / 100) * 100) + "m";
-        } else if (dist < 5000) {
-          dist = String(Math.round(dist / 100) / 10) + "km";
-        } else {
-          dist = String(Math.round(dist / 1000)) + "km";
-        }
-
-        var row = $("<tr class='turn'/>");
-        row.append("<td><div class='direction i" + direction + "'/></td> ");
-        row.append("<td class='instruction'>" + instruction);
-        row.append("<td class='distance'>" + dist);
-
-        row.on("click", function () {
-          popup
-            .setLatLng(ll)
-            .setContent("<p>" + instruction + "</p>")
-            .openOn(map);
-        });
-
-        row.hover(function () {
-          highlight
-            .setLatLngs(lineseg)
-            .addTo(map);
-        }, function () {
-          map.removeLayer(highlight);
-        });
-
-        turnByTurnTable.append(row);
-      });
-
-      $("#sidebar_content").append("<p class=\"text-center\">" +
-        I18n.t("javascripts.directions.instructions.courtesy", { link: chosenEngine.creditline }) +
-        "</p>");
-
-      directionsCloseButton.on("click", function () {
-        map.removeLayer(polyline);
-        $("#sidebar_content").html("");
-        map.setSidebarOverlaid(true);
-        // TODO: collapse width of sidebar back to previous
-      });
+    }).finally(function () {
+      $("#directions_loader").prop("hidden", true);
+      controller = null;
     });
   }
 
-  var chosenEngineIndex = findEngine("fossgis_osrm_car");
-  if (Cookies.get("_osm_directions_engine")) {
-    chosenEngineIndex = findEngine(Cookies.get("_osm_directions_engine"));
+  function closeButtonListener(e) {
+    e.stopPropagation();
+    routeOutput.remove();
+    sidebarReadyPromise = null;
+    map.setSidebarOverlaid(true);
+    // TODO: collapse width of sidebar back to previous
   }
-  setEngine(chosenEngineIndex);
+
+  setEngine("fossgis_osrm_car");
+  setEngine(Cookies.get("_osm_directions_engine"));
+
+  modeGroup.on("change", "input[name='modes']", function (e) {
+    setEngine(chosenEngine.provider + "_" + e.target.id);
+    Cookies.set("_osm_directions_engine", chosenEngine.id, { secure: true, expires: expiry, path: "/", samesite: "lax" });
+    getRoute(true, true);
+  });
 
   select.on("change", function (e) {
-    chosenEngine = engines[e.target.selectedIndex];
+    setEngine(e.target.value + "_" + chosenEngine.mode);
     Cookies.set("_osm_directions_engine", chosenEngine.id, { secure: true, expires: expiry, path: "/", samesite: "lax" });
     getRoute(true, true);
   });
@@ -356,22 +157,44 @@ OSM.Directions = function (map) {
     getRoute(true, true);
   });
 
-  $(".routing_marker").on("dragstart", function (e) {
-    var dt = e.originalEvent.dataTransfer;
+  $(".routing_marker_column img").on("dragstart", function (e) {
+    const dt = e.originalEvent.dataTransfer;
     dt.effectAllowed = "move";
-    var dragData = { type: $(this).data("type") };
+    const dragData = { type: $(this).data("type") };
     dt.setData("text", JSON.stringify(dragData));
     if (dt.setDragImage) {
-      var img = $("<img>").attr("src", $(e.originalEvent.target).attr("src"));
+      const img = $("<img>").attr("src", $(e.originalEvent.target).attr("src"));
       dt.setDragImage(img.get(0), 12, 21);
     }
   });
 
-  var page = {};
+  function sendstartinglocation({ latlng: { lat, lng } }) {
+    map.fire("startinglocation", { latlng: [lat, lng] });
+  }
 
-  page.pushstate = page.popstate = function () {
-    $(".search_form").hide();
-    $(".directions_form").show();
+  function startingLocationListener({ latlng }) {
+    if (endpoints[0].value) return;
+    endpoints[0].setValue(latlng.join(", "));
+  }
+
+  map.on("locationfound", ({ latlng: { lat, lng } }) =>
+    lastLocation = [lat, lng]
+  ).on("locateactivate", () => {
+    map.once("startinglocation", startingLocationListener);
+  });
+
+  function initializeFromParams() {
+    const params = new URLSearchParams(location.search),
+          route = (params.get("route") || "").split(";");
+
+    if (params.has("engine")) setEngine(params.get("engine"));
+
+    endpoints[0].setValue(params.get("from") || route[0] || lastLocation.join(", "));
+    endpoints[1].setValue(params.get("to") || route[1] || "");
+  }
+
+  function enableListeners() {
+    $("#sidebar .sidebar-close-controls button").on("click", closeButtonListener);
 
     $("#map").on("dragend dragover", function (e) {
       e.preventDefault();
@@ -379,51 +202,62 @@ OSM.Directions = function (map) {
 
     $("#map").on("drop", function (e) {
       e.preventDefault();
-      var oe = e.originalEvent;
-      var dragData = JSON.parse(oe.dataTransfer.getData("text"));
-      var type = dragData.type;
-      var pt = L.DomEvent.getMousePosition(oe, map.getContainer()); // co-ordinates of the mouse pointer at present
+      const oe = e.originalEvent;
+      const dragData = JSON.parse(oe.dataTransfer.getData("text"));
+      const type = dragData.type;
+      const pt = L.DomEvent.getMousePosition(oe, map.getContainer()); // co-ordinates of the mouse pointer at present
       pt.y += 20;
-      var ll = map.containerPointToLatLng(pt);
-      endpoints[type === "from" ? 0 : 1].setLatLng(ll);
-      getRoute(true, true);
+      const ll = map.containerPointToLatLng(pt);
+      const llWithPrecision = OSM.cropLocation(ll, map.getZoom());
+      endpoints[type === "from" ? 0 : 1].setValue(llWithPrecision.join(", "));
     });
 
-    var params = Qs.parse(location.search.substring(1)),
-        route = (params.route || "").split(";"),
-        from = route[0] && L.latLng(route[0].split(",")),
-        to = route[1] && L.latLng(route[1].split(","));
+    map.on("locationfound", sendstartinglocation);
 
-    if (params.engine) {
-      var engineIndex = findEngine(params.engine);
+    endpoints[0].enableListeners();
+    endpoints[1].enableListeners();
+  }
 
-      if (engineIndex >= 0) {
-        setEngine(engineIndex);
-      }
+  const page = {};
+
+  function sidebarLoaded() {
+    if ($("#directions_route").length) {
+      sidebarReadyPromise = null;
+      return Promise.resolve();
     }
+    if (sidebarReadyPromise) return sidebarReadyPromise;
+    sidebarReadyPromise = new Promise(resolve => OSM.loadSidebarContent("/directions", resolve));
+    return sidebarReadyPromise;
+  }
 
-    endpoints[0].setValue(params.from || "", from);
-    endpoints[1].setValue(params.to || "", to);
+  page.pushstate = page.popstate = page.load = function () {
+    initializeFromParams();
 
-    map.setSidebarOverlaid(!from || !to);
+    $(".search_form").hide();
+    $(".directions_form").show();
 
-    getRoute(true, true);
-  };
+    sidebarLoaded().then(enableListeners);
 
-  page.load = function () {
-    page.pushstate();
+    map.setSidebarOverlaid(!endpoints[0].latlng || !endpoints[1].latlng);
   };
 
   page.unload = function () {
     $(".search_form").show();
     $(".directions_form").hide();
-    $("#map").off("dragend dragover drop");
 
-    map
-      .removeLayer(popup)
-      .removeLayer(polyline)
-      .removeLayer(endpoints[0].marker)
-      .removeLayer(endpoints[1].marker);
+    $("#sidebar .sidebar-close-controls button").off("click", closeButtonListener);
+    $("#map").off("dragend dragover drop");
+    map.off("locationfound", sendstartinglocation);
+
+    endpoints[0].disableListeners();
+    endpoints[1].disableListeners();
+
+    endpoints[0].clearValue();
+    endpoints[1].clearValue();
+
+    routeOutput.remove();
+
+    sidebarReadyPromise = null;
   };
 
   return page;
@@ -432,7 +266,8 @@ OSM.Directions = function (map) {
 OSM.Directions.engines = [];
 
 OSM.Directions.addEngine = function (engine, supportsHTTPS) {
-  if (document.location.protocol === "http:" || supportsHTTPS) {
+  if (location.protocol === "http:" || supportsHTTPS) {
+    engine.id = engine.provider + "_" + engine.mode;
     OSM.Directions.engines.push(engine);
   }
 };

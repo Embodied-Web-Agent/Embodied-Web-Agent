@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  include UserMethods
+
   layout "site"
 
   before_action :authorize_web
@@ -8,8 +10,9 @@ class MessagesController < ApplicationController
 
   before_action :lookup_user, :only => [:new, :create]
   before_action :check_database_readable
-  before_action :check_database_writable, :only => [:new, :create, :reply, :mark, :destroy]
-  before_action :allow_thirdparty_images, :only => [:new, :create, :show]
+  before_action :check_database_writable, :only => [:new, :create, :destroy]
+
+  allow_thirdparty_images :only => [:new, :create, :show]
 
   # Show a message
   def show
@@ -40,13 +43,13 @@ class MessagesController < ApplicationController
     @message.sender = current_user
     @message.sent_on = Time.now.utc
 
-    if current_user.sent_messages.where("sent_on >= ?", Time.now.utc - 1.hour).count >= current_user.max_messages_per_hour
+    if current_user.sent_messages.where(:sent_on => Time.now.utc - 1.hour..).count >= current_user.max_messages_per_hour
       flash.now[:error] = t ".limit_exceeded"
       render :action => "new"
     elsif @message.save
       flash[:notice] = t ".message_sent"
-      UserMailer.message_notification(@message).deliver_later
-      redirect_to :action => :inbox
+      UserMailer.message_notification(@message).deliver_later if @message.notify_recipient?
+      redirect_to messages_outbox_path
     else
       @title = t "messages.new.title"
       render :action => "new"
@@ -55,70 +58,15 @@ class MessagesController < ApplicationController
 
   # Destroy the message.
   def destroy
-    @message = Message.where("to_user_id = ? OR from_user_id = ?", current_user.id, current_user.id).find(params[:id])
+    @message = Message.where(:recipient => current_user).or(Message.where(:sender => current_user.id)).find(params[:id])
     @message.from_user_visible = false if @message.sender == current_user
     @message.to_user_visible = false if @message.recipient == current_user
-    if @message.save && !request.xhr?
+    if @message.save
       flash[:notice] = t ".destroyed"
 
       referer = safe_referer(params[:referer]) if params[:referer]
 
-      redirect_to referer || { :action => :inbox }
-    end
-  rescue ActiveRecord::RecordNotFound
-    @title = t "messages.no_such_message.title"
-    render :action => "no_such_message", :status => :not_found
-  end
-
-  # Allow the user to reply to another message.
-  def reply
-    message = Message.find(params[:message_id])
-
-    if message.recipient == current_user
-      message.update(:message_read => true)
-
-      @message = Message.new(
-        :recipient => message.sender,
-        :title => "Re: #{message.title.sub(/^Re:\s*/, '')}",
-        :body => "On #{message.sent_on} #{message.sender.display_name} wrote:\n\n#{message.body.gsub(/^/, '> ')}"
-      )
-
-      @title = @message.title
-
-      render :action => "new"
-    else
-      flash[:notice] = t ".wrong_user", :user => current_user.display_name
-      redirect_to login_path(:referer => request.fullpath)
-    end
-  rescue ActiveRecord::RecordNotFound
-    @title = t "messages.no_such_message.title"
-    render :action => "no_such_message", :status => :not_found
-  end
-
-  # Display the list of messages that have been sent to the user.
-  def inbox
-    @title = t ".title"
-  end
-
-  # Display the list of messages that the user has sent to other users.
-  def outbox
-    @title = t ".title"
-  end
-
-  # Set the message as being read or unread.
-  def mark
-    @message = Message.where("to_user_id = ? OR from_user_id = ?", current_user.id, current_user.id).find(params[:message_id])
-    if params[:mark] == "unread"
-      message_read = false
-      notice = t ".as_unread"
-    else
-      message_read = true
-      notice = t ".as_read"
-    end
-    @message.message_read = message_read
-    if @message.save && !request.xhr?
-      flash[:notice] = notice
-      redirect_to :action => :inbox
+      redirect_to referer || messages_inbox_path, :status => :see_other
     end
   rescue ActiveRecord::RecordNotFound
     @title = t "messages.no_such_message.title"
@@ -130,7 +78,7 @@ class MessagesController < ApplicationController
   ##
   # return permitted message parameters
   def message_params
-    params.require(:message).permit(:title, :body)
+    params.expect(:message => [:title, :body])
   rescue ActionController::ParameterMissing
     ActionController::Parameters.new.permit(:title, :body)
   end

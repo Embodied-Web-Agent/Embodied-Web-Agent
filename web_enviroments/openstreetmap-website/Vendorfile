@@ -15,7 +15,7 @@ folder 'vendor/assets' do
       folder 'img', 'src/img'
     end
 
-    from 'https://github.com/jfirebaugh/leaflet-osm.git' do
+    from 'https://github.com/openstreetmap/leaflet-osm.git' do
       file 'leaflet.osm.js', 'leaflet-osm.js'
     end
 
@@ -30,7 +30,7 @@ folder 'vendor/assets' do
       folder 'iD/img', 'dist/img'
       folder 'iD/locales', 'dist/locales'
       folder 'iD/mapillary-js', 'dist/mapillary-js'
-      folder 'iD/pannellum-streetside', 'dist/pannellum-streetside'
+      folder 'iD/pannellum', 'dist/pannellum'
 
       file 'iD.css.erb', 'dist/iD.css' do |path|
         rewrite(path) do |content|
@@ -40,9 +40,5 @@ folder 'vendor/assets' do
 
       file 'iD.js', 'dist/iD.js'
     end
-  end
-
-  folder 'polyfill' do
-    file 'es6.js', 'https://polyfill.io/v3/polyfill.js?features=es6&flags=gated,always'
   end
 end

@@ -1,30 +1,35 @@
 L.OSM.layers = function (options) {
-  var control = L.OSM.sidebarPane(options, "layers", "javascripts.map.layers.title", "javascripts.map.layers.header");
+  const control = L.OSM.sidebarPane(options, "layers", "javascripts.map.layers.title", "javascripts.map.layers.header");
 
   control.onAddPane = function (map, button, $ui, toggle) {
-    var layers = options.layers;
+    const layers = options.layers;
 
-    var baseSection = $("<div>")
-      .attr("class", "section base-layers")
+    const baseSection = $("<div>")
+      .attr("class", "base-layers d-grid gap-3 p-3 border-bottom border-secondary-subtle")
       .appendTo($ui);
 
-    var baseLayers = $("<ul class='list-unstyled'>")
-      .appendTo(baseSection);
+    layers.forEach(function (layer, i) {
+      const id = "map-ui-layer-" + i;
 
-    layers.forEach(function (layer) {
-      var item = $("<li>")
-        .appendTo(baseLayers);
+      const buttonContainer = $("<div class='position-relative'>")
+        .appendTo(baseSection);
 
-      if (map.hasLayer(layer)) {
-        item.addClass("active");
-      }
+      const mapContainer = $("<div class='position-absolute top-0 start-0 bottom-0 end-0 z-0 bg-body-secondary'>")
+        .appendTo(buttonContainer);
 
-      var div = $("<div>")
-        .appendTo(item);
+      const input = $("<input type='radio' class='btn-check' name='layer'>")
+        .prop("id", id)
+        .prop("checked", map.hasLayer(layer))
+        .appendTo(buttonContainer);
+
+      const item = $("<label class='btn btn-outline-primary border-4 rounded-3 bg-transparent position-absolute p-0 h-100 w-100 overflow-hidden'>")
+        .prop("for", id)
+        .append($("<span class='badge position-absolute top-0 start-0 rounded-top-0 rounded-start-0 py-1 px-2 bg-body bg-opacity-75 text-body text-wrap text-start fs-6 lh-base'>").append(layer.options.name))
+        .appendTo(buttonContainer);
 
       map.whenReady(function () {
-        var miniMap = L.map(div[0], { attributionControl: false, zoomControl: false, keyboard: false })
-          .addLayer(new layer.constructor({ apikey: layer.options.apikey }));
+        const miniMap = L.map(mapContainer[0], { attributionControl: false, zoomControl: false, keyboard: false })
+          .addLayer(new layer.constructor(layer.options));
 
         miniMap.dragging.disable();
         miniMap.touchZoom.disable();
@@ -54,88 +59,80 @@ L.OSM.layers = function (options) {
         }
       });
 
-      var label = $("<label>")
-        .appendTo(item);
-
-      var input = $("<input>")
-        .attr("type", "radio")
-        .prop("checked", map.hasLayer(layer))
-        .appendTo(label);
-
-      label.append(layer.options.name);
-
-      item.on("click", function () {
-        layers.forEach(function (other) {
-          if (other === layer) {
-            map.addLayer(other);
-          } else {
+      input.on("click", function () {
+        for (const other of layers) {
+          if (other !== layer) {
             map.removeLayer(other);
           }
-        });
-        map.fire("baselayerchange", { layer: layer });
+        }
+        map.addLayer(layer);
       });
 
       item.on("dblclick", toggle);
 
-      map.on("layeradd layerremove", function () {
-        item.toggleClass("active", map.hasLayer(layer));
+      map.on("baselayerchange", function () {
         input.prop("checked", map.hasLayer(layer));
       });
     });
 
     if (OSM.STATUS !== "api_offline" && OSM.STATUS !== "database_offline") {
-      var overlaySection = $("<div>")
-        .attr("class", "section overlay-layers")
+      const overlaySection = $("<div>")
+        .attr("class", "overlay-layers p-3")
         .appendTo($ui);
 
       $("<p>")
-        .text(I18n.t("javascripts.map.layers.overlays"))
-        .attr("class", "text-muted")
+        .text(OSM.i18n.t("javascripts.map.layers.overlays"))
+        .attr("class", "text-body-secondary small mb-2")
         .appendTo(overlaySection);
 
-      var overlays = $("<ul class='list-unstyled form-check'>")
+      const overlays = $("<ul class='list-unstyled form-check'>")
         .appendTo(overlaySection);
 
-      var addOverlay = function (layer, name, maxArea) {
-        var item = $("<li>")
+      const addOverlay = function (layer, name, maxArea) {
+        const item = $("<li>")
           .appendTo(overlays);
 
         if (name === "notes" || name === "data") {
           item
-            .attr("title", I18n.t("javascripts.site.map_" + name + "_zoom_in_tooltip"))
+            .attr("title", OSM.i18n.t("javascripts.site.map_" + name + "_zoom_in_tooltip"))
             .tooltip("disable");
         }
 
-        var label = $("<label>")
+        const label = $("<label>")
           .attr("class", "form-check-label")
+          .attr("id", `label-layers-${name}`)
           .appendTo(item);
 
-        var checked = map.hasLayer(layer);
+        let checked = map.hasLayer(layer);
 
-        var input = $("<input>")
+        const input = $("<input>")
           .attr("type", "checkbox")
           .attr("class", "form-check-input")
           .prop("checked", checked)
           .appendTo(label);
 
-        label.append(I18n.t("javascripts.map.layers." + name));
+        label.append(OSM.i18n.t("javascripts.map.layers." + name));
 
         input.on("change", function () {
           checked = input.is(":checked");
+          if (layer.cancelLoading) {
+            layer.cancelLoading();
+          }
+
           if (checked) {
             map.addLayer(layer);
           } else {
             map.removeLayer(layer);
+            $(`#layers-${name}-loading`).remove();
           }
-          map.fire("overlaylayerchange", { layer: layer });
         });
 
-        map.on("layeradd layerremove", function () {
+        map.on("overlayadd overlayremove", function () {
           input.prop("checked", map.hasLayer(layer));
         });
 
         map.on("zoomend", function () {
-          var disabled = map.getBounds().getSize() >= maxArea;
+          const disabled = map.getBounds().getSize() >= maxArea;
           $(input).prop("disabled", disabled);
 
           if (disabled && $(input).is(":checked")) {

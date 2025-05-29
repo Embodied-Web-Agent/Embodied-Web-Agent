@@ -21,13 +21,8 @@ end
 
 json.tags changeset.tags unless changeset.tags.empty?
 
-if @include_discussion
-  json.comments(changeset.comments) do |comment|
-    json.date comment.created_at.xmlschema
-    if comment.author.data_public?
-      json.uid comment.author.id
-      json.user comment.author.display_name
-    end
-    json.text comment.body
+if @comments
+  json.comments(@comments) do |comment|
+    json.partial! comment
   end
 end

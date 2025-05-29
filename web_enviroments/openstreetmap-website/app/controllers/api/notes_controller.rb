@@ -1,6 +1,7 @@
 module Api
   class NotesController < ApiController
-    before_action :check_api_readable
+    include QueryMethods
+
     before_action :check_api_writable, :only => [:create, :comment, :close, :reopen, :destroy]
     before_action :setup_user_auth, :only => [:create, :show]
     before_action :authorize, :only => [:close, :reopen, :destroy, :comment]
@@ -8,7 +9,6 @@ module Api
     authorize_resource
 
     before_action :set_locale
-    around_action :api_call_handle_error, :api_call_timeout
     before_action :set_request_formats, :except => [:feed]
 
     ##
@@ -18,13 +18,10 @@ module Api
       # support the old, deprecated, method with four arguments
       if params[:bbox]
         bbox = BoundingBox.from_bbox_params(params)
-      else
-        raise OSM::APIBadUserInput, "No l was given" unless params[:l]
-        raise OSM::APIBadUserInput, "No r was given" unless params[:r]
-        raise OSM::APIBadUserInput, "No b was given" unless params[:b]
-        raise OSM::APIBadUserInput, "No t was given" unless params[:t]
-
+      elsif params[:l] && params[:r] && params[:b] && params[:t]
         bbox = BoundingBox.from_lrbt_params(params)
+      else
+        raise OSM::APIBadUserInput, "The parameter bbox is required"
       end
 
       # Get any conditions that need to be applied
@@ -41,7 +38,9 @@ module Api
       @max_lat = bbox.max_lat
 
       # Find the notes we want to return
-      @notes = notes.bbox(bbox).order("updated_at DESC").limit(result_limit).preload(:comments)
+      notes = notes.bbox(bbox).order("updated_at DESC")
+      notes = query_limit(notes)
+      @notes = notes.preload(:comments)
 
       # Render the result
       respond_to do |format|
@@ -86,19 +85,22 @@ module Api
       # Extract the arguments
       lon = OSM.parse_float(params[:lon], OSM::APIBadUserInput, "lon was not a number")
       lat = OSM.parse_float(params[:lat], OSM::APIBadUserInput, "lat was not a number")
-      comment = params[:text]
+      description = params[:text]
+
+      # Get note's author info (for logged in users - user_id, for logged out users - IP address)
+      note_author_info = author_info
 
       # Include in a transaction to ensure that there is always a note_comment for every note
       Note.transaction do
         # Create the note
-        @note = Note.create(:lat => lat, :lon => lon)
+        @note = Note.create(:lat => lat, :lon => lon, :description => description, :user_id => note_author_info[:user_id], :user_ip => note_author_info[:user_ip])
         raise OSM::APIBadUserInput, "The note is outside this world" unless @note.in_world?
 
         # Save the note
         @note.save!
 
-        # Add a comment to the note
-        add_comment(@note, comment, "opened")
+        # Add opening comment (description) to the note
+        add_comment(@note, description, "opened")
       end
 
       # Return a copy of the new note
@@ -119,12 +121,12 @@ module Api
       comment = params[:text]
 
       # Find the note and check it is valid
-      @note = Note.find(id)
-      raise OSM::APINotFoundError unless @note
-      raise OSM::APIAlreadyDeletedError.new("note", @note.id) unless @note.visible?
-
-      # Mark the note as hidden
       Note.transaction do
+        @note = Note.lock.find(id)
+        raise OSM::APINotFoundError unless @note
+        raise OSM::APIAlreadyDeletedError.new("note", @note.id) unless @note.visible?
+
+        # Mark the note as hidden
         @note.status = "hidden"
         @note.save
 
@@ -141,9 +143,6 @@ module Api
     ##
     # Add a comment to an existing note
     def comment
-      # Check the ACLs
-      raise OSM::APIAccessDenied if current_user.nil? && Acl.no_note_comment(request.remote_ip)
-
       # Check the arguments are sane
       raise OSM::APIBadUserInput, "No id was given" unless params[:id]
       raise OSM::APIBadUserInput, "No text was given" if params[:text].blank?
@@ -153,13 +152,13 @@ module Api
       comment = params[:text]
 
       # Find the note and check it is valid
-      @note = Note.find(id)
-      raise OSM::APINotFoundError unless @note
-      raise OSM::APIAlreadyDeletedError.new("note", @note.id) unless @note.visible?
-      raise OSM::APINoteAlreadyClosedError, @note if @note.closed?
-
-      # Add a comment to the note
       Note.transaction do
+        @note = Note.lock.find(id)
+        raise OSM::APINotFoundError unless @note
+        raise OSM::APIAlreadyDeletedError.new("note", @note.id) unless @note.visible?
+        raise OSM::APINoteAlreadyClosedError, @note if @note.closed?
+
+        # Add a comment to the note
         add_comment(@note, comment, "commented")
       end
 
@@ -181,13 +180,13 @@ module Api
       comment = params[:text]
 
       # Find the note and check it is valid
-      @note = Note.find_by(:id => id)
-      raise OSM::APINotFoundError unless @note
-      raise OSM::APIAlreadyDeletedError.new("note", @note.id) unless @note.visible?
-      raise OSM::APINoteAlreadyClosedError, @note if @note.closed?
-
-      # Close the note and add a comment
       Note.transaction do
+        @note = Note.lock.find_by(:id => id)
+        raise OSM::APINotFoundError unless @note
+        raise OSM::APIAlreadyDeletedError.new("note", @note.id) unless @note.visible?
+        raise OSM::APINoteAlreadyClosedError, @note if @note.closed?
+
+        # Close the note and add a comment
         @note.close
 
         add_comment(@note, comment, "closed")
@@ -211,13 +210,13 @@ module Api
       comment = params[:text]
 
       # Find the note and check it is valid
-      @note = Note.find_by(:id => id)
-      raise OSM::APINotFoundError unless @note
-      raise OSM::APIAlreadyDeletedError.new("note", @note.id) unless @note.visible? || current_user.moderator?
-      raise OSM::APINoteAlreadyOpenError, @note unless @note.closed? || !@note.visible?
-
-      # Reopen the note and add a comment
       Note.transaction do
+        @note = Note.lock.find_by(:id => id)
+        raise OSM::APINotFoundError unless @note
+        raise OSM::APIAlreadyDeletedError.new("note", @note.id) unless @note.visible? || current_user.moderator?
+        raise OSM::APINoteAlreadyOpenError, @note unless @note.closed? || !@note.visible?
+
+        # Reopen the note and add a comment
         @note.reopen
 
         add_comment(@note, comment, "reopened")
@@ -235,23 +234,13 @@ module Api
     def feed
       # Get any conditions that need to be applied
       notes = closed_condition(Note.all)
-
-      # Process any bbox
-      if params[:bbox]
-        bbox = BoundingBox.from_bbox_params(params)
-
-        bbox.check_boundaries
-        bbox.check_size(Settings.max_note_request_area)
-
-        notes = notes.bbox(bbox)
-        @min_lon = bbox.min_lon
-        @min_lat = bbox.min_lat
-        @max_lon = bbox.max_lon
-        @max_lat = bbox.max_lat
-      end
+      notes = bbox_condition(notes)
 
       # Find the comments we want to return
-      @comments = NoteComment.where(:note_id => notes).order("created_at DESC").limit(result_limit).preload(:note)
+      @comments = NoteComment.where(:note => notes)
+                             .order(:created_at => :desc)
+      @comments = query_limit(@comments)
+      @comments = @comments.preload(:author, :note => { :comments => :author })
 
       # Render the result
       respond_to do |format|
@@ -264,49 +253,24 @@ module Api
     def search
       # Get the initial set of notes
       @notes = closed_condition(Note.all)
+      @notes = bbox_condition(@notes)
 
       # Add any user filter
-      if params[:display_name] || params[:user]
-        if params[:display_name]
-          @user = User.find_by(:display_name => params[:display_name])
-
-          raise OSM::APIBadUserInput, "User #{params[:display_name]} not known" unless @user
-        else
-          @user = User.find_by(:id => params[:user])
-
-          raise OSM::APIBadUserInput, "User #{params[:user]} not known" unless @user
-        end
-
-        @notes = @notes.joins(:comments).where(:note_comments => { :author_id => @user })
-      end
+      user = query_conditions_user_value
+      @notes = @notes.joins(:comments).where(:note_comments => { :author_id => user }) if user
 
       # Add any text filter
-      @notes = @notes.joins(:comments).where("to_tsvector('english', note_comments.body) @@ plainto_tsquery('english', ?)", params[:q]) if params[:q]
+      if params[:q]
+        @notes = @notes.joins(:comments).where("to_tsvector('english', note_comments.body) @@ plainto_tsquery('english', ?) OR to_tsvector('english', notes.description) @@ plainto_tsquery('english', ?)", params[:q], params[:q])
+      end
 
       # Add any date filter
-      if params[:from]
-        begin
-          from = Time.parse(params[:from]).utc
-        rescue ArgumentError
-          raise OSM::APIBadUserInput, "Date #{params[:from]} is in a wrong format"
-        end
-
-        begin
-          to = if params[:to]
-                 Time.parse(params[:to]).utc
-               else
-                 Time.now.utc
-               end
-        rescue ArgumentError
-          raise OSM::APIBadUserInput, "Date #{params[:to]} is in a wrong format"
-        end
-
-        @notes = if params[:sort] == "updated_at"
-                   @notes.where(:updated_at => from..to)
-                 else
-                   @notes.where(:created_at => from..to)
-                 end
-      end
+      time_filter_property = if params[:sort] == "updated_at"
+                               :updated_at
+                             else
+                               :created_at
+                             end
+      @notes = query_conditions_time(@notes, time_filter_property)
 
       # Choose the sort order
       @notes = if params[:sort] == "created_at"
@@ -324,7 +288,8 @@ module Api
                end
 
       # Find the notes we want to return
-      @notes = @notes.distinct.limit(result_limit).preload(:comments)
+      @notes = query_limit(@notes.distinct)
+      @notes = @notes.preload(:comments)
 
       # Render the result
       respond_to do |format|
@@ -340,20 +305,6 @@ module Api
     #------------------------------------------------------------
     # utility functions below.
     #------------------------------------------------------------
-
-    ##
-    # Get the maximum number of results to return
-    def result_limit
-      if params[:limit]
-        if params[:limit].to_i.positive? && params[:limit].to_i <= 10000
-          params[:limit].to_i
-        else
-          raise OSM::APIBadUserInput, "Note limit must be between 1 and 10000"
-        end
-      else
-        100
-      end
-    end
 
     ##
     # Generate a condition to choose which notes we want based
@@ -377,21 +328,59 @@ module Api
     end
 
     ##
+    # Generate a condition to choose which notes we want based
+    # on the user's bounding box request parameters
+    def bbox_condition(notes)
+      if params[:bbox]
+        bbox = BoundingBox.from_bbox_params(params)
+
+        bbox.check_boundaries
+        bbox.check_size(Settings.max_note_request_area)
+
+        @min_lon = bbox.min_lon
+        @min_lat = bbox.min_lat
+        @max_lon = bbox.max_lon
+        @max_lat = bbox.max_lat
+
+        notes.bbox(bbox)
+      else
+        notes
+      end
+    end
+
+    ##
+    # Get author's information (for logged in users - user_id, for logged out users - IP address)
+    def author_info
+      if current_user
+        { :user_id => current_user.id }
+      else
+        { :user_ip => request.remote_ip }
+      end
+    end
+
+    ##
     # Add a comment to a note
     def add_comment(note, text, event, notify: true)
       attributes = { :visible => true, :event => event, :body => text }
 
-      if current_user
-        attributes[:author_id] = current_user.id
+      # Get note comment's author info (for logged in users - user_id, for logged out users - IP address)
+      note_comment_author_info = author_info
+
+      if note_comment_author_info[:user_ip].nil?
+        attributes[:author_id] = note_comment_author_info[:user_id]
       else
-        attributes[:author_ip] = request.remote_ip
+        attributes[:author_ip] = note_comment_author_info[:user_ip]
       end
 
       comment = note.comments.create!(attributes)
 
-      note.comments.map(&:author).uniq.each do |user|
-        UserMailer.note_comment_notification(comment, user).deliver_later if notify && user && user != current_user && user.visible?
+      if notify
+        note.subscribers.visible.each do |user|
+          UserMailer.note_comment_notification(comment, user).deliver_later if current_user != user
+        end
       end
+
+      NoteSubscription.find_or_create_by(:note => note, :user => current_user) if current_user
     end
   end
 end

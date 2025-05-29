@@ -88,6 +88,14 @@ class BoundingBox
     end
   end
 
+  def linear_size
+    if complete?
+      (max_lon - min_lon) + (max_lat - min_lat)
+    else
+      0
+    end
+  end
+
   def complete?
     to_a.exclude?(nil)
   end
@@ -132,17 +140,17 @@ class BoundingBox
   end
 
   def to_scaled
-    BoundingBox.new((min_lon * GeoRecord::SCALE),
-                    (min_lat * GeoRecord::SCALE),
-                    (max_lon * GeoRecord::SCALE),
-                    (max_lat * GeoRecord::SCALE))
+    BoundingBox.new(min_lon * GeoRecord::SCALE,
+                    min_lat * GeoRecord::SCALE,
+                    max_lon * GeoRecord::SCALE,
+                    max_lat * GeoRecord::SCALE)
   end
 
   def to_unscaled
-    BoundingBox.new((min_lon / GeoRecord::SCALE),
-                    (min_lat / GeoRecord::SCALE),
-                    (max_lon / GeoRecord::SCALE),
-                    (max_lat / GeoRecord::SCALE))
+    BoundingBox.new(min_lon / GeoRecord::SCALE,
+                    min_lat / GeoRecord::SCALE,
+                    max_lon / GeoRecord::SCALE,
+                    max_lat / GeoRecord::SCALE)
   end
 
   def to_a
@@ -157,7 +165,7 @@ class BoundingBox
     private
 
     def from_bbox_array(bbox_array)
-      raise OSM::APIBadUserInput, "The parameter bbox is required, and must be of the form min_lon,min_lat,max_lon,max_lat" unless bbox_array
+      raise OSM::APIBadUserInput, "The parameter bbox must be of the form min_lon,min_lat,max_lon,max_lat" unless bbox_array
 
       # Take an array of length 4, create a bounding box with min_lon, min_lat, max_lon and
       # max_lat within their respective boundaries.

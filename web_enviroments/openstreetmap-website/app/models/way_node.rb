@@ -2,9 +2,9 @@
 #
 # Table name: current_way_nodes
 #
-#  way_id      :bigint(8)        not null, primary key
-#  node_id     :bigint(8)        not null
-#  sequence_id :bigint(8)        not null, primary key
+#  way_id      :bigint           not null, primary key
+#  node_id     :bigint           not null
+#  sequence_id :bigint           not null, primary key
 #
 # Indexes
 #
@@ -18,7 +18,6 @@
 
 class WayNode < ApplicationRecord
   self.table_name = "current_way_nodes"
-  self.primary_keys = "way_id", "sequence_id"
 
   belongs_to :way
   belongs_to :node

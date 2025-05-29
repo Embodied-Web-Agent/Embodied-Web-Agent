@@ -6,7 +6,15 @@ module Api
     # test all routes which lead to this controller
     def test_routes
       assert_routing(
-        { :path => "/api/0.6/node/create", :method => :put },
+        { :path => "/api/0.6/nodes", :method => :get },
+        { :controller => "api/nodes", :action => "index" }
+      )
+      assert_routing(
+        { :path => "/api/0.6/nodes.json", :method => :get },
+        { :controller => "api/nodes", :action => "index", :format => "json" }
+      )
+      assert_routing(
+        { :path => "/api/0.6/nodes", :method => :post },
         { :controller => "api/nodes", :action => "create" }
       )
       assert_routing(
@@ -23,16 +31,60 @@ module Api
       )
       assert_routing(
         { :path => "/api/0.6/node/1", :method => :delete },
-        { :controller => "api/nodes", :action => "delete", :id => "1" }
+        { :controller => "api/nodes", :action => "destroy", :id => "1" }
       )
-      assert_routing(
-        { :path => "/api/0.6/nodes", :method => :get },
-        { :controller => "api/nodes", :action => "index" }
+
+      assert_recognizes(
+        { :controller => "api/nodes", :action => "create" },
+        { :path => "/api/0.6/node/create", :method => :put }
       )
-      assert_routing(
-        { :path => "/api/0.6/nodes.json", :method => :get },
-        { :controller => "api/nodes", :action => "index", :format => "json" }
-      )
+    end
+
+    ##
+    # test fetching multiple nodes
+    def test_index
+      node1 = create(:node)
+      node2 = create(:node, :deleted)
+      node3 = create(:node)
+      node4 = create(:node, :with_history, :version => 2)
+      node5 = create(:node, :deleted, :with_history, :version => 2)
+
+      # check error when no parameter provided
+      get api_nodes_path
+      assert_response :bad_request
+
+      # check error when no parameter value provided
+      get api_nodes_path(:nodes => "")
+      assert_response :bad_request
+
+      # test a working call
+      get api_nodes_path(:nodes => "#{node1.id},#{node2.id},#{node3.id},#{node4.id},#{node5.id}")
+      assert_response :success
+      assert_select "osm" do
+        assert_select "node", :count => 5
+        assert_select "node[id='#{node1.id}'][visible='true']", :count => 1
+        assert_select "node[id='#{node2.id}'][visible='false']", :count => 1
+        assert_select "node[id='#{node3.id}'][visible='true']", :count => 1
+        assert_select "node[id='#{node4.id}'][visible='true']", :count => 1
+        assert_select "node[id='#{node5.id}'][visible='false']", :count => 1
+      end
+
+      # test a working call with json format
+      get api_nodes_path(:nodes => "#{node1.id},#{node2.id},#{node3.id},#{node4.id},#{node5.id}", :format => "json")
+
+      js = ActiveSupport::JSON.decode(@response.body)
+      assert_not_nil js
+      assert_equal 5, js["elements"].count
+      assert_equal 5, (js["elements"].count { |a| a["type"] == "node" })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == node1.id && a["visible"].nil? })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == node2.id && a["visible"] == false })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == node3.id && a["visible"].nil? })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == node4.id && a["visible"].nil? })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == node5.id && a["visible"] == false })
+
+      # check error when a non-existent node is included
+      get api_nodes_path(:nodes => "#{node1.id},#{node2.id},#{node3.id},#{node4.id},#{node5.id},0")
+      assert_response :not_found
     end
 
     def test_create
@@ -49,28 +101,28 @@ module Api
       # create a minimal xml file
       xml = "<osm><node lat='#{lat}' lon='#{lon}' changeset='#{changeset.id}'/></osm>"
       assert_difference("OldNode.count", 0) do
-        put node_create_path, :params => xml
+        post api_nodes_path, :params => xml
       end
       # hope for unauthorized
       assert_response :unauthorized, "node upload did not return unauthorized status"
 
       ## Now try with the user which doesn't have their data public
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # create a minimal xml file
       xml = "<osm><node lat='#{lat}' lon='#{lon}' changeset='#{private_changeset.id}'/></osm>"
       assert_difference("Node.count", 0) do
-        put node_create_path, :params => xml, :headers => auth_header
+        post api_nodes_path, :params => xml, :headers => auth_header
       end
       # hope for success
       assert_require_public_data "node create did not return forbidden status"
 
       ## Now try with the user that has the public data
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # create a minimal xml file
       xml = "<osm><node lat='#{lat}' lon='#{lon}' changeset='#{changeset.id}'/></osm>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       # hope for success
       assert_response :success, "node upload did not return success status"
 
@@ -92,20 +144,20 @@ module Api
       user = create(:user)
       changeset = create(:changeset, :user => user)
 
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
       lat = 3.434
       lon = 3.23
 
       # test that the upload is rejected when xml is valid, but osm doc isn't
       xml = "<create/>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       assert_response :bad_request, "node upload did not return bad_request status"
       assert_equal "Cannot parse valid node from xml string <create/>. XML doesn't contain an osm/node element.", @response.body
 
       # test that the upload is rejected when no lat is supplied
       # create a minimal xml file
       xml = "<osm><node lon='#{lon}' changeset='#{changeset.id}'/></osm>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       # hope for success
       assert_response :bad_request, "node upload did not return bad_request status"
       assert_equal "Cannot parse valid node from xml string <node lon=\"3.23\" changeset=\"#{changeset.id}\"/>. lat missing", @response.body
@@ -113,7 +165,7 @@ module Api
       # test that the upload is rejected when no lon is supplied
       # create a minimal xml file
       xml = "<osm><node lat='#{lat}' changeset='#{changeset.id}'/></osm>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       # hope for success
       assert_response :bad_request, "node upload did not return bad_request status"
       assert_equal "Cannot parse valid node from xml string <node lat=\"3.434\" changeset=\"#{changeset.id}\"/>. lon missing", @response.body
@@ -121,7 +173,7 @@ module Api
       # test that the upload is rejected when lat is non-numeric
       # create a minimal xml file
       xml = "<osm><node lat='abc' lon='#{lon}' changeset='#{changeset.id}'/></osm>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       # hope for success
       assert_response :bad_request, "node upload did not return bad_request status"
       assert_equal "Cannot parse valid node from xml string <node lat=\"abc\" lon=\"#{lon}\" changeset=\"#{changeset.id}\"/>. lat not a number", @response.body
@@ -129,30 +181,36 @@ module Api
       # test that the upload is rejected when lon is non-numeric
       # create a minimal xml file
       xml = "<osm><node lat='#{lat}' lon='abc' changeset='#{changeset.id}'/></osm>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       # hope for success
       assert_response :bad_request, "node upload did not return bad_request status"
       assert_equal "Cannot parse valid node from xml string <node lat=\"#{lat}\" lon=\"abc\" changeset=\"#{changeset.id}\"/>. lon not a number", @response.body
 
       # test that the upload is rejected when we have a tag which is too long
       xml = "<osm><node lat='#{lat}' lon='#{lon}' changeset='#{changeset.id}'><tag k='foo' v='#{'x' * 256}'/></node></osm>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       assert_response :bad_request, "node upload did not return bad_request status"
-      assert_equal ["NodeTag ", " v: is too long (maximum is 255 characters) (\"#{'x' * 256}\")"], @response.body.split(/[0-9]+,foo:/)
+      assert_match(/ v: is too long \(maximum is 255 characters\) /, @response.body)
+    end
+
+    def test_show_not_found
+      get api_node_path(0)
+      assert_response :not_found
+    end
+
+    def test_show_deleted
+      get api_node_path(create(:node, :deleted))
+      assert_response :gone
     end
 
     def test_show
-      # check that a visible node is returned properly
-      get api_node_path(create(:node))
+      node = create(:node, :timestamp => "2021-02-03T00:00:00Z")
+
+      get api_node_path(node)
+
       assert_response :success
-
-      # check that an deleted node is not returned
-      get api_node_path(create(:node, :deleted))
-      assert_response :gone
-
-      # check chat a non-existent node is not returned
-      get api_node_path(:id => 0)
-      assert_response :not_found
+      assert_not_nil @response.header["Last-Modified"]
+      assert_equal "2021-02-03T00:00:00Z", Time.parse(@response.header["Last-Modified"]).utc.xmlschema
     end
 
     # Ensure the lat/lon is formatted as a decimal e.g. not 4.0e-05
@@ -166,7 +224,7 @@ module Api
 
     # this tests deletion restrictions - basic deletion is tested in the unit
     # tests for node!
-    def test_delete
+    def test_destroy
       private_user = create(:user, :data_public => false)
       private_user_changeset = create(:changeset, :user => private_user)
       private_user_closed_changeset = create(:changeset, :closed, :user => private_user)
@@ -178,7 +236,7 @@ module Api
       assert_response :unauthorized
 
       ## now set auth for the non-data public user
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # try to delete with an invalid (closed) changeset
       xml = update_changeset(xml_for_node(private_node), private_user_closed_changeset.id)
@@ -201,7 +259,7 @@ module Api
       assert_require_public_data
 
       # this won't work since the node never existed
-      delete api_node_path(:id => 0), :headers => auth_header
+      delete api_node_path(0), :headers => auth_header
       assert_require_public_data
 
       ## these test whether nodes which are in-use can be deleted:
@@ -226,7 +284,7 @@ module Api
       changeset = create(:changeset, :user => user)
       closed_changeset = create(:changeset, :closed, :user => user)
       node = create(:node, :changeset => changeset)
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # try to delete with an invalid (closed) changeset
       xml = update_changeset(xml_for_node(node), closed_changeset.id)
@@ -241,7 +299,7 @@ module Api
       # try to delete a node with a different ID
       other_node = create(:node)
       xml = xml_for_node(other_node)
-      delete api_node_path(node.id), :params => xml.to_s, :headers => auth_header
+      delete api_node_path(node), :params => xml.to_s, :headers => auth_header
       assert_response :bad_request,
                       "should not be able to delete a node with a different ID from the XML"
 
@@ -258,8 +316,7 @@ module Api
 
       # valid delete should return the new version number, which should
       # be greater than the old version number
-      assert @response.body.to_i > node.version,
-             "delete request should return a new version number for node"
+      assert_operator @response.body.to_i, :>, node.version, "delete request should return a new version number for node"
 
       # deleting the same node twice doesn't work
       xml = xml_for_node(node)
@@ -267,7 +324,7 @@ module Api
       assert_response :gone
 
       # this won't work since the node never existed
-      delete api_node_path(:id => 0), :headers => auth_header
+      delete api_node_path(0), :headers => auth_header
       assert_response :not_found
 
       ## these test whether nodes which are in-use can be deleted:
@@ -298,6 +355,8 @@ module Api
     # tests whether the API works and prevents incorrect use while trying
     # to update nodes.
     def test_update
+      invalid_attr_values = [["lat", 91.0], ["lat", -91.0], ["lon", 181.0], ["lon", -181.0]]
+
       ## First test with no user credentials
       # try and update a node without authorisation
       # first try to delete node without auth
@@ -313,7 +372,7 @@ module Api
       ## Second test with the private user
 
       # setup auth
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       ## trying to break changesets
 
@@ -335,21 +394,11 @@ module Api
       assert_require_public_data "update with changeset=0 should be forbidden, when data isn't public"
 
       ## try and submit invalid updates
-      xml = xml_attr_rewrite(xml_for_node(private_node), "lat", 91.0)
-      put api_node_path(private_node), :params => xml.to_s, :headers => auth_header
-      assert_require_public_data "node at lat=91 should be forbidden, when data isn't public"
-
-      xml = xml_attr_rewrite(xml_for_node(private_node), "lat", -91.0)
-      put api_node_path(private_node), :params => xml.to_s, :headers => auth_header
-      assert_require_public_data "node at lat=-91 should be forbidden, when data isn't public"
-
-      xml = xml_attr_rewrite(xml_for_node(private_node), "lon", 181.0)
-      put api_node_path(private_node), :params => xml.to_s, :headers => auth_header
-      assert_require_public_data "node at lon=181 should be forbidden, when data isn't public"
-
-      xml = xml_attr_rewrite(xml_for_node(private_node), "lon", -181.0)
-      put api_node_path(private_node), :params => xml.to_s, :headers => auth_header
-      assert_require_public_data "node at lon=-181 should be forbidden, when data isn't public"
+      invalid_attr_values.each do |name, value|
+        xml = xml_attr_rewrite(xml_for_node(private_node), name, value)
+        put api_node_path(private_node), :params => xml.to_s, :headers => auth_header
+        assert_require_public_data "node at #{name}=#{value} should be forbidden, when data isn't public"
+      end
 
       ## finally, produce a good request which still won't work
       xml = xml_for_node(private_node)
@@ -361,11 +410,11 @@ module Api
       # try and update a node without authorisation
       # first try to update node without auth
       xml = xml_for_node(node)
-      put api_node_path(node.id), :params => xml.to_s, :headers => auth_header
+      put api_node_path(node), :params => xml.to_s, :headers => auth_header
       assert_response :forbidden
 
       # setup auth
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       ## trying to break changesets
 
@@ -387,21 +436,11 @@ module Api
       assert_response :conflict, "update with changeset=0 should be rejected"
 
       ## try and submit invalid updates
-      xml = xml_attr_rewrite(xml_for_node(node), "lat", 91.0)
-      put api_node_path(node), :params => xml.to_s, :headers => auth_header
-      assert_response :bad_request, "node at lat=91 should be rejected"
-
-      xml = xml_attr_rewrite(xml_for_node(node), "lat", -91.0)
-      put api_node_path(node), :params => xml.to_s, :headers => auth_header
-      assert_response :bad_request, "node at lat=-91 should be rejected"
-
-      xml = xml_attr_rewrite(xml_for_node(node), "lon", 181.0)
-      put api_node_path(node), :params => xml.to_s, :headers => auth_header
-      assert_response :bad_request, "node at lon=181 should be rejected"
-
-      xml = xml_attr_rewrite(xml_for_node(node), "lon", -181.0)
-      put api_node_path(node), :params => xml.to_s, :headers => auth_header
-      assert_response :bad_request, "node at lon=-181 should be rejected"
+      invalid_attr_values.each do |name, value|
+        xml = xml_attr_rewrite(xml_for_node(node), name, value)
+        put api_node_path(node), :params => xml.to_s, :headers => auth_header
+        assert_response :bad_request, "node at #{name}=#{value} should be rejected"
+      end
 
       ## next, attack the versioning
       current_node_version = node.version
@@ -444,59 +483,12 @@ module Api
     end
 
     ##
-    # test fetching multiple nodes
-    def test_index
-      node1 = create(:node)
-      node2 = create(:node, :deleted)
-      node3 = create(:node)
-      node4 = create(:node, :with_history, :version => 2)
-      node5 = create(:node, :deleted, :with_history, :version => 2)
-
-      # check error when no parameter provided
-      get nodes_path
-      assert_response :bad_request
-
-      # check error when no parameter value provided
-      get nodes_path, :params => { :nodes => "" }
-      assert_response :bad_request
-
-      # test a working call
-      get nodes_path, :params => { :nodes => "#{node1.id},#{node2.id},#{node3.id},#{node4.id},#{node5.id}" }
-      assert_response :success
-      assert_select "osm" do
-        assert_select "node", :count => 5
-        assert_select "node[id='#{node1.id}'][visible='true']", :count => 1
-        assert_select "node[id='#{node2.id}'][visible='false']", :count => 1
-        assert_select "node[id='#{node3.id}'][visible='true']", :count => 1
-        assert_select "node[id='#{node4.id}'][visible='true']", :count => 1
-        assert_select "node[id='#{node5.id}'][visible='false']", :count => 1
-      end
-
-      # test a working call with json format
-      get nodes_path, :params => { :nodes => "#{node1.id},#{node2.id},#{node3.id},#{node4.id},#{node5.id}", :format => "json" }
-
-      js = ActiveSupport::JSON.decode(@response.body)
-      assert_not_nil js
-      assert_equal 5, js["elements"].count
-      assert_equal 5, (js["elements"].count { |a| a["type"] == "node" })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == node1.id && a["visible"].nil? })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == node2.id && a["visible"] == false })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == node3.id && a["visible"].nil? })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == node4.id && a["visible"].nil? })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == node5.id && a["visible"] == false })
-
-      # check error when a non-existent node is included
-      get nodes_path, :params => { :nodes => "#{node1.id},#{node2.id},#{node3.id},#{node4.id},#{node5.id},0" }
-      assert_response :not_found
-    end
-
-    ##
     # test adding tags to a node
     def test_duplicate_tags
       existing_tag = create(:node_tag)
       assert existing_tag.node.changeset.user.data_public
       # setup auth
-      auth_header = basic_authorization_header existing_tag.node.changeset.user.email, "test"
+      auth_header = bearer_authorization_header existing_tag.node.changeset.user
 
       # add an identical tag to the node
       tag_xml = XML::Node.new("tag")
@@ -522,25 +514,25 @@ module Api
       changeset = create(:changeset, :user => user)
 
       ## First try with the non-data public user
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # try and put something into a string that the API might
       # use unquoted and therefore allow code injection...
       xml = "<osm><node lat='0' lon='0' changeset='#{private_changeset.id}'>" \
             "<tag k='\#{@user.inspect}' v='0'/>" \
             "</node></osm>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       assert_require_public_data "Shouldn't be able to create with non-public user"
 
       ## Then try with the public data user
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # try and put something into a string that the API might
       # use unquoted and therefore allow code injection...
       xml = "<osm><node lat='0' lon='0' changeset='#{changeset.id}'>" \
             "<tag k='\#{@user.inspect}' v='0'/>" \
             "</node></osm>"
-      put node_create_path, :params => xml, :headers => auth_header
+      post api_nodes_path, :params => xml, :headers => auth_header
       assert_response :success
       nodeid = @response.body
 
@@ -549,7 +541,7 @@ module Api
       assert_not_nil checknode, "node not found in data base after upload"
 
       # and grab it using the api
-      get api_node_path(:id => nodeid)
+      get api_node_path(nodeid)
       assert_response :success
       apinode = Node.from_xml(@response.body)
       assert_not_nil apinode, "downloaded node is nil, but shouldn't be"
@@ -557,6 +549,91 @@ module Api
       # check the tags are not corrupted
       assert_equal checknode.tags, apinode.tags
       assert_includes apinode.tags, "\#{@user.inspect}"
+    end
+
+    ##
+    # test initial rate limit
+    def test_initial_rate_limit
+      # create a user
+      user = create(:user)
+
+      # create a changeset that puts us near the initial rate limit
+      changeset = create(:changeset, :user => user,
+                                     :created_at => Time.now.utc - 5.minutes,
+                                     :num_changes => Settings.initial_changes_per_hour - 1)
+
+      # create authentication header
+      auth_header = bearer_authorization_header user
+
+      # try creating a node
+      xml = "<osm><node lat='0' lon='0' changeset='#{changeset.id}'/></osm>"
+      post api_nodes_path, :params => xml, :headers => auth_header
+      assert_response :success, "node create did not return success status"
+
+      # get the id of the node we created
+      nodeid = @response.body
+
+      # try updating the node, which should be rate limited
+      xml = "<osm><node id='#{nodeid}' version='1' lat='1' lon='1' changeset='#{changeset.id}'/></osm>"
+      put api_node_path(nodeid), :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "node update did not hit rate limit"
+
+      # try deleting the node, which should be rate limited
+      xml = "<osm><node id='#{nodeid}' version='2' lat='1' lon='1' changeset='#{changeset.id}'/></osm>"
+      delete api_node_path(nodeid), :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "node delete did not hit rate limit"
+
+      # try creating a node, which should be rate limited
+      xml = "<osm><node lat='0' lon='0' changeset='#{changeset.id}'/></osm>"
+      post api_nodes_path, :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "node create did not hit rate limit"
+    end
+
+    ##
+    # test maximum rate limit
+    def test_maximum_rate_limit
+      # create a user
+      user = create(:user)
+
+      # create a changeset to establish our initial edit time
+      changeset = create(:changeset, :user => user,
+                                     :created_at => Time.now.utc - 28.days)
+
+      # create changeset to put us near the maximum rate limit
+      total_changes = Settings.max_changes_per_hour - 1
+      while total_changes.positive?
+        changes = [total_changes, Changeset::MAX_ELEMENTS].min
+        changeset = create(:changeset, :user => user,
+                                       :created_at => Time.now.utc - 5.minutes,
+                                       :num_changes => changes)
+        total_changes -= changes
+      end
+
+      # create authentication header
+      auth_header = bearer_authorization_header user
+
+      # try creating a node
+      xml = "<osm><node lat='0' lon='0' changeset='#{changeset.id}'/></osm>"
+      post api_nodes_path, :params => xml, :headers => auth_header
+      assert_response :success, "node create did not return success status"
+
+      # get the id of the node we created
+      nodeid = @response.body
+
+      # try updating the node, which should be rate limited
+      xml = "<osm><node id='#{nodeid}' version='1' lat='1' lon='1' changeset='#{changeset.id}'/></osm>"
+      put api_node_path(nodeid), :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "node update did not hit rate limit"
+
+      # try deleting the node, which should be rate limited
+      xml = "<osm><node id='#{nodeid}' version='2' lat='1' lon='1' changeset='#{changeset.id}'/></osm>"
+      delete api_node_path(nodeid), :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "node delete did not hit rate limit"
+
+      # try creating a node, which should be rate limited
+      xml = "<osm><node lat='0' lon='0' changeset='#{changeset.id}'/></osm>"
+      post api_nodes_path, :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "node create did not hit rate limit"
     end
 
     private
@@ -572,13 +649,6 @@ module Api
     def xml_attr_rewrite(xml, name, value)
       xml.find("//osm/node").first[name] = value.to_s
       xml
-    end
-
-    ##
-    # parse some xml
-    def xml_parse(xml)
-      parser = XML::Parser.string(xml)
-      parser.parse
     end
   end
 end

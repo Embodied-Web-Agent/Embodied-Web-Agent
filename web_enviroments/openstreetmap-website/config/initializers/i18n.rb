@@ -18,27 +18,16 @@ module OpenStreetMap
       def store_translations(locale, data, options = {})
         locale = ::I18n::Locale::Tag::Rfc4646.tag(locale).to_s
 
-        super(locale, data, options)
-      end
-    end
-
-    module ValidateLocales
-      def default_fallbacks
-        super.select do |locale|
-          ::I18n.available_locales.include?(locale)
-        end
+        super
       end
     end
   end
 end
 
 I18n::Backend::Simple.prepend(OpenStreetMap::I18n::NormaliseLocales)
-I18n::JS::FallbackLocales.prepend(OpenStreetMap::I18n::ValidateLocales)
 
 I18n::Backend::Simple.include(I18n::Backend::PluralizationFallback)
 I18n::Backend::Simple.include(I18n::Backend::Fallbacks)
-
-I18n.fallbacks.map("no" => "nb")
 
 I18n.enforce_available_locales = false
 
@@ -49,5 +38,10 @@ if Rails.env.test?
 end
 
 Rails.configuration.after_initialize do
+  require "i18n-js/listen"
+
+  # This will only run in development.
+  I18nJS.listen
+
   I18n.available_locales
 end

@@ -2,7 +2,7 @@
 #
 # Table name: user_preferences
 #
-#  user_id :bigint(8)        not null, primary key
+#  user_id :bigint           not null, primary key
 #  k       :string           not null, primary key
 #  v       :string           not null
 #
@@ -12,8 +12,6 @@
 #
 
 class UserPreference < ApplicationRecord
-  self.primary_keys = "user_id", "k"
-
   belongs_to :user
 
   validates :user, :associated => true

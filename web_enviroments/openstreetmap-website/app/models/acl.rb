@@ -2,7 +2,7 @@
 #
 # Table name: acls
 #
-#  id      :bigint(8)        not null, primary key
+#  id      :bigint           not null, primary key
 #  address :inet
 #  k       :string           not null
 #  v       :string
@@ -39,6 +39,10 @@ class Acl < ApplicationRecord
 
   def self.no_account_creation(address, options = {})
     match(address, options).exists?(:k => "no_account_creation")
+  end
+
+  def self.allow_account_creation(address, options = {})
+    match(address, options).exists?(:k => "allow_account_creation")
   end
 
   def self.no_note_comment(address, domain = nil)

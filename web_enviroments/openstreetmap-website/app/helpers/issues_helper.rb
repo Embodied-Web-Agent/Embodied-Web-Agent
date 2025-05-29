@@ -25,12 +25,35 @@ module IssuesHelper
     end
   end
 
-  def open_issues_count
-    count = Issue.visible_to(current_user).open.limit(100).size
-    if count > 99
-      tag.span("99+", :class => "count-number")
-    elsif count.positive?
-      tag.span(count, :class => "count-number")
+  def reportable_heading(reportable)
+    heading_params = { :title => link_to(reportable_title(reportable), reportable_url(reportable)) }
+    heading_params[:datetime_created] = reportable_heading_time(reportable.created_at)
+    heading_params[:datetime_updated] = reportable_heading_time(reportable.updated_at) unless reportable.is_a? User
+
+    case reportable
+    when DiaryComment
+      t "issues.helper.reportable_heading.diary_comment_html", **heading_params
+    when DiaryEntry
+      t "issues.helper.reportable_heading.diary_entry_html", **heading_params
+    when Note
+      t "issues.helper.reportable_heading.note_html", **heading_params
+    when User
+      t "issues.helper.reportable_heading.user_html", **heading_params
     end
+  end
+
+  def open_issues_count
+    count = Issue.visible_to(current_user).open.limit(Settings.max_issues_count).size
+    if count >= Settings.max_issues_count
+      tag.span(I18n.t("count.at_least_pattern", :count => Settings.max_issues_count), :class => "badge count-number")
+    elsif count.positive?
+      tag.span(count, :class => "badge count-number")
+    end
+  end
+
+  private
+
+  def reportable_heading_time(datetime)
+    tag.time l(datetime.to_datetime, :format => :friendly), :datetime => datetime.xmlschema
   end
 end

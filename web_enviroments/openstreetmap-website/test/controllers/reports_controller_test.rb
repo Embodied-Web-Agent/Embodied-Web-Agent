@@ -4,7 +4,6 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
   def test_new_report_without_login
     target_user = create(:user)
     get new_report_path(:reportable_id => target_user.id, :reportable_type => "User")
-    assert_response :redirect
     assert_redirected_to login_path(:referer => new_report_path(:reportable_id => target_user.id, :reportable_type => "User"))
   end
 
@@ -25,7 +24,6 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
                           :issue => { :reportable_id => target_user.id, :reportable_type => "User" }
                         })
     end
-    assert_response :redirect
     assert_redirected_to user_path(target_user)
   end
 
@@ -48,7 +46,6 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
                           :issue => { :reportable_id => target_user.id, :reportable_type => "User" }
                         })
     end
-    assert_response :redirect
     assert_redirected_to user_path(target_user)
 
     issue = Issue.last
@@ -92,7 +89,6 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
                           :issue => { :reportable_id => target_user.id, :reportable_type => "User" }
                         })
     end
-    assert_response :redirect
     assert_redirected_to user_path(target_user)
 
     issue = Issue.last
@@ -114,5 +110,43 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
 
     assert_equal 2, issue.reports.count
+  end
+
+  def test_spam_reports_can_suspend
+    target_user = create(:user)
+
+    session_for(create(:user))
+
+    post reports_path(:report => {
+                        :details => "Spammer",
+                        :category => "spam",
+                        :issue => { :reportable_id => target_user.id, :reportable_type => "User" }
+                      })
+    assert_equal "active", target_user.reload.status
+
+    session_for(create(:user))
+
+    post reports_path(:report => {
+                        :details => "Spammer",
+                        :category => "spam",
+                        :issue => { :reportable_id => target_user.id, :reportable_type => "User" }
+                      })
+    assert_equal "active", target_user.reload.status
+
+    post reports_path(:report => {
+                        :details => "Spammer",
+                        :category => "spam",
+                        :issue => { :reportable_id => target_user.id, :reportable_type => "User" }
+                      })
+    assert_equal "active", target_user.reload.status
+
+    session_for(create(:user))
+
+    post reports_path(:report => {
+                        :details => "Spammer",
+                        :category => "spam",
+                        :issue => { :reportable_id => target_user.id, :reportable_type => "User" }
+                      })
+    assert_equal "suspended", target_user.reload.status
   end
 end

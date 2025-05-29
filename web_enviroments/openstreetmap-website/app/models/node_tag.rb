@@ -2,7 +2,7 @@
 #
 # Table name: current_node_tags
 #
-#  node_id :bigint(8)        not null, primary key
+#  node_id :bigint           not null, primary key
 #  k       :string           default(""), not null, primary key
 #  v       :string           default(""), not null
 #
@@ -13,7 +13,6 @@
 
 class NodeTag < ApplicationRecord
   self.table_name = "current_node_tags"
-  self.primary_keys = "node_id", "k"
 
   belongs_to :node
 

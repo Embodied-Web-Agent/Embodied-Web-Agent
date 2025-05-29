@@ -1,6 +1,7 @@
 # Messages for Yoruba (Yorùbá)
 # Exported from translatewiki.net
 # Export driver: phpyaml
+# Author: BigDareLibrary
 # Author: Demmy
 ---
 yo:
@@ -33,26 +34,24 @@ yo:
     form:
       use_map_link: Lo map
     show:
+      discussion: Ijiroro
       login: wole
   layouts:
     home: ibùdó
     logout: jade
     log_in: Ìjáwọlé
-    make_a_donation:
-      text: Da wo si openstreetmap.org
   messages:
     show:
       title: Ka message
   passwords:
-    lost_password:
+    new:
       title: lost password
       new password button: Fi ọ̀rọ̀ìpamọ́ tuntun ránsẹ́ sí mi
-    reset_password:
+    edit:
       title: ìtúntò ọ̀rọ̀ìpamọ́
   sessions:
     new:
-      title: Wole
-      heading: Wole
+      tab_title: Wole
       lost password link: Se eh ti san password nu?
       auth failure: Pele, e le wole pelu details yi.
   site:

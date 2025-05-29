@@ -5,7 +5,10 @@ class IssuesTest < ApplicationSystemTestCase
 
   def test_view_issues_not_logged_in
     visit issues_path
-    assert_content I18n.t("sessions.new.title")
+
+    within_content_heading do
+      assert_content "Log In"
+    end
   end
 
   def test_view_issues_normal_user
@@ -19,7 +22,7 @@ class IssuesTest < ApplicationSystemTestCase
     sign_in_as(create(:moderator_user))
 
     visit issues_path
-    assert_content I18n.t("issues.index.issues_not_found")
+    assert_content I18n.t("issues.page.issues_not_found")
   end
 
   def test_view_issues
@@ -81,22 +84,22 @@ class IssuesTest < ApplicationSystemTestCase
     visit issues_path
     fill_in "search_by_user", :with => good_user.display_name
     click_on "Search"
-    assert_no_content I18n.t("issues.index.user_not_found")
-    assert_content I18n.t("issues.index.issues_not_found")
+    assert_no_content I18n.t("issues.page.user_not_found")
+    assert_content I18n.t("issues.page.issues_not_found")
 
     # User doesn't exist
     visit issues_path
     fill_in "search_by_user", :with => "Nonexistent User"
     click_on "Search"
-    assert_content I18n.t("issues.index.user_not_found")
-    assert_content I18n.t("issues.index.issues_not_found")
+    assert_content I18n.t("issues.page.user_not_found")
+    assert_no_content I18n.t("issues.page.issues_not_found")
 
     # Find Issue against bad_user
     visit issues_path
     fill_in "search_by_user", :with => bad_user.display_name
     click_on "Search"
-    assert_no_content I18n.t("issues.index.user_not_found")
-    assert_no_content I18n.t("issues.index.issues_not_found")
+    assert_no_content I18n.t("issues.page.user_not_found")
+    assert_no_content I18n.t("issues.page.issues_not_found")
   end
 
   def test_commenting
@@ -114,15 +117,15 @@ class IssuesTest < ApplicationSystemTestCase
     assert_equal("test comment", issue.comments.first.body)
   end
 
-  def test_reassign_issue
-    issue = create(:issue)
-    assert_equal "administrator", issue.assigned_role
+  def test_reassign_issue_to_moderators
+    issue = create(:issue, :assigned_role => "administrator")
     sign_in_as(create(:administrator_user))
 
     visit issue_path(issue)
 
+    assert_unchecked_field "Reassign Issue to Moderators"
     fill_in :issue_comment_body, :with => "reassigning to moderators"
-    check :reassign
+    check "Reassign Issue to Moderators"
     click_on "Add Comment"
 
     assert_content "and the issue was reassigned"
@@ -132,6 +135,24 @@ class IssuesTest < ApplicationSystemTestCase
     assert_equal "moderator", issue.assigned_role
   end
 
+  def test_reassign_issue_to_administrators
+    issue = create(:issue, :assigned_role => "moderator")
+    sign_in_as(create(:moderator_user))
+
+    visit issue_path(issue)
+
+    assert_unchecked_field "Reassign Issue to Administrators"
+    fill_in :issue_comment_body, :with => "reassigning to administrators"
+    check "Reassign Issue to Administrators"
+    click_on "Add Comment"
+
+    assert_content "and the issue was reassigned"
+    assert_current_path issues_path(:status => "open")
+
+    issue.reload
+    assert_equal "administrator", issue.assigned_role
+  end
+
   def test_reassign_issue_as_super_user
     issue = create(:issue)
     sign_in_as(create(:super_user))
@@ -139,7 +160,7 @@ class IssuesTest < ApplicationSystemTestCase
     visit issue_path(issue)
 
     fill_in :issue_comment_body, :with => "reassigning to moderators"
-    check :reassign
+    check "Reassign Issue to Moderators"
     click_on "Add Comment"
 
     assert_content "and the issue was reassigned"
@@ -158,7 +179,123 @@ class IssuesTest < ApplicationSystemTestCase
 
     visit issues_path
 
-    assert_link I18n.t("issues.index.reports_count", :count => issue1.reports_count), :href => issue_path(issue1)
-    assert_link I18n.t("issues.index.reports_count", :count => issue2.reports_count), :href => issue_path(issue2)
+    assert_link I18n.t("issues.page.reports_count", :count => issue1.reports_count), :href => issue_path(issue1)
+    assert_link I18n.t("issues.page.reports_count", :count => issue2.reports_count), :href => issue_path(issue2)
+  end
+
+  def test_issues_pagination
+    1.upto(8).each do |n|
+      user = create(:user, :display_name => "extra_#{n}")
+      create(:issue, :reportable => user, :reported_user => user, :assigned_role => "administrator")
+    end
+
+    sign_in_as(create(:administrator_user))
+
+    visit issues_path(:limit => 5)
+
+    # First Page
+    assert_no_content I18n.t("issues.page.user_not_found")
+    assert_no_content I18n.t("issues.page.issues_not_found")
+    4.upto(8).each do |n|
+      assert_content(/extra_#{n}[^\d]/i, :count => 2)
+    end
+    1.upto(3).each do |n|
+      assert_no_content(/extra_#{n}[^\d]/i)
+    end
+
+    # Second Page
+    click_on "Older Issues"
+    assert_no_content I18n.t("issues.page.user_not_found")
+    assert_no_content I18n.t("issues.page.issues_not_found")
+    4.upto(8).each do |n|
+      assert_no_content(/extra_#{n}[^\d]/i)
+    end
+    1.upto(3).each do |n|
+      assert_content(/extra_#{n}[^\d]/i, :count => 2)
+    end
+
+    # Back to First Page
+    click_on "Newer Issues"
+    assert_no_content I18n.t("issues.page.user_not_found")
+    assert_no_content I18n.t("issues.page.issues_not_found")
+    4.upto(8).each do |n|
+      assert_content(/extra_#{n}[^\d]/i, :count => 2)
+    end
+    1.upto(3).each do |n|
+      assert_no_content(/extra_#{n}[^\d]/i)
+    end
+  end
+
+  def test_single_issue_reporters
+    sign_in_as(create(:moderator_user))
+    issue = create(:issue, :assigned_role => "moderator")
+    issue.reports << create(:report, :user => create(:user, :display_name => "Test Name"))
+
+    visit issues_path
+    assert_content issue.reported_user.display_name
+    assert_content issue.reports.first.user.display_name
+  end
+
+  def test_multiple_issue_reporters
+    sign_in_as(create(:moderator_user))
+    issue = create(:issue, :assigned_role => "moderator")
+
+    create_list(:report, 5, :issue => issue)
+
+    visit issues_path
+    0.upto(1).each do |n|
+      assert_no_content issue.reports[n].user.display_name
+    end
+    2.upto(4).each do |n|
+      assert_content issue.reports[n].user.display_name
+    end
+  end
+
+  def test_ordering_issue_reporters
+    sign_in_as(create(:moderator_user))
+    issue = create(:issue, :assigned_role => "moderator")
+
+    create_list(:report, 5, :issue => issue)
+
+    4.downto(0).each do |n|
+      issue.reports << create(:report, :user => issue.reports[n].user)
+    end
+
+    visit issues_path
+    0.upto(2).each do |n|
+      assert_content issue.reports[n].user.display_name
+    end
+    3.upto(4).each do |n|
+      assert_no_content issue.reports[n].user.display_name
+    end
+  end
+
+  def test_view_managed_issue
+    issue = create(:issue, :assigned_role => "moderator")
+    issue.reports << create(:report)
+    moderator_user = create(:moderator_user)
+
+    sign_in_as(moderator_user)
+    visit issues_path
+
+    within_content_body do
+      assert_no_link moderator_user.display_name
+
+      click_on "1 Report"
+    end
+
+    within_content_heading do
+      assert_content "Open Issue ##{issue.id}"
+
+      click_on "Resolve"
+
+      assert_content "Resolved Issue ##{issue.id}"
+    end
+
+    visit issues_path
+
+    within_content_body do
+      assert_link moderator_user.display_name
+    end
   end
 end

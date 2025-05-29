@@ -25,9 +25,6 @@ zh-HK:
         create: 添加評論
       message:
         create: 傳送
-      client_application:
-        create: 註冊
-        update: 更新
       oauth2_application:
         create: 註冊
         update: 更新
@@ -41,10 +38,6 @@ zh-HK:
         create: 創建封鎖
         update: 更新封鎖
   activerecord:
-    errors:
-      messages:
-        invalid_email_address: 不像是有效的電郵地址。
-        email_address_not_routable: 不可繞送
     models:
       acl: 存取控制清單
       changeset: 變更集
@@ -136,7 +129,6 @@ zh-HK:
         auth_provider: 認證提供者
         auth_uid: 認證UID
         email: 電郵
-        email_confirmation: 電郵確認
         new_email: 新電郵地址
         active: 活躍
         display_name: 顯示名稱
@@ -207,10 +199,8 @@ zh-HK:
   auth:
     providers:
       none: 無
-      openid: OpenID
       google: Google
       facebook: Facebook
-      windowslive: Windows Live
       github: GitHub
       wikipedia: 維基百科
   api:
@@ -228,38 +218,11 @@ zh-HK:
         title: OpenStreetMap註記
       entry:
         comment: 評論
-  account:
-    deletions:
-      show:
-        title: 刪除我的帳號
-        warning: 警告！帳號刪除程序不可逆轉，無法復原。
-        delete_account: 刪除帳號
-        delete_introduction: 您可以用以下按鈕來刪除閣下的OpenStreetMap帳號。請注意這些細節：
-        delete_profile: 您的個人檔案資訊，如頭像圖片、描述、住家位置，都會刪除。
-        delete_display_name: 您的顯示名稱將會刪除，並且可由其他帳號重新使用。
-        retain_caveats: 但，在刪除帳號後，OpenStreetMap內依然會保留一些關於閣下的資料，包括：
-        retain_edits: 您在地圖數據庫的編輯會保留。
-        retain_traces: 您的上傳軌跡也會保留。
-        retain_diary_entries: 您的日記和日記評論會保留但會隱藏起來。
-        retain_notes: 您如曾在地圖上的註記和對註記所發表的評論會被保留，但會隱藏起來。
-        retain_changeset_discussions: 您的變更集討論都會保留。
-        retain_email: 您的電郵地址會繼續保留下來。
-        confirm_delete: 您確定嗎？
-        cancel: 取消
   accounts:
-    edit:
+    show:
       title: 編輯帳號
-      my settings: 我的設定
       current email address: 現在的電郵地址
       external auth: 外部認證
-      openid:
-        link text: 這是什麼？
-      public editing:
-        heading: 公開編輯
-        enabled: 已啟用。並非匿名而可以編輯資料。
-        enabled link text: 這是什麼？
-        disabled: 已停用而不能編輯資料，所有以往的編輯為匿名。
-        disabled link text: 為什麼我不能編輯？
       contributor terms:
         heading: 貢獻者條款
         agreed: 您已同意新的貢獻者條款。
@@ -277,6 +240,37 @@ zh-HK:
       success: 使用者資訊更新成功。
     destroy:
       success: 帳號已刪除。
+    deletions:
+      show:
+        title: 刪除我的帳號
+        warning: 警告！帳號刪除程序不可逆轉，無法復原。
+        delete_account: 刪除帳號
+        delete_introduction: 您可以用以下按鈕來刪除閣下的OpenStreetMap帳號。請注意這些細節：
+        delete_profile: 您的個人檔案資訊，如頭像圖片、描述、住家位置，都會刪除。
+        delete_display_name: 您的顯示名稱將會刪除，並且可由其他帳號重新使用。
+        retain_caveats: 但，在刪除帳號後，OpenStreetMap內依然會保留一些關於閣下的資料，包括：
+        retain_edits: 您在地圖數據庫的編輯會保留。
+        retain_traces: 您的上傳軌跡也會保留。
+        retain_diary_entries: 您的日記和日記評論會保留但會隱藏起來。
+        retain_notes: 您如曾在地圖上的註記和對註記所發表的評論會被保留，但會隱藏起來。
+        retain_changeset_discussions: 您的變更集討論都會保留。
+        retain_email: 您的電郵地址會繼續保留下來。
+        confirm_delete: 您確定嗎？
+        cancel: 取消
+    terms:
+      show:
+        title: 條款
+        heading: 條款
+        heading_ct: 貢獻者條款
+        read_tou: 我已經閱讀過並同意使用條款
+        continue: 繼續
+        legale_select: 請選擇您的居住地：
+        legale_names:
+          france: 法國
+          italy: 意大利
+          rest_of_world: 世界其他地方
+      update:
+        terms accepted: 感謝您接受新的貢獻條款！
   browse:
     version: 版本
     in_changeset: 變更集
@@ -287,24 +281,10 @@ zh-HK:
     view_history: 檢視歷史
     view_details: 檢視詳細資料
     location: 位置：
-    changeset:
-      title: 變更集：%{id}
-      belongs_to: 製作者
-      changesetxml: 變更集XML
-      osmchangexml: osmChange格式XML
-      feed:
-        title: 變更集 %{id}
     relation_member:
       type:
         node: 節點
         way: 路徑
-    not_found:
-      sorry: '抱歉，找不到 %{type} #%{id}。'
-      type:
-        node: 節點
-        way: 路徑
-        changeset: 變更集
-        note: 註記
     timeout:
       type:
         node: 節點
@@ -317,23 +297,12 @@ zh-HK:
         way: 路徑
     start_rjs:
       feature_warning: 正在載入%{num_features}項地圖特徵，可能會拖慢您的瀏覽器或導致瀏覽器未能回應。您是否肯定想要顯示這些資料？
-    query:
+  feature_queries:
+    show:
       title: 查詢地圖特徴
       introduction: 點擊地圖以尋找附近的地圖特徵。
       enclosing: 包圍着的地圖特徵
   changesets:
-    changeset_paging_nav:
-      showing_page: 第%{page}頁
-      next: 下一頁 »
-      previous: « 上一頁
-    changeset:
-      anonymous: 匿名
-    changesets:
-      id: ID
-      saved_at: 已儲存於
-      user: 用戶
-      comment: 評論
-      area: 區域
     index:
       title: 變更集
       title_user: '%{user}的變更集'
@@ -342,7 +311,13 @@ zh-HK:
       empty_user: 此用戶沒有變更集。
       no_more_area: 此區域沒有更多變更集。
       no_more_user: 此用戶沒有更多變更集。
-      load_more: 載入更多
+      feed:
+        title: 變更集 %{id}
+        belongs_to: 製作者
+    show:
+      title: 變更集：%{id}
+      changesetxml: 變更集XML
+      osmchangexml: osmChange格式XML
   dashboards:
     show:
       nearby users: 其他附近的用戶
@@ -354,8 +329,6 @@ zh-HK:
     index:
       title: 用戶日記
       title_nearby: 附近用戶的日記
-      new_title: 在我的用戶日記中撰寫新文章
-      my_diary: 我的日記
       no_entries: 沒有日記項目
     show:
       title: '%{user}的日記 | %{title}'
@@ -367,8 +340,6 @@ zh-HK:
       confirm: 確認
     location:
       location: 位置：
-      view: 檢視
-      edit: 編輯
     feed:
       user:
         title: '%{user}的OpenStreetMap日記文章'
@@ -377,18 +348,9 @@ zh-HK:
         description: 近期以%{language_name}撰寫的OpenStreetMap用戶日記文章
       all:
         description: 近期的OpenStreetMap用戶日記文章
-    comments:
-      post: 貼文
-      when: 於
-      comment: 評論
-      newer_comments: 較新評論
-      older_comments: 較舊評論
-  friendships:
-    make_friend:
-      heading: 將%{user}加為好友？
-      button: 加入為好友
-    remove_friend:
-      heading: 刪除好友%{user}？
+    navigation:
+      my_diary: 我的日記
+      new_title: 在我的用戶日記中撰寫新文章
   geocoder:
     search_osm_nominatim:
       prefix:
@@ -643,7 +605,7 @@ zh-HK:
           elevator: 電梯
           emergency_access_point: 緊急聯絡點
           emergency_bay: 緊急停車灣
-          footway: 行人徑
+          footway: 行人路
           ford: 河床便道
           give_way: 讓路標誌
           living_street: 生活街道
@@ -653,7 +615,7 @@ zh-HK:
           motorway_link: 高速公路聯絡道
           passing_place: 避車彎
           path: 小徑
-          pedestrian: 人行道
+          pedestrian: 行人路
           platform: 月台
           primary: 一級道路
           primary_link: 一級道路聯絡道
@@ -1008,16 +970,15 @@ zh-HK:
         level8: 市界
         level9: 村界
         level10: 市郊邊界
-      types:
-        cities: 城市
-        towns: 市鎮
-        places: 地點
-    results:
-      no_results: 找不到結果
-      more_results: 更多結果
+  searches:
+    queries:
+      create:
+        no_results: 找不到結果
+        more_results: 更多結果
   issues:
     index:
       reported_user: 曾經舉報的用戶
+    page:
       user_not_found: 用戶並不存在
     show:
       resolve: 解決
@@ -1047,20 +1008,16 @@ zh-HK:
     history: 歷史
     export: 匯出
     gps_traces: GPS軌跡
-    gps_traces_tooltip: 管理GPS軌跡
     user_diaries: 用戶日記
-    user_diaries_tooltip: 檢視用戶日記
     edit_with: 用%{editor}來編輯
     intro_header: 歡迎來到 OpenStreetMap！
-    intro_2_create_account: 建立用戶帳號
     tou: 使用條款
     help: 幫助
     copyright: 版權
   user_mailer:
     diary_comment_notification:
       subject: '[OpenStreetMap] %{user}在日記中留下了評論'
-    friendship_notification:
-      subject: '[OpenStreetMap] %{user} 添加了您成為好友'
+    follow_notification:
       see_their_profile: 您可以在 %{userurl} 查看他的個人檔案。
     email_confirm:
       greeting: 您好，
@@ -1076,19 +1033,21 @@ zh-HK:
     confirm_resend:
       failure: 找不到用戶%{name}。
   messages:
-    outbox:
-      title: 寄件匣
+    outboxes:
+      show:
+        title: 寄件匣
   passwords:
-    lost_password:
+    new:
       title: 忘記密碼
       heading: 忘記密碼？
       email address: 電郵地址：
       new password button: 重設密碼
       help_text: 輸入您註冊時用的電郵地址，我們會將可用於重設密碼的連結發送至該地址。
-    reset_password:
+    edit:
       title: 重設密碼
       heading: 重設%{user}的密碼
       reset: 重設密碼
+    update:
       flash changed: 您的密碼已經變更。
   sessions:
     new:
@@ -1097,104 +1056,74 @@ zh-HK:
       lost password link: 忘記您的密碼？
     destroy:
       title: 登出
+  shared:
+    pagination:
+      diary_comments:
+        older: 較舊評論
+        newer: 較新評論
   site:
-    index:
-      createnote: 添加註記
-    edit:
+    not_public_flash:
       not_public: 您尚未把編輯公開。
       not_public_description_html: 您不這樣設定的話就將再無法編輯地圖。您可以在%{user_page}將閣下的編輯設為公開。
-      no_iframe_support: 閣下的瀏覽器並未支援此功能所必需的HTML iframes。
     export:
       title: 匯出
-      area_to_export: 要匯出的範圍
       manually_select: 手動選擇另一範圍
-      format_to_export: 匯出格式
-      map_image: 地圖影像 (顯示標準圖層)
-      embeddable_html: 可內嵌的HTML
       licence: 授權
-      options: 選項
-      format: 格式
-      scale: 比例
-      max: 最大
-      latitude: 緯度：
-      longitude: 經度：
     help:
       beginners_guide:
         description: 由社群編修的新手指南。
-      help:
-        description: 在OpenStreetMap的問答網站上提問或搜尋答案。
       mailing_lists:
         description: 在有着各式各樣主題或地域分類的郵件列表中發問或討論有趣的事。
       irc:
         title: IRC
     sidebar:
       search_results: 搜尋結果
-      close: 關閉
     search:
       search: 搜尋
       where_am_i: 這是哪裡？
       reverse_directions_text: 反轉方向
-    key:
-      table:
-        entry:
-          motorway: 高速公路
-          rail: 鐵路
-          subway: 地鐵
-          tram:
-          - 輕便鐵路
-          - 電車
-          runway:
-          - 機場跑道
-          apron:
-          - 機場停機坪
-          - 客運大樓
-          admin: 行政邊界
-          forest: 森林
-          golf: 哥爾夫球場
-          park: 公園
-          resident: 住宅區
-          industrial: 工業區
-          commercial: 商業區
-          lake:
-          - 湖泊
-          - 水庫
-          brownfield: 棕地
-          cemetery: 墓地
-          pitch: 運動場
-          centre: 運動中心
-          reserve: 自然保護區
-          military: 軍事區
-          school:
-          - 學校
-          - 大學
-          station: 火車站
-          bicycle_shop: 單車店
-          bicycle_parking: 單車停泊處
-          toilets: 廁所
     welcome:
       introduction: 歡迎來到OpenStreetMap，自由而可以編輯的世界地圖。現在您已經注冊完成，繪製地圖所需要的準備已經就緒。以下是一份快速指南，裡面包含着您所需要知道的最重要事項。
-      add_a_note:
-        title: 沒時間編輯？加筆註記吧！
-        para_1: 如果你只想讓一些小問題得以更正，而沒有時間注冊並學習如何編輯，那麼加入註記是非常容易的。
+    add_a_note:
+      title: 沒時間編輯？加筆註記吧！
+      para_1: 如果你只想讓一些小問題得以更正，而沒有時間注冊並學習如何編輯，那麼加入註記是非常容易的。
+  map_keys:
+    show:
+      entries:
+        motorway: 高速公路
+        rail: 鐵路
+        subway: 地鐵
+        runway: 機場跑道
+        apron: 機場停機坪
+        admin: 行政邊界
+        forest: 森林
+        golf: 哥爾夫球場
+        park: 公園
+        resident: 住宅區
+        industrial: 工業區
+        commercial: 商業區
+        lake: 湖泊
+        reservoir: 水庫
+        brownfield: 棕地
+        cemetery: 墓地
+        pitch: 運動場
+        centre: 運動中心
+        reserve: 自然保護區
+        military: 軍事區
+        school: 學校
+        university: 大學
+        station: 火車站
+        bicycle_shop: 單車店
+        bicycle_parking: 單車停泊處
+        toilets: 廁所
   traces:
     create:
       traces_waiting: 您有%{count}條軌跡等待上傳。請考慮先讓目前的軌跡處理完成後，再來繼續上傳其他軌跡，以免阻礙其他用戶的排程。
     index:
       public_traces_from: '%{user}的公開GPS軌跡'
   oauth:
-    authorize:
-      allow_read_prefs: 讀取您的用戶設定。
-      allow_write_notes: 修改註記。
     scopes:
       write_notes: 修改註記
-  oauth_clients:
-    show:
-      requests: 向用戶要求下列權限：
-    index:
-      revoke: 撤銷！
-      oauth: OAuth
-    form:
-      requests: 向用戶要求下列權限：
   users:
     new:
       title: 註冊
@@ -1202,34 +1131,25 @@ zh-HK:
       about:
         header: 自由而可編輯
       display name description: 您公開顯示的用戶名稱。以後還可以在設定中更換。
-      external auth: 第三方身份認證：
-      auth no password: 啟用第三方認證後密碼並非必須，但一些額外的工具或伺服器可能仍需要使用密碼。
       continue: 註冊
-      terms accepted: 感謝您接受新的貢獻條款！
-    terms:
-      title: 條款
-      heading: 條款
-      heading_ct: 貢獻者條款
-      read_tou: 我已經閱讀過並同意使用條款
-      consider_pd: 除上述條款之外，我會把我的貢獻釋放到公共領域(Public Domain)
-      continue: 繼續
-      decline: 拒絕
-      legale_select: 請選擇您的居住地：
-      legale_names:
-        france: 法國
-        italy: 意大利
-        rest_of_world: 世界其他地方
     no_such_user:
       title: 沒有這用戶
       body: 抱歉，沒有名為%{user}的用戶。請檢查您的拼寫，或者您可能按到了錯誤的連結。
     show:
       my notes: 我的註記
-      my settings: 我的設定
       notes: 地圖註記
       report: 舉報此用戶
-    index:
-      title: 用戶
-      heading: 用戶
+    lists:
+      show:
+        title: 用戶
+        heading: 用戶
+    changeset_comments:
+      page:
+        when: 於
+        comment: 評論
+    diary_comments:
+      page:
+        post: 貼文
     auth_association:
       option_2: 如果您已經有帳號，您可以用該帳號的用戶名稱和密碼登入，然後到用戶設定中把您的ID和帳號關聯到一起。
   notes:
@@ -1244,6 +1164,8 @@ zh-HK:
       report: 舉報此註記
     new:
       title: 新增註記
+    notes_paging_nav:
+      showing_page: 第%{page}頁
   javascripts:
     share:
       embed: HTML
@@ -1260,7 +1182,6 @@ zh-HK:
         cycle_map: 單車地圖
         transport_map: 交通地圖
         hot: 人道地圖
-        opnvkarte: ÖPNVKarte
       layers:
         header: 地圖圖層
         notes: 地圖註記

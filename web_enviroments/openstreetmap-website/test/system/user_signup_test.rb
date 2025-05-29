@@ -1,29 +1,90 @@
 require "application_system_test_case"
 
 class UserSignupTest < ApplicationSystemTestCase
+  include ActionMailer::TestHelper
+
+  def setup
+    stub_request(:get, /.*gravatar.com.*d=404/).to_return(:status => 404)
+  end
+
+  test "Sign up with confirmation email" do
+    visit root_path
+
+    click_on "Sign Up"
+
+    within_content_body do
+      fill_in "Email", :with => "new_user_account@example.com"
+      fill_in "Display Name", :with => "new_user_account"
+      fill_in "Password", :with => "new_user_password"
+      fill_in "Confirm Password", :with => "new_user_password"
+
+      assert_emails 1 do
+        click_on "Sign Up"
+
+        assert_content "We sent you a confirmation email"
+      end
+    end
+
+    email = ActionMailer::Base.deliveries.first
+    assert_equal 1, email.to.count
+    assert_equal "new_user_account@example.com", email.to.first
+    email_text = email.parts[0].parts[0].decoded
+    match = %r{/user/new_user_account/confirm\?confirm_string=\S+}.match(email_text)
+    assert_not_nil match
+
+    visit match[0]
+
+    assert_content "new_user_account"
+    assert_content "Welcome!"
+  end
+
+  test "Sign up with confirmation email resending" do
+    visit root_path
+
+    click_on "Sign Up"
+
+    within_content_body do
+      fill_in "Email", :with => "new_user_account@example.com"
+      fill_in "Display Name", :with => "new_user_account"
+      fill_in "Password", :with => "new_user_password"
+      fill_in "Confirm Password", :with => "new_user_password"
+
+      assert_emails 2 do
+        click_on "Sign Up"
+
+        assert_content "We sent you a confirmation email"
+
+        click_on "Resend the confirmation email"
+
+        assert_content "Email Address or Username"
+      end
+    end
+
+    assert_content "sent a new confirmation"
+    assert_no_content "<p>"
+
+    email = ActionMailer::Base.deliveries.last
+    assert_equal 1, email.to.count
+    assert_equal "new_user_account@example.com", email.to.first
+    email_text = email.parts[0].parts[0].decoded
+    match = %r{/user/new_user_account/confirm\?confirm_string=\S+}.match(email_text)
+    assert_not_nil match
+
+    visit match[0]
+
+    assert_content "new_user_account"
+    assert_content "Welcome!"
+  end
+
   test "Sign up from login page" do
     visit login_path
 
-    click_on "Register now"
+    within_content_heading do
+      click_on "Sign Up"
+    end
 
-    assert_content "Confirm Password"
-  end
-
-  test "externally redirect when contributor terms declined" do
-    user = build(:user)
-
-    visit root_path
-    click_on "Sign Up"
-    fill_in "Email", :with => user.email
-    fill_in "Email Confirmation", :with => user.email
-    fill_in "Display Name", :with => user.display_name
-    fill_in "Password", :with => "testtest"
-    fill_in "Confirm Password", :with => "testtest"
-    click_button "Sign Up"
-
-    assert_content "Contributor terms"
-    click_on "Cancel"
-
-    assert_current_path "https://wiki.openstreetmap.org/wiki/Contributor_Terms_Declined"
+    within_content_body do
+      assert_content "Confirm Password"
+    end
   end
 end

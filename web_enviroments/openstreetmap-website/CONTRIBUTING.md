@@ -1,5 +1,14 @@
+# Contributing
+
 * https://www.ruby-lang.org/ - The homepage of Ruby which has more links and some great tutorials.
-* http://rubyonrails.org/ - The homepage of Rails, also has links and tutorials
+* https://rubyonrails.org/ - The homepage of Rails, also has links and tutorials.
+
+## Assigning Issues
+
+We don't assign issues to individual contributors. You are welcome to work on any
+issue, and there's no need to ask first.
+
+For more details see [our FAQ](FAQ.md)]
 
 ## Coding style
 
@@ -11,7 +20,14 @@ development to check that your code matches our guidelines:
 ```
 bundle exec rubocop
 bundle exec rails eslint
-bundle exec erblint .
+bundle exec erb_lint .
+```
+
+You can also install hooks to have git run checks automatically when
+you commit using [overcommit](https://github.com/sds/overcommit) with:
+
+```
+bundle exec overcommit --install
 ```
 
 ## Testing
@@ -34,6 +50,12 @@ You can run the existing test suite with:
 
 ```
 bundle exec rails test:all
+```
+
+You can run javascript tests with:
+
+```
+RAILS_ENV=test bundle exec teaspoon
 ```
 
 You can view test coverage statistics by browsing the `coverage` directory.
@@ -65,19 +87,10 @@ and why it should be the way it is.
 
 ## i18n
 
-If you make a change that involve the locale files (in `config/locales`) then please
+If you make a change that involves the locale files (in `config/locales`) then please
 only submit changes to the `en.yml` file. The other files are updated via
 [Translatewiki](https://translatewiki.net/wiki/Translating:OpenStreetMap) and should
 not be included in your pull request.
-
-### Nominatim prefixes
-
-I18n keys under the `geocoder.search_osm_nominatim` keyspace are managed by the
-Nominatim maintainers. From time to time they run stats over the Nominatim
-database, and update the list of available keys manually.
-
-Adding or removing keys to this list is therefore discouraged, but contributions
-to the descriptive texts are welcome.
 
 ### Copyright attribution
 
@@ -130,7 +143,7 @@ with making the reviews as straightforward as possible:
   large to review in one sitting, or if changes are requested, then the
   maintainer needs to repeatedly re-read code that has already been considered.
 * The commit history is important. This is a large codebase, developed over many
-  years by many developers. We frequently need to read the commit history (e.g.
+  years by many developers. We frequently need to read the commit history (for example
   using `git blame`) to figure out what is going on. So small, understandable,
   and relevant commits are important for other developers looking back at your
   work in future.

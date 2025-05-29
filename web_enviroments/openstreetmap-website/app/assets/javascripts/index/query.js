@@ -1,14 +1,12 @@
-//= require jquery-simulate/jquery.simulate
-//= require qs/dist/qs
-
 OSM.Query = function (map) {
-  var url = OSM.OVERPASS_URL,
-      credentials = OSM.OVERPASS_CREDENTIALS,
-      queryButton = $(".control-query .control-button"),
-      uninterestingTags = ["source", "source_ref", "source:ref", "history", "attribution", "created_by", "tiger:county", "tiger:tlid", "tiger:upload_uuid", "KSJ2:curve_id", "KSJ2:lat", "KSJ2:lon", "KSJ2:coordinate", "KSJ2:filename", "note:ja"],
-      marker;
+  const url = OSM.OVERPASS_URL,
+        credentials = OSM.OVERPASS_CREDENTIALS,
+        control = $(".control-query"),
+        queryButton = control.find(".control-button"),
+        uninterestingTags = ["source", "source_ref", "source:ref", "history", "attribution", "created_by", "tiger:county", "tiger:tlid", "tiger:upload_uuid", "KSJ2:curve_id", "KSJ2:lat", "KSJ2:lon", "KSJ2:coordinate", "KSJ2:filename", "note:ja"];
+  let marker;
 
-  var featureStyle = {
+  const featureStyle = {
     color: "#FF6200",
     weight: 4,
     opacity: 1,
@@ -20,19 +18,19 @@ OSM.Query = function (map) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (queryButton.hasClass("active")) {
+    if (control.hasClass("active")) {
       disableQueryMode();
     } else if (!queryButton.hasClass("disabled")) {
       enableQueryMode();
     }
   }).on("disabled", function () {
-    if (queryButton.hasClass("active")) {
+    if (control.hasClass("active")) {
       map.off("click", clickHandler);
       $(map.getContainer()).removeClass("query-active").addClass("query-disabled");
       $(this).tooltip("show");
     }
   }).on("enabled", function () {
-    if (queryButton.hasClass("active")) {
+    if (control.hasClass("active")) {
       map.on("click", clickHandler);
       $(map.getContainer()).removeClass("query-disabled").addClass("query-active");
       $(this).tooltip("hide");
@@ -40,39 +38,24 @@ OSM.Query = function (map) {
   });
 
   function showResultGeometry() {
-    var geometry = $(this).data("geometry");
+    const geometry = $(this).data("geometry");
     if (geometry) map.addLayer(geometry);
     $(this).addClass("selected");
   }
 
   function hideResultGeometry() {
-    var geometry = $(this).data("geometry");
+    const geometry = $(this).data("geometry");
     if (geometry) map.removeLayer(geometry);
     $(this).removeClass("selected");
   }
 
   $("#sidebar_content")
-    .on("mouseover", ".query-results li.query-result", showResultGeometry)
-    .on("mouseout", ".query-results li.query-result", hideResultGeometry)
-    .on("mousedown", ".query-results li.query-result", function () {
-      var moved = false;
-      $(this).one("click", function (e) {
-        if (!moved) {
-          var geometry = $(this).data("geometry");
-          if (geometry) map.removeLayer(geometry);
-
-          if (!$(e.target).is("a")) {
-            $(this).find("a").simulate("click", e);
-          }
-        }
-      }).one("mousemove", function () {
-        moved = true;
-      });
-    });
+    .on("mouseover", ".query-results a", showResultGeometry)
+    .on("mouseout", ".query-results a", hideResultGeometry);
 
   function interestingFeature(feature) {
     if (feature.tags) {
-      for (var key in feature.tags) {
+      for (const key in feature.tags) {
         if (uninterestingTags.indexOf(key) < 0) {
           return true;
         }
@@ -83,19 +66,20 @@ OSM.Query = function (map) {
   }
 
   function featurePrefix(feature) {
-    var tags = feature.tags;
-    var prefix = "";
+    const tags = feature.tags;
+    let prefix = "";
 
-    if (tags.boundary === "administrative" && tags.admin_level) {
-      prefix = I18n.t("geocoder.search_osm_nominatim.admin_levels.level" + tags.admin_level, {
-        defaultValue: I18n.t("geocoder.search_osm_nominatim.prefix.boundary.administrative")
+    if (tags.boundary === "administrative" && (tags.border_type || tags.admin_level)) {
+      prefix = OSM.i18n.t("geocoder.search_osm_nominatim.border_types." + tags.border_type, {
+        defaultValue: OSM.i18n.t("geocoder.search_osm_nominatim.admin_levels.level" + tags.admin_level, {
+          defaultValue: OSM.i18n.t("geocoder.search_osm_nominatim.prefix.boundary.administrative")
+        })
       });
     } else {
-      var prefixes = I18n.t("geocoder.search_osm_nominatim.prefix");
-      var key, value;
+      const prefixes = OSM.i18n.t("geocoder.search_osm_nominatim.prefix");
 
-      for (key in tags) {
-        value = tags[key];
+      for (const key in tags) {
+        const value = tags[key];
 
         if (prefixes[key]) {
           if (prefixes[key][value]) {
@@ -104,12 +88,12 @@ OSM.Query = function (map) {
         }
       }
 
-      for (key in tags) {
-        value = tags[key];
+      for (const key in tags) {
+        const value = tags[key];
 
         if (prefixes[key]) {
-          var first = value.slice(0, 1).toUpperCase(),
-              rest = value.slice(1).replace(/_/g, " ");
+          const first = value.slice(0, 1).toUpperCase(),
+                rest = value.slice(1).replace(/_/g, " ");
 
           return first + rest;
         }
@@ -117,37 +101,36 @@ OSM.Query = function (map) {
     }
 
     if (!prefix) {
-      prefix = I18n.t("javascripts.query." + feature.type);
+      prefix = OSM.i18n.t("javascripts.query." + feature.type);
     }
 
     return prefix;
   }
 
   function featureName(feature) {
-    var tags = feature.tags,
-        locales = I18n.locales.get();
+    const tags = feature.tags,
+          locales = OSM.preferred_languages;
 
-    for (var i = 0; i < locales.length; i++) {
-      if (tags["name:" + locales[i]]) {
-        return tags["name:" + locales[i]];
+    for (const locale of locales) {
+      if (tags["name:" + locale]) {
+        return tags["name:" + locale];
       }
     }
 
-    if (tags.name) {
-      return tags.name;
-    } else if (tags.ref) {
-      return tags.ref;
-    } else if (tags["addr:housename"]) {
-      return tags["addr:housename"];
-    } else if (tags["addr:housenumber"] && tags["addr:street"]) {
-      return tags["addr:housenumber"] + " " + tags["addr:street"];
-    } else {
-      return "#" + feature.id;
+    for (const key of ["name", "ref", "addr:housename"]) {
+      if (tags[key]) {
+        return tags[key];
+      }
     }
+
+    if (tags["addr:housenumber"] && tags["addr:street"]) {
+      return tags["addr:housenumber"] + " " + tags["addr:street"];
+    }
+    return "#" + feature.id;
   }
 
   function featureGeometry(feature) {
-    var geometry;
+    let geometry;
 
     if (feature.type === "node" && feature.lat && feature.lon) {
       geometry = L.circleMarker([feature.lat, feature.lon], featureStyle);
@@ -167,7 +150,7 @@ OSM.Query = function (map) {
   }
 
   function runQuery(latlng, radius, query, $section, merge, compare) {
-    var $ul = $section.find("ul");
+    const $ul = $section.find("ul");
 
     $ul.empty();
     $section.show();
@@ -176,23 +159,24 @@ OSM.Query = function (map) {
       $section.data("ajax").abort();
     }
 
-    $section.data("ajax", $.ajax({
-      url: url,
+    $section.data("ajax", new AbortController());
+    fetch(url, {
       method: "POST",
-      data: {
+      body: new URLSearchParams({
         data: "[timeout:10][out:json];" + query
-      },
-      xhrFields: {
-        withCredentials: credentials
-      },
-      success: function (results) {
-        var elements;
+      }),
+      credentials: credentials ? "include" : "same-origin",
+      signal: $section.data("ajax").signal
+    })
+      .then(response => response.json())
+      .then(function (results) {
+        let elements;
 
         $section.find(".loader").hide();
 
         if (merge) {
           elements = results.elements.reduce(function (hash, element) {
-            var key = element.type + element.id;
+            const key = element.type + element.id;
             if ("geometry" in element) {
               delete element.bounds;
             }
@@ -211,55 +195,55 @@ OSM.Query = function (map) {
           elements = elements.sort(compare);
         }
 
-        for (var i = 0; i < elements.length; i++) {
-          var element = elements[i];
+        for (const element of elements) {
+          if (!interestingFeature(element)) continue;
 
-          if (interestingFeature(element)) {
-            var $li = $("<li>")
-              .addClass("query-result list-group-item")
-              .data("geometry", featureGeometry(element))
-              .text(featurePrefix(element) + " ")
-              .appendTo($ul);
+          const $li = $("<li>")
+            .addClass("list-group-item list-group-item-action")
+            .text(featurePrefix(element) + " ")
+            .appendTo($ul);
 
-            $("<a>")
-              .attr("href", "/" + element.type + "/" + element.id)
-              .text(featureName(element))
-              .appendTo($li);
-          }
+          $("<a>")
+            .addClass("stretched-link")
+            .attr("href", "/" + element.type + "/" + element.id)
+            .data("geometry", featureGeometry(element))
+            .text(featureName(element))
+            .appendTo($li);
         }
 
         if (results.remark) {
           $("<li>")
-            .addClass("query-result list-group-item")
-            .text(I18n.t("javascripts.query.error", { server: url, error: results.remark }))
+            .addClass("list-group-item")
+            .text(OSM.i18n.t("javascripts.query.error", { server: url, error: results.remark }))
             .appendTo($ul);
         }
 
         if ($ul.find("li").length === 0) {
           $("<li>")
-            .addClass("query-result list-group-item")
-            .text(I18n.t("javascripts.query.nothing_found"))
+            .addClass("list-group-item")
+            .text(OSM.i18n.t("javascripts.query.nothing_found"))
             .appendTo($ul);
         }
-      },
-      error: function (xhr, status, error) {
+      })
+      .catch(function (error) {
+        if (error.name === "AbortError") return;
+
         $section.find(".loader").hide();
 
         $("<li>")
-          .addClass("query-result list-group-item")
-          .text(I18n.t("javascripts.query." + status, { server: url, error: error }))
+          .addClass("list-group-item")
+          .text(OSM.i18n.t("javascripts.query.error", { server: url, error: error.message }))
           .appendTo($ul);
-      }
-    }));
+      });
   }
 
   function compareSize(feature1, feature2) {
-    var width1 = feature1.bounds.maxlon - feature1.bounds.minlon,
-        height1 = feature1.bounds.maxlat - feature1.bounds.minlat,
-        area1 = width1 * height1,
-        width2 = feature2.bounds.maxlat - feature2.bounds.minlat,
-        height2 = feature2.bounds.maxlat - feature2.bounds.minlat,
-        area2 = width2 * height2;
+    const width1 = feature1.bounds.maxlon - feature1.bounds.minlon,
+          height1 = feature1.bounds.maxlat - feature1.bounds.minlat,
+          area1 = width1 * height1,
+          width2 = feature2.bounds.maxlat - feature2.bounds.minlat,
+          height2 = feature2.bounds.maxlat - feature2.bounds.minlat,
+          area2 = width2 * height2;
 
     return area1 - area2;
   }
@@ -268,9 +252,9 @@ OSM.Query = function (map) {
    * To find nearby objects we ask overpass for the union of the
    * following sets:
    *
-   *   node(around:<radius>,<lat>,lng>)
-   *   way(around:<radius>,<lat>,lng>)
-   *   relation(around:<radius>,<lat>,lng>)
+   *   node(around:<radius>,<lat>,<lng>)
+   *   way(around:<radius>,<lat>,<lng>)
+   *   relation(around:<radius>,<lat>,<lng>)
    *
    * to find enclosing objects we first find all the enclosing areas:
    *
@@ -285,53 +269,43 @@ OSM.Query = function (map) {
    * for each object.
    */
   function queryOverpass(lat, lng) {
-    var latlng = L.latLng(lat, lng).wrap(),
-        bounds = map.getBounds().wrap(),
-        precision = OSM.zoomPrecision(map.getZoom()),
-        bbox = bounds.getSouth().toFixed(precision) + "," +
-               bounds.getWest().toFixed(precision) + "," +
-               bounds.getNorth().toFixed(precision) + "," +
-               bounds.getEast().toFixed(precision),
-        radius = 10 * Math.pow(1.5, 19 - map.getZoom()),
-        around = "around:" + radius + "," + lat + "," + lng,
-        nodes = "node(" + around + ")",
-        ways = "way(" + around + ")",
-        relations = "relation(" + around + ")",
-        nearby = "(" + nodes + ";" + ways + ";);out tags geom(" + bbox + ");" + relations + ";out geom(" + bbox + ");",
-        isin = "is_in(" + lat + "," + lng + ")->.a;way(pivot.a);out tags bb;out ids geom(" + bbox + ");relation(pivot.a);out tags bb;";
+    const latlng = L.latLng(lat, lng).wrap(),
+          bounds = map.getBounds().wrap(),
+          zoom = map.getZoom(),
+          bbox = [bounds.getSouthWest(), bounds.getNorthEast()]
+            .map(c => OSM.cropLocation(c, zoom))
+            .join(),
+          geombbox = "geom(" + bbox + ");",
+          radius = 10 * Math.pow(1.5, 19 - zoom),
+          around = "(around:" + radius + "," + lat + "," + lng + ")",
+          nodes = "node" + around,
+          ways = "way" + around,
+          relations = "relation" + around,
+          nearby = "(" + nodes + ";" + ways + ";);out tags " + geombbox + relations + ";out " + geombbox,
+          isin = "is_in(" + lat + "," + lng + ")->.a;way(pivot.a);out tags bb;out ids " + geombbox + "relation(pivot.a);out tags bb;";
 
     $("#sidebar_content .query-intro")
       .hide();
 
     if (marker) map.removeLayer(marker);
-    marker = L.circle(latlng, radius, featureStyle).addTo(map);
-
-    $(document).everyTime(75, "fadeQueryMarker", function (i) {
-      if (i === 10) {
-        map.removeLayer(marker);
-      } else {
-        marker.setStyle({
-          opacity: 1 - (i * 0.1),
-          fillOpacity: 0.5 - (i * 0.05)
-        });
-      }
-    }, 10);
+    marker = L.circle(latlng, {
+      radius: radius,
+      className: "query-marker",
+      ...featureStyle
+    }).addTo(map);
 
     runQuery(latlng, radius, nearby, $("#query-nearby"), false);
     runQuery(latlng, radius, isin, $("#query-isin"), true, compareSize);
   }
 
   function clickHandler(e) {
-    var precision = OSM.zoomPrecision(map.getZoom()),
-        latlng = e.latlng.wrap(),
-        lat = latlng.lat.toFixed(precision),
-        lng = latlng.lng.toFixed(precision);
+    const [lat, lon] = OSM.cropLocation(e.latlng, map.getZoom());
 
-    OSM.router.route("/query?lat=" + lat + "&lon=" + lng);
+    OSM.router.route("/query?" + new URLSearchParams({ lat, lon }));
   }
 
   function enableQueryMode() {
-    queryButton.addClass("active");
+    control.addClass("active");
     map.on("click", clickHandler);
     $(map.getContainer()).addClass("query-active");
   }
@@ -340,10 +314,10 @@ OSM.Query = function (map) {
     if (marker) map.removeLayer(marker);
     $(map.getContainer()).removeClass("query-active").removeClass("query-disabled");
     map.off("click", clickHandler);
-    queryButton.removeClass("active");
+    control.removeClass("active");
   }
 
-  var page = {};
+  const page = {};
 
   page.pushstate = page.popstate = function (path) {
     OSM.loadSidebarContent(path, function () {
@@ -352,22 +326,22 @@ OSM.Query = function (map) {
   };
 
   page.load = function (path, noCentre) {
-    var params = Qs.parse(path.substring(path.indexOf("?") + 1)),
-        latlng = L.latLng(params.lat, params.lon);
+    const params = new URLSearchParams(path.substring(path.indexOf("?"))),
+          latlng = L.latLng(params.get("lat"), params.get("lon"));
 
-    if (!window.location.hash && !noCentre && !map.getBounds().contains(latlng)) {
+    if (!location.hash && !noCentre && !map.getBounds().contains(latlng)) {
       OSM.router.withoutMoveListener(function () {
         map.setView(latlng, 15);
       });
     }
 
-    queryOverpass(params.lat, params.lon);
+    queryOverpass(params.get("lat"), params.get("lon"));
   };
 
   page.unload = function (sameController) {
     if (!sameController) {
       disableQueryMode();
-      $("#sidebar_content .query-results li.query-result.selected").each(hideResultGeometry);
+      $("#sidebar_content .query-results a.selected").each(hideResultGeometry);
     }
   };
 

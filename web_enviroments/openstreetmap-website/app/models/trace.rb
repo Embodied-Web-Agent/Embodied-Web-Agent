@@ -2,11 +2,11 @@
 #
 # Table name: gpx_files
 #
-#  id          :bigint(8)        not null, primary key
-#  user_id     :bigint(8)        not null
+#  id          :bigint           not null, primary key
+#  user_id     :bigint           not null
 #  visible     :boolean          default(TRUE), not null
 #  name        :string           default(""), not null
-#  size        :bigint(8)
+#  size        :bigint
 #  latitude    :float
 #  longitude   :float
 #  timestamp   :datetime         not null
@@ -16,9 +16,10 @@
 #
 # Indexes
 #
-#  gpx_files_timestamp_idx           (timestamp)
-#  gpx_files_user_id_idx             (user_id)
-#  gpx_files_visible_visibility_idx  (visible,visibility)
+#  gpx_files_timestamp_idx            (timestamp)
+#  gpx_files_user_id_idx              (user_id)
+#  gpx_files_visible_visibility_idx   (visible,visibility)
+#  index_gpx_files_on_user_id_and_id  (user_id,id)
 #
 # Foreign Keys
 #
@@ -35,9 +36,10 @@ class Trace < ApplicationRecord
   has_many :points, :class_name => "Tracepoint", :foreign_key => "gpx_id", :dependent => :delete_all, :inverse_of => :trace
 
   scope :visible, -> { where(:visible => true) }
-  scope :visible_to, ->(u) { visible.where("visibility IN ('public', 'identifiable') OR user_id = ?", u) }
+  scope :visible_to, ->(u) { visible.where(:visibility => %w[public identifiable]).or(visible.where(:user => u)) }
   scope :visible_to_all, -> { where(:visibility => %w[public identifiable]) }
   scope :tagged, ->(t) { joins(:tags).where(:gpx_file_tags => { :tag => t }) }
+  scope :imported, -> { where(:inserted => true) }
 
   has_one_attached :file, :service => Settings.trace_file_storage
   has_one_attached :image, :service => Settings.trace_image_storage
@@ -80,16 +82,16 @@ class Trace < ApplicationRecord
             :content_type => content_type(attachable.path),
             :identify => false)
     else
-      super(attachable)
+      super
     end
   end
 
   def public?
-    visibility == "public" || visibility == "identifiable"
+    %w[public identifiable].include?(visibility)
   end
 
   def trackable?
-    visibility == "trackable" || visibility == "identifiable"
+    %w[trackable identifiable].include?(visibility)
   end
 
   def identifiable?
@@ -165,13 +167,12 @@ class Trace < ApplicationRecord
   end
 
   def xml_file
-    file.open do |tracefile|
-      filetype = Open3.capture2("/usr/bin/file", "-Lbz", tracefile.path).first.chomp
-      gzipped = filetype.include?("gzip compressed")
-      bzipped = filetype.include?("bzip2 compressed")
-      zipped = filetype.include?("Zip archive")
-      tarred = filetype.include?("tar archive")
+    gzipped = file.content_type.end_with?("gzip")
+    bzipped = file.content_type.end_with?("bzip2")
+    zipped = file.content_type.start_with?("application/zip")
+    tarred = file.content_type.start_with?("application/x-tar")
 
+    file.open do |tracefile|
       if gzipped || bzipped || zipped || tarred
         file = Tempfile.new("trace.#{id}")
 
@@ -202,14 +203,14 @@ class Trace < ApplicationRecord
     logger.info("GPX Import importing #{name} (#{id}) from #{user.email}")
 
     file.open do |file|
-      gpx = GPX::File.new(file.path)
+      gpx = GPX::File.new(file.path, :maximum_points => Settings.max_trace_size)
 
       f_lat = 0
       f_lon = 0
       first = true
 
       # If there are any existing points for this trace then delete them
-      Tracepoint.where(:gpx_id => id).delete_all
+      Tracepoint.where(:trace => id).delete_all
 
       gpx.points.each_slice(1_000) do |points|
         # Gather the trace points together for a bulk import
@@ -242,10 +243,10 @@ class Trace < ApplicationRecord
       end
 
       if gpx.actual_points.positive?
-        max_lat = Tracepoint.where(:gpx_id => id).maximum(:latitude)
-        min_lat = Tracepoint.where(:gpx_id => id).minimum(:latitude)
-        max_lon = Tracepoint.where(:gpx_id => id).maximum(:longitude)
-        min_lon = Tracepoint.where(:gpx_id => id).minimum(:longitude)
+        max_lat = Tracepoint.where(:trace => id).maximum(:latitude)
+        min_lat = Tracepoint.where(:trace => id).minimum(:latitude)
+        max_lon = Tracepoint.where(:trace => id).maximum(:longitude)
+        min_lon = Tracepoint.where(:trace => id).minimum(:longitude)
 
         max_lat = max_lat.to_f / 10000000
         min_lat = min_lat.to_f / 10000000
@@ -267,16 +268,30 @@ class Trace < ApplicationRecord
     end
   end
 
+  def schedule_import
+    TraceImporterJob.new(self).enqueue(:priority => user.traces.where(:inserted => false).count)
+  end
+
+  def schedule_destruction
+    TraceDestroyerJob.perform_later(self)
+  end
+
   private
 
   def content_type(file)
-    case Open3.capture2("/usr/bin/file", "-Lbz", file).first.chomp
-    when /.*\btar archive\b.*\bgzip\b/ then "application/x-tar+gzip"
-    when /.*\btar archive\b.*\bbzip2\b/ then "application/x-tar+x-bzip2"
-    when /.*\btar archive\b/ then "application/x-tar"
-    when /.*\bZip archive\b/ then "application/zip"
-    when /.*\bXML\b.*\bgzip\b/ then "application/gzip"
-    when /.*\bXML\b.*\bbzip2\b/ then "application/x-bzip2"
+    file_type = Open3.capture2("/usr/bin/file", "-Lb", file).first.chomp
+
+    case file_type
+    when /\bcompressed data,/ then file_type = Open3.capture2("/usr/bin/file", "-Lbz", file).first.chomp
+    end
+
+    case file_type
+    when /\btar archive\b.*\bgzip\b/ then "application/x-tar+gzip"
+    when /\btar archive\b.*\bbzip2\b/ then "application/x-tar+x-bzip2"
+    when /\btar archive\b/ then "application/x-tar"
+    when /\bZip archive\b/ then "application/zip"
+    when /\bXML\b.*\bgzip\b/ then "application/gzip"
+    when /\bXML\b.*\bbzip2\b/ then "application/x-bzip2"
     else "application/gpx+xml"
     end
   end

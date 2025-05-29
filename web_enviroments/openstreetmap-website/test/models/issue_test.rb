@@ -6,14 +6,14 @@ class IssueTest < ActiveSupport::TestCase
 
     assert_predicate issue, :valid?
     issue.assigned_role = "bogus"
-    assert_not issue.valid?
+    assert_not_predicate issue, :valid?
   end
 
   def test_reported_user
     create(:language, :code => "en")
     user = create(:user)
-    note = create(:note_comment, :author => create(:user)).note
-    anonymous_note = create(:note_comment, :author => nil).note
+    note = create(:note, :author => create(:user))
+    anonymous_note = create(:note, :author => nil)
     diary_entry = create(:diary_entry)
     diary_comment = create(:diary_comment, :diary_entry => diary_entry)
 

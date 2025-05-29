@@ -36,8 +36,8 @@ class Issue < ApplicationRecord
   belongs_to :user_resolved, :class_name => "User", :foreign_key => :resolved_by, :optional => true
   belongs_to :user_updated, :class_name => "User", :foreign_key => :updated_by, :optional => true
 
-  has_many :reports, :dependent => :destroy
-  has_many :comments, :class_name => "IssueComment", :dependent => :destroy
+  has_many :reports, -> { order(:id) }, :dependent => :destroy
+  has_many :comments, -> { order(:id) }, :class_name => "IssueComment", :dependent => :destroy
 
   validates :reportable_id, :uniqueness => { :scope => [:reportable_type] }
 
@@ -50,11 +50,11 @@ class Issue < ApplicationRecord
   scope :visible_to, ->(user) { where(:assigned_role => user.roles.map(&:role)) }
 
   def read_reports
-    resolved_at.present? ? reports.where("updated_at < ?", resolved_at) : nil
+    resolved_at.present? ? reports.where(:updated_at => ...resolved_at) : nil
   end
 
   def unread_reports
-    resolved_at.present? ? reports.where("updated_at >= ?", resolved_at) : reports
+    resolved_at.present? ? reports.where(:updated_at => resolved_at..) : reports
   end
 
   include AASM

@@ -1,10 +1,6 @@
 module Api
   class TracepointsController < ApiController
-    before_action :check_api_readable
-
     authorize_resource
-
-    around_action :api_call_handle_error, :api_call_timeout
 
     # Get an XML response containing a list of tracepoints that have been uploaded
     # within the specified bounding box, and in the specified page.
@@ -23,6 +19,8 @@ module Api
       # check boundary is sane and area within defined
       # see /config/application.yml
       begin
+        raise OSM::APIBadUserInput, "The parameter bbox is required" unless params[:bbox]
+
         bbox = BoundingBox.from_bbox_params(params)
         bbox.check_boundaries
         bbox.check_size

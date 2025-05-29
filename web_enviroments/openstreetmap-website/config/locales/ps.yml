@@ -5,13 +5,14 @@
 # Author: Ahmed-Najib-Biabani-Ibrahimkhel
 # Author: Ajeje Brazorf
 # Author: Amjad Khan
+# Author: شاه زمان پټان
 ---
 ps:
   html:
     dir: rtl
   helpers:
     file:
-      prompt: فایل غوره کړئ
+      prompt: دوتنه ټاکل
     submit:
       diary_comment:
         create: تبصره
@@ -22,9 +23,6 @@ ps:
         create: تبصره ورگډول
       message:
         create: لېږل
-      client_application:
-        create: ثبتول
-        update: تازه کول
       oauth2_application:
         create: ثبتول
         update: تازه کول
@@ -84,24 +82,19 @@ ps:
     id:
       name: iD
   accounts:
-    edit:
-      my settings: زما امستنې
-      openid:
-        link text: دا څه دی؟
-      public editing:
-        enabled link text: دا څه دی؟
+    show:
       contributor terms:
         link text: دا څه دی؟
       save changes button: بدلونونه خوندي کول
+    terms:
+      show:
+        legale_names:
+          france: فرانسه
+          italy: اېټاليا
   browse:
-    created: جوړ شو
-    closed: تړل شوی
     relation:
       members: غړي
     relation_member:
-      type:
-        way: لار
-    not_found:
       type:
         way: لار
     timeout:
@@ -113,16 +106,10 @@ ps:
     start_rjs:
       loading: رابرسېرېږي...
   changesets:
-    changeset:
-      anonymous: ورکنومی
-    changesets:
-      id: پېژند
-      user: کارن
-      comment: تبصره
-      area: سيمه
-  dashboards:
-    popup:
-      friend: ملگری
+    index:
+      feed:
+        created: جوړ شو
+        closed: تړل شوی
   diary_entries:
     form:
       location: 'ځای:'
@@ -131,6 +118,7 @@ ps:
       leave_a_comment: يوه تبصره پرېښودل
       login: ننوتل
     diary_entry:
+      full_entry: بشپړه ننوتنه کتل
       confirm: تاييد
     diary_comment:
       comment_from_html: په %{comment_created_at} باندې د %{link_user} تبصره
@@ -138,14 +126,6 @@ ps:
       confirm: تاييد
     location:
       location: 'ځای:'
-      view: کتل
-      edit: سمول
-    comments:
-      when: کله
-      comment: تبصره
-  friendships:
-    make_friend:
-      button: د ملگري په توگه ورگډول
   geocoder:
     search_osm_nominatim:
       prefix:
@@ -277,13 +257,15 @@ ps:
           river: رود
           stream: لښتی
           waterfall: ځوړاوبی
-      types:
-        cities: ښارونه
-        towns: ښارګوټي
-        places: ځايونه
-    results:
-      no_results: کومې پايلې و  نه موندل شوې
-      more_results: نورې پايلې
+  searches:
+    queries:
+      create:
+        no_results: کومې پايلې و  نه موندل شوې
+        more_results: نورې پايلې
+  directions:
+    show:
+      distance: واټن
+      time: وخت
   layouts:
     home: کور
     logout: وتل
@@ -292,8 +274,6 @@ ps:
     edit: سمول
     history: پېښليک
     help: لارښود
-    make_a_donation:
-      text: بسپنه ورکول
     learn_more: نور مالومات
   user_mailer:
     diary_comment_notification:
@@ -310,38 +290,35 @@ ps:
     confirm_email:
       button: تاييد
   messages:
-    inbox:
-      date: نېټه
-    message_summary:
-      reply_button: ځوابول
-      destroy_button: ړنگول
     new:
       title: پيغام لېږل
-    outbox:
-      date: نېټه
     show:
       title: پيغام لوستل
       reply_button: ځواب
-    sent_message_summary:
-      destroy_button: ړنگول
+    mailboxes:
+      messages_table:
+        date: نېټه
+      message:
+        destroy_button: ړنگول
+    outboxes:
+      message:
+        destroy_button: ړنگول
   passwords:
-    lost_password:
+    new:
       heading: آيا پټنوم مو هېر شوی؟
-      email address: 'برېښليک پته:'
+      email address: برېښليک‌پته
   profiles:
-    edit:
+    show:
       image: 'انځور:'
       new image: يو انځور ورگډول
+      social_links:
+        title: د ټولنيز پېژنيال وېبتړنې
+        remove: لرې کول
   sessions:
     new:
-      title: ننوتل
-      heading: ننوتل
+      tab_title: ننوتل
       password: 'پټنوم:'
       login_button: ننوتل
-      auth_providers:
-        github:
-          title: د گېټ هب له لارې ننوتل
-          alt: د يو گېټ هب گڼون له لارې ننوتل
     destroy:
       title: وتل
       logout_button: وتل
@@ -352,35 +329,36 @@ ps:
       native:
         title: د دې مخ په اړه
       legal_babble:
+        lead_2_get_started_mapping: نخشه جوړول پيلول
+        lead_2_weeklyosm: اوونيزه او اېس اېم
+        lead_2_osm_community: او اېس اېم ټولنه
+        lead_2_osm_foundation: اواېس اېم بنسټ
+        lead_2_making_donation: بسپنه ورکول
         credit_1_html: موږ غواړو چې تاسو کریډیټ وکاروي لپاره &ldquo;&copy; د اوفن
           سټریټ ميپ مرسته کوونکی&rdquo;.
-    edit:
+        services_title_html: زياتي چوپړونه
+    not_public_flash:
       user_page_link: د کارن مخ
     export:
       licence: منښتليک
-      options: خوښنې
-      format: بڼه
     sidebar:
       search_results: د پلټنې پايلې
-      close: تړل
     search:
       search: پلټل
       where_am_i: زه چېرته يم؟
       submit_text: ورځه
-    key:
-      table:
-        entry:
-          forest: ځنگل
-          park: پارک
-          lake:
-          - ډنډ
-          - زېرمتون
-          farm: کرونده
-          cemetery: هديره
-          military: پوځي سيمه
-          school:
-          - ښوونځی
-          - پوهنتون
+  map_keys:
+    show:
+      entries:
+        forest: ځنگل
+        park: پارک
+        lake: ډنډ
+        reservoir: زېرمتون
+        farm: کرونده
+        cemetery: هديره
+        military: پوځي سيمه
+        school: ښوونځی
+        university: پوهنتون
   traces:
     new:
       visibility_help: دا څه مانا لري؟
@@ -398,26 +376,20 @@ ps:
     trace:
       view_map: نخشه کتل
       edit_map: نخشه سمول
-  oauth_clients:
-    show:
-      confirm: آيا تاسې ډاډه ياست؟
-    index:
-      application: کاريال نوم
+  application:
+    auth_providers:
+      github:
+        title: د گېټ هب له لارې ننوتل
+        alt: د يو گېټ هب گڼون له لارې ننوتل
   users:
     new:
       title: نومليکنه
-    terms:
-      decline: ردول
-      legale_names:
-        france: فرانسه
-        italy: اېټاليا
     show:
       my edits: زما سمونونه
       my messages: زما پيغامونه
       send message: پيغام لېږل
       edits: سمونونه
-      add as friend: ملگری ورگډول
-      email address: 'برېښليک پته:'
+      email address: 'برېښليک‌پته:'
       status: 'دريځ:'
       block_history: فعاله بنديزونه
       moderator_history: لگېدلي بنديزونه
@@ -429,24 +401,23 @@ ps:
       unhide_user: دا کارن ښکاره کول
       delete_user: دا کارن ړنگول
       confirm: تاييد
-    index:
-      title: کارنان
-      heading: کارنان
-  user_role:
-    grant:
-      confirm: تاييد
-    revoke:
-      confirm: تاييد
+    lists:
+      show:
+        title: کارنان
+        heading: کارنان
+    changeset_comments:
+      page:
+        when: کله
+        comment: تبصره
   user_blocks:
     show:
       created: جوړ شو
       status: دريځ
-      show: ښکاره کول
       edit: سمول
     block:
       show: ښکاره کول
       edit: سمول
-    blocks:
+    page:
       creator_name: جوړونکی
       status: دريځ
   notes:
@@ -455,10 +426,8 @@ ps:
       comment: تبصره
   javascripts:
     directions:
-      distance: واټن
       instructions:
         unnamed: بې نومه
-      time: وخت
   redactions:
     show:
       description: 'څرگندونه:'

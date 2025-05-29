@@ -12,8 +12,19 @@ class SiteController < ApplicationController
 
   authorize_resource :class => false
 
+  content_security_policy(:only => :edit) do |policy|
+    policy.frame_src(*policy.frame_src, :blob)
+  end
+
+  content_security_policy(:only => :id) do |policy|
+    policy.connect_src("*")
+    policy.img_src(*policy.img_src, "*", :blob)
+    policy.script_src(*policy.script_src, :unsafe_eval)
+    policy.style_src(*policy.style_src, :unsafe_inline)
+  end
+
   def index
-    session[:location] ||= OSM.ip_location(request.env["REMOTE_ADDR"]) unless Settings.status == "database_readonly" || Settings.status == "database_offline"
+    session[:location] ||= OSM.ip_location(request.env["REMOTE_ADDR"]) unless %w[database_readonly database_offline].include?(Settings.status)
   end
 
   def permalink
@@ -46,11 +57,6 @@ class SiteController < ApplicationController
     redirect_to path
   end
 
-  def key
-    expires_in 7.days, :public => true
-    render :layout => false
-  end
-
   def edit
     editor = preferred_editor
 
@@ -60,12 +66,6 @@ class SiteController < ApplicationController
       return
     else
       require_user
-    end
-
-    if %w[id].include?(editor)
-      append_content_security_policy_directives(
-        :frame_src => %w[blob:]
-      )
     end
 
     begin
@@ -93,9 +93,18 @@ class SiteController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       # don't try and derive a location from a missing/deleted object
     end
+
+    if api_status != "online"
+      flash.now[:warning] = { :partial => "layouts/offline_flash" }
+    elsif current_user && !current_user.data_public?
+      flash.now[:warning] = { :partial => "not_public_flash" }
+    else
+      @enable_editor = true
+    end
   end
 
   def copyright
+    @title = t ".title"
     @locale = params[:copyright_locale] || I18n.locale
   end
 
@@ -113,20 +122,21 @@ class SiteController < ApplicationController
 
   def export; end
 
-  def offline; end
+  def offline
+    flash.now[:warning] = { :partial => "layouts/offline_flash" }
+    render :html => nil, :layout => true
+  end
 
   def preview
-    render :html => RichText.new(params[:type], params[:text]).to_html
+    if params[:text].blank?
+      flash.now[:warning] = t("layouts.nothing_to_preview")
+      render :partial => "layouts/flash"
+    else
+      render :html => RichText.new(params[:type], params[:text]).to_html
+    end
   end
 
   def id
-    append_content_security_policy_directives(
-      :connect_src => %w[*],
-      :img_src => %w[* blob:],
-      :script_src => %w[dev.virtualearth.net 'unsafe-eval'],
-      :style_src => %w['unsafe-inline']
-    )
-
     render :layout => false
   end
 

@@ -3,11 +3,11 @@
 # Table name: redactions
 #
 #  id                 :integer          not null, primary key
-#  title              :string
-#  description        :text
+#  title              :string           not null
+#  description        :text             not null
 #  created_at         :datetime
 #  updated_at         :datetime
-#  user_id            :bigint(8)        not null
+#  user_id            :bigint           not null
 #  description_format :enum             default("markdown"), not null
 #
 # Foreign Keys

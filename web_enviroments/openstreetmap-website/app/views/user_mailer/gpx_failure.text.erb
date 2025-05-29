@@ -1,0 +1,13 @@
+<%= t ".hi", :to_user => @to_user %>
+
+<%= t ".failed_to_import" %>
+
+<%= render :partial => "gpx_details" %>
+
+<%= t ".verify" %>
+
+==
+<%= @error %>
+==
+
+<%= t ".more_info", :url => t(".import_failures_url") %>

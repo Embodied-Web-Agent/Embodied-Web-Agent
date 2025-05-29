@@ -10,7 +10,7 @@ class UserTest < ActiveSupport::TestCase
                         :home_lat => nil,
                         :home_lon => nil,
                         :home_zoom => nil)
-    assert_not user.valid?
+    assert_not_predicate user, :valid?
     assert_predicate user.errors[:email], :any?
     assert_predicate user.errors[:pass_crypt], :any?
     assert_predicate user.errors[:display_name], :any?
@@ -27,10 +27,13 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_unique_display_name
-    existing_user = create(:user)
-    new_user = build(:user, :display_name => existing_user.display_name)
-    assert_not new_user.save
-    assert_includes new_user.errors[:display_name], "has already been taken"
+    create(:user, :display_name => "H\u{e9}nryIV")
+
+    %W[H\u{e9}nryIV he\u{301}nryiv H\u{c9}nry\u2163 he\u{301}nry\u2173].each do |name|
+      new_user = build(:user, :display_name => name)
+      assert_not new_user.save
+      assert_includes new_user.errors[:display_name], "has already been taken"
+    end
   end
 
   def test_email_valid
@@ -57,11 +60,23 @@ class UserTest < ActiveSupport::TestCase
     user.display_name = "123"
     assert_predicate user, :valid?, "should allow 3 char name name"
     user.display_name = "12"
-    assert_not user.valid?, "should not allow 2 char name"
+    assert_not_predicate user, :valid?, "should not allow 2 char name"
     user.display_name = ""
-    assert_not user.valid?, "should not allow blank/0 char name"
+    assert_not_predicate user, :valid?, "should not allow blank/0 char name"
     user.display_name = nil
-    assert_not user.valid?, "should not allow nil value"
+    assert_not_predicate user, :valid?, "should not allow nil value"
+  end
+
+  def test_display_name_width
+    user = build(:user)
+    user.display_name = "123"
+    assert_predicate user, :valid?, "should allow 3 column name name"
+    user.display_name = "12"
+    assert_not_predicate user, :valid?, "should not allow 2 column name"
+    user.display_name = "1\u{200B}2"
+    assert_not_predicate user, :valid?, "should not allow 2 column name"
+    user.display_name = "\u{200B}\u{200B}\u{200B}"
+    assert_not_predicate user, :valid?, "should not allow 0 column name"
   end
 
   def test_display_name_valid
@@ -87,22 +102,64 @@ class UserTest < ActiveSupport::TestCase
     bad.each do |display_name|
       user = build(:user)
       user.display_name = display_name
-      assert_not user.valid?, "#{display_name} is valid when it shouldn't be"
+      assert_not_predicate user, :valid?, "#{display_name} is valid when it shouldn't be"
     end
   end
 
-  def test_friends_with
+  def test_display_name_user_id_new
+    existing_user = create(:user)
+    user = build(:user)
+
+    user.display_name = "user_#{existing_user.id}"
+    assert_not_predicate user, :valid?, "user_<id> name is valid for existing user id when it shouldn't be"
+
+    user.display_name = "user_#{existing_user.id + 1}"
+    assert_not_predicate user, :valid?, "user_<id> name is valid for new user id when it shouldn't be"
+  end
+
+  def test_display_name_user_id_rename
+    existing_user = create(:user)
+    user = create(:user)
+
+    user.display_name = "user_#{existing_user.id}"
+    assert_not_predicate user, :valid?, "user_<id> name is valid for existing user id when it shouldn't be"
+
+    user.display_name = "user_#{user.id}"
+    assert_predicate user, :valid?, "user_<id> name is invalid for own id, when it should be"
+  end
+
+  def test_display_name_user_id_unchanged_is_valid
+    user = build(:user, :display_name => "user_0")
+    user.save(:validate => false)
+    user.reload
+
+    assert_predicate user, :valid?, "user_0 display_name is invalid but it hasn't been changed"
+  end
+
+  def test_description_length
+    user = build(:user)
+    user.description = "x" * 65536
+    assert_predicate user, :valid?, "should allow 65536 char description"
+    user.description = "x" * 65537
+    assert_not_predicate user, :valid?, "should not allow 65537 char description"
+    user.description = ""
+    assert_predicate user, :valid?, "should allow blank/0 char description"
+    user.description = nil
+    assert_predicate user, :valid?, "should allow nil value"
+  end
+
+  def test_follows
     alice = create(:user, :active)
     bob = create(:user, :active)
     charlie = create(:user, :active)
-    create(:friendship, :befriender => alice, :befriendee => bob)
+    create(:follow, :follower => alice, :following => bob)
 
-    assert alice.friends_with?(bob)
-    assert_not alice.friends_with?(charlie)
-    assert_not bob.friends_with?(alice)
-    assert_not bob.friends_with?(charlie)
-    assert_not charlie.friends_with?(bob)
-    assert_not charlie.friends_with?(alice)
+    assert alice.follows?(bob)
+    assert_not alice.follows?(charlie)
+    assert_not bob.follows?(alice)
+    assert_not bob.follows?(charlie)
+    assert_not charlie.follows?(bob)
+    assert_not charlie.follows?(alice)
   end
 
   def test_users_nearby
@@ -129,13 +186,13 @@ class UserTest < ActiveSupport::TestCase
   def test_friends
     norm = create(:user, :active)
     sec = create(:user, :active)
-    create(:friendship, :befriender => norm, :befriendee => sec)
+    create(:follow, :follower => norm, :following => sec)
 
-    assert_equal [sec], norm.friends
-    assert_equal 1, norm.friends.size
+    assert_equal [sec], norm.followings
+    assert_equal 1, norm.followings.size
 
-    assert_empty sec.friends
-    assert_equal 0, sec.friends.size
+    assert_empty sec.followings
+    assert_equal 0, sec.followings.size
   end
 
   def test_user_preferred_editor
@@ -198,52 +255,110 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_languages
-    create(:language, :code => "en")
-    create(:language, :code => "de")
-    create(:language, :code => "sl")
-
     user = create(:user, :languages => ["en"])
     assert_equal ["en"], user.languages
     user.languages = %w[de fr en]
     assert_equal %w[de fr en], user.languages
     user.languages = %w[fr de sl]
-    assert_equal "de", user.preferred_language
     assert_equal %w[fr de sl], user.preferred_languages.map(&:to_s)
     user = create(:user, :languages => %w[en de])
     assert_equal %w[en de], user.languages
+  end
+
+  def test_default_diary_language_undefined
+    create(:language, :code => "en")
+    user = create(:user, :languages => [])
+    assert_nil user.default_diary_language
+  end
+
+  def test_default_diary_language_known
+    create(:language, :code => "en")
+    user = create(:user, :languages => ["en"])
+    assert_equal "en", user.default_diary_language
+  end
+
+  def test_default_diary_language_known_with_fallback
+    create(:language, :code => "en")
+    create(:language, :code => "fr")
+    user = create(:user, :languages => ["fr en"])
+    assert_equal "fr", user.default_diary_language
+  end
+
+  def test_default_diary_language_unknown
+    create(:language, :code => "en")
+    user = create(:user, :languages => ["unknown"])
+    assert_nil user.default_diary_language
+  end
+
+  def test_default_diary_language_unknown_with_known_fallback
+    create(:language, :code => "en")
+    user = create(:user, :languages => ["unknown en"])
+    assert_equal "en", user.default_diary_language
+  end
+
+  def test_default_diary_language_set
+    create(:language, :code => "en")
+    user = create(:user, :languages => [])
+
+    assert_difference "user.preferences.count", 1 do
+      assert_equal "en", (user.default_diary_language = "en")
+    end
+
+    user.reload
+    assert_equal "en", user.default_diary_language
+    preference = user.preferences.find_by(:k => "diary.default_language")
+    assert_equal "en", preference.v
+  end
+
+  def test_default_diary_language_set_twice
+    create(:language, :code => "en")
+    create(:language, :code => "fr")
+    user = create(:user, :languages => [])
+
+    assert_difference "user.preferences.count", 1 do
+      assert_equal "en", (user.default_diary_language = "en")
+    end
+    assert_difference "user.preferences.count", 0 do
+      assert_equal "fr", (user.default_diary_language = "fr")
+    end
+
+    user.reload
+    assert_equal "fr", user.default_diary_language
+    preference = user.preferences.find_by(:k => "diary.default_language")
+    assert_equal "fr", preference.v
   end
 
   def test_visible?
     assert_predicate build(:user, :pending), :visible?
     assert_predicate build(:user, :active), :visible?
     assert_predicate build(:user, :confirmed), :visible?
-    assert_not build(:user, :suspended).visible?
-    assert_not build(:user, :deleted).visible?
+    assert_not_predicate build(:user, :suspended), :visible?
+    assert_not_predicate build(:user, :deleted), :visible?
   end
 
   def test_active?
-    assert_not build(:user, :pending).active?
+    assert_not_predicate build(:user, :pending), :active?
     assert_predicate build(:user, :active), :active?
     assert_predicate build(:user, :confirmed), :active?
-    assert_not build(:user, :suspended).active?
-    assert_not build(:user, :deleted).active?
+    assert_not_predicate build(:user, :suspended), :active?
+    assert_not_predicate build(:user, :deleted), :active?
   end
 
   def test_moderator?
-    assert_not create(:user).moderator?
+    assert_not_predicate create(:user), :moderator?
     assert_predicate create(:moderator_user), :moderator?
   end
 
   def test_administrator?
-    assert_not create(:user).administrator?
+    assert_not_predicate create(:user), :administrator?
     assert_predicate create(:administrator_user), :administrator?
   end
 
-  def test_has_role?
-    assert_not create(:user).has_role?("administrator")
-    assert_not create(:user).has_role?("moderator")
-    assert create(:administrator_user).has_role?("administrator")
-    assert create(:moderator_user).has_role?("moderator")
+  def test_role?
+    assert_not create(:user).role?("administrator")
+    assert_not create(:user).role?("moderator")
+    assert create(:administrator_user).role?("administrator")
+    assert create(:moderator_user).role?("moderator")
   end
 
   def test_soft_destroy
@@ -253,27 +368,15 @@ class UserTest < ActiveSupport::TestCase
     assert_predicate user.description, :blank?
     assert_nil user.home_lat
     assert_nil user.home_lon
-    assert_not user.avatar.attached?
+    assert_not_predicate user.avatar, :attached?
     assert_equal "deleted", user.status
-    assert_not user.visible?
-    assert_not user.active?
-  end
-
-  def test_soft_destroy_revokes_oauth1_tokens
-    user = create(:user)
-    access_token = create(:access_token, :user => user)
-    assert_equal 1, user.oauth_tokens.authorized.count
-
-    user.soft_destroy
-
-    assert_equal 0, user.oauth_tokens.authorized.count
-    access_token.reload
-    assert_predicate access_token, :invalidated?
+    assert_not_predicate user, :visible?
+    assert_not_predicate user, :active?
   end
 
   def test_soft_destroy_revokes_oauth2_tokens
     user = create(:user)
-    oauth_access_token = create(:oauth_access_token, :resource_owner_id => user.id)
+    oauth_access_token = create(:oauth_access_token, :user => user)
     assert_equal 1, user.access_tokens.not_expired.count
 
     user.soft_destroy
@@ -281,5 +384,63 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 0, user.access_tokens.not_expired.count
     oauth_access_token.reload
     assert_predicate oauth_access_token, :revoked?
+  end
+
+  def test_deletion_allowed_when_no_changesets
+    with_user_account_deletion_delay(10000) do
+      user = create(:user)
+      assert_predicate user, :deletion_allowed?
+    end
+  end
+
+  def test_deletion_allowed_without_delay
+    with_user_account_deletion_delay(nil) do
+      user = create(:user)
+      create(:changeset, :user => user)
+      user.reload
+      assert_predicate user, :deletion_allowed?
+    end
+  end
+
+  def test_deletion_allowed_past_delay
+    with_user_account_deletion_delay(10) do
+      user = create(:user)
+      create(:changeset, :user => user, :created_at => Time.now.utc - 12.hours, :closed_at => Time.now.utc - 10.hours)
+      user.reload
+      assert_predicate user, :deletion_allowed?
+    end
+  end
+
+  def test_deletion_allowed_during_delay
+    with_user_account_deletion_delay(10) do
+      user = create(:user)
+      create(:changeset, :user => user, :created_at => Time.now.utc - 11.hours, :closed_at => Time.now.utc - 9.hours)
+      user.reload
+      assert_not_predicate user, :deletion_allowed?
+      assert_equal Time.now.utc + 1.hour, user.deletion_allowed_at
+    end
+  end
+
+  def test_deletion_allowed_past_zero_delay
+    with_user_account_deletion_delay(0) do
+      user = create(:user)
+      create(:changeset, :user => user, :created_at => Time.now.utc, :closed_at => Time.now.utc + 1.hour)
+      travel 90.minutes do
+        user.reload
+        assert_predicate user, :deletion_allowed?
+      end
+    end
+  end
+
+  def test_deletion_allowed_during_zero_delay
+    with_user_account_deletion_delay(0) do
+      user = create(:user)
+      create(:changeset, :user => user, :created_at => Time.now.utc, :closed_at => Time.now.utc + 1.hour)
+      travel 30.minutes do
+        user.reload
+        assert_not_predicate user, :deletion_allowed?
+        assert_equal Time.now.utc + 30.minutes, user.deletion_allowed_at
+      end
+    end
   end
 end

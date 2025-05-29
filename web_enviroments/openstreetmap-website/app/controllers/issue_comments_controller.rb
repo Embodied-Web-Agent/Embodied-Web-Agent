@@ -19,7 +19,7 @@ class IssueCommentsController < ApplicationController
       reassign_issue(@issue)
       flash[:notice] = t ".issue_reassigned"
 
-      if current_user.has_role? @issue.assigned_role
+      if current_user.role? @issue.assigned_role
         redirect_to @issue
       else
         redirect_to issues_path(:status => "open")
@@ -33,7 +33,7 @@ class IssueCommentsController < ApplicationController
   private
 
   def issue_comment_params
-    params.require(:issue_comment).permit(:body)
+    params.expect(:issue_comment => [:body])
   end
 
   # This sort of assumes there are only two roles

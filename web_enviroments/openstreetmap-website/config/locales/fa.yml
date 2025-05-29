@@ -14,9 +14,11 @@
 # Author: Danialbehzadi
 # Author: Darafsh
 # Author: Dr jackie
+# Author: Ebrahim
 # Author: Ebraminio
 # Author: FarsiNevis
 # Author: Fatemi127
+# Author: Gravitystorm
 # Author: Grille chompa
 # Author: Hooshmand.hasannia
 # Author: Huji
@@ -25,6 +27,7 @@
 # Author: Jeeputer
 # Author: Leyth
 # Author: LordProfo
+# Author: Marwin H.H.
 # Author: Mcuteangel
 # Author: Mjbmr
 # Author: Mobin2008
@@ -38,12 +41,14 @@
 # Author: Reza koulivand
 # Author: Reza1615
 # Author: Ruila
+# Author: Rulebased
 # Author: Sahim
 # Author: Taha
 # Author: Wayiran
 # Author: ZxxZxxZ
 # Author: جواد
 # Author: فلورانس
+# Author: کهربا
 ---
 fa:
   html:
@@ -56,7 +61,7 @@ fa:
       prompt: انتخاب پرونده
     submit:
       diary_comment:
-        create: ذخیره
+        create: نظردهی
       diary_entry:
         create: انتشار
         update: به‌روز رسانی
@@ -64,9 +69,6 @@ fa:
         create: افزودن نظر
       message:
         create: ارسال
-      client_application:
-        create: نام‌نویسی
-        update: به‌روز رسانی
       oauth2_application:
         create: نام‌نویسی
         update: به‌روز رسانی
@@ -80,10 +82,6 @@ fa:
         create: ایجاد مسدودی
         update: به‌روز رسانی مسدودی
   activerecord:
-    errors:
-      messages:
-        invalid_email_address: نشانی رایانامه نامعتبر به نظر می‌رسد
-        email_address_not_routable: قابل مسیریابی نیست
     models:
       acl: فهرست کنترل دسترسی
       changeset: بستهٔ تغییر
@@ -137,6 +135,7 @@ fa:
       diary_entry:
         user: کاربر
         title: عنوان
+        body: متن
         latitude: عرض جغرافیایی
         longitude: طول جغرافیایی
         language_code: زبان
@@ -175,7 +174,6 @@ fa:
         auth_provider: فراهم‌آورندهٔ احراز هویت
         auth_uid: شناسه UID احراز هویت
         email: رایانامه
-        email_confirmation: تأیید رایانامه
         new_email: نشانی رایانامهٔ جدید
         active: فعال
         display_name: نام نمایشی
@@ -204,39 +202,41 @@ fa:
   datetime:
     distance_in_words_ago:
       about_x_hours:
-        one: حدود ۱ ساعت پیش
+        one: حدود %{count} ساعت پیش
         other: حدود %{count} ساعت پیش
       about_x_months:
-        one: حدود ۱ ماه پیش
+        one: حدود %{count} ماه پیش
         other: حدود %{count} ماه پیش
       about_x_years:
-        one: حدود ۱ سال پیش
+        one: حدود %{count} سال پیش
         other: حدود %{count} سال پیش
       almost_x_years:
-        one: نزدیک به ۱ سال پیش
+        one: نزدیک به %{count} سال پیش
         other: نزدیک به %{count} سال پیش
       half_a_minute: نیم دقیقه پیش
       less_than_x_seconds:
-        one: کمتر از ۱ ثانیه پیش
+        one: کمتر از %{count} ثانیه پیش
         other: کمتر از %{count} ثانیه پیش
       less_than_x_minutes:
-        one: کمتر از ۱ دقیقه پیش
+        one: کمتر از %{count} دقیقه پیش
         other: کمتر از %{count} دقیقه پیش
-      over_x_years: بیش از %{count} سال پیش
+      over_x_years:
+        one: بیش از %{count} سال پیش
+        other: بیش از %{count} سال پیش
       x_seconds:
-        one: ۱ ثانیه پیش
+        one: '%{count} ثانیه پیش'
         other: '%{count} ثانیه پیش'
       x_minutes:
-        one: ۱ دقیقه پیش
+        one: '%{count} دقیقه پیش'
         other: '%{count} دقیقه پیش'
       x_days:
         one: '%{count} روز پیش'
         other: '%{count} روز پیش'
       x_months:
-        one: ۱ ماه پیش
+        one: '%{count} ماه پیش'
         other: '%{count} ماه پیش'
       x_years:
-        one: ۱ سال پیش
+        one: '%{count} سال پیش'
         other: '%{count} سال پیش'
   editor:
     default: پیش‌فرض (در حال حاضر %{name})
@@ -249,23 +249,22 @@ fa:
   auth:
     providers:
       none: هیچ‌کدام
-      openid: OpenID
       google: گوگل
       facebook: فیس‌بوک
-      windowslive: ویندوز لایو
+      microsoft: مایکروسافت
       github: گیت‌هاب
       wikipedia: ویکی‌پدیا
   api:
     notes:
       comment:
         opened_at_html: '%{when} ایجاد شد'
-        opened_at_by_html: '%{when} %{user} آن را ایجاد کرد'
+        opened_at_by_html: '%{when} %{user} ایجادش کرد'
         commented_at_html: '%{when} روزآمد شد'
-        commented_at_by_html: '%{when} %{user} آن را روزآمد کرد'
+        commented_at_by_html: '%{when} %{user} روزآمدش کرد'
         closed_at_html: '%{when} حل شد'
-        closed_at_by_html: '%{when} %{user} آن را حل کرد'
+        closed_at_by_html: '%{when} %{user} حلش کرد'
         reopened_at_html: '%{when} دوباره فعال شد'
-        reopened_at_by_html: '%{when} %{user} دوباره آن را فعال کرد'
+        reopened_at_by_html: '%{when} %{user} به جریانش انداخت'
       rss:
         title: یادداشت‌های OpenStreetMap
         description_area: فهرستی از یادداشت‌های گزارش‌شده، نظردار یا بسته‌شده در منطقهٔ
@@ -278,7 +277,40 @@ fa:
       entry:
         comment: نظر
         full: یادداشت کامل
-  account:
+  accounts:
+    show:
+      title: ویرایش حساب
+      current email address: رایانامهٔ کنونی
+      external auth: احراز هویت خارجی
+      contributor terms:
+        heading: شرایط مشارکت‌کننده
+        agreed: شما شرایط جدید مشارکت‌کننده را پذیرفته‌اید.
+        not yet agreed: شما هنوز شرایط جدید مشارکت‌کننده را نپذیرفته‌اید.
+        review link text: لطفاً در فرصت مناسب این پیوند را دنبال کنید و پس از مطالعهٔ
+          شرایط جدید مشارکت‌کننده، موافقت خود را با آن اعلام کنید.
+        agreed_with_pd: شما همچنین اعلام کرده‌اید که ویرایش‌هایتان در مالکیت عمومی
+          باشد.
+        link text: این چیست؟
+      save changes button: ذخیره‌کردن تغییرات
+      delete_account: حذف حساب...
+    go_public:
+      heading: ویرایش عمومی
+      currently_not_public: هم‌اکنون ویرایش‌های شما گمنام هستند و مردم نمی‌توانند
+        برایتان پیام بفرستند یا مکان شما را ببینند. برای نمایش آنچه ویرایش کرده‌اید
+        و اجازه به مردم برای تماس با شما از طریق وبگاه، روی دکمهٔ زیر کلیک کنید.
+      only_public_can_edit: از زمان روی کار آمدن 0.6 API، فقط کاربران عمومی می‌توانند
+        نقشه را ویرایش کنند.
+      find_out_why: بفهمید چرا این‌طور است
+      email_not_revealed: رایانامهٔ شما از طریق عمومی‌شدن فاش نمی‌شود.
+      not_reversible: این عملیات برگشت‌پذیر نیست و هم‌اکنون همهٔ کاربرانِ تازه به‌طور
+        پیش‌فرض عمومی هستند.
+      make_edits_public_button: همهٔ ویرایش‌های من را عمومی کن
+    update:
+      success_confirm_needed: اطلاعات کاربر با موفقیت به‌روز شد. برای تأیید نشانی
+        رایانامهٔ جدید، یادداشت ارسال شده به رایانامه‌تان را بررسی کنید.
+      success: اطلاعات کاربر با موفقیت روزآمد شد.
+    destroy:
+      success: حساب حذف شد.
     deletions:
       show:
         title: حذف حساب من
@@ -303,95 +335,81 @@ fa:
         retain_email: نشانی رایانامهٔ شما حفظ خواهد شد.
         confirm_delete: آیا مطمئن هستید؟
         cancel: لغو
-  accounts:
-    edit:
-      title: ویرایش حساب
-      my settings: تنظیمات من
-      current email address: رایانامهٔ کنونی
-      external auth: احراز هویت خارجی
-      openid:
-        link text: این چیست؟
-      public editing:
-        heading: ویرایش عمومی
-        enabled: فعال. گمنام نیستید و می‌توانید داده را ویرایش کنید.
-        enabled link text: این چیست؟
-        disabled: غیرفعال شده و نمی‌توان داده را ویرایش کرد، همهٔ ویرایش‌های قبلی
-          گمنام هستند.
-        disabled link text: چرا من نمی‌توانم ویرایش کنم؟
-      contributor terms:
-        heading: شرایط مشارکت‌کننده
-        agreed: شما شرایط جدید مشارکت‌کننده را پذیرفته‌اید.
-        not yet agreed: شما هنوز شرایط جدید مشارکت‌کننده را نپذیرفته‌اید.
-        review link text: لطفاً در فرصت مناسب این پیوند را دنبال کنید و پس از مطالعهٔ
-          شرایط جدید مشارکت‌کننده، موافقت خود را با آن اعلام کنید.
-        agreed_with_pd: شما همچنین اعلام کرده‌اید که ویرایش‌هایتان در مالکیت عمومی
-          باشد.
-        link text: این چیست؟
-      save changes button: ذخیره‌کردن تغییرات
-      delete_account: حذف حساب...
-    go_public:
-      heading: ویرایش عمومی
-      make_edits_public_button: همهٔ ویرایش‌های من را عمومی کن
-    update:
-      success_confirm_needed: اطلاعات کاربر با موفقیت به‌روز شد. برای تأیید نشانی
-        رایانامهٔ جدید، یادداشت ارسال شده به رایانامه‌تان را بررسی کنید.
-      success: اطلاعات کاربر با موفقیت روزآمد شد.
-    destroy:
-      success: حساب حذف شد.
+    terms:
+      show:
+        title: شرایط
+        heading: شرایط
+        heading_ct: شرایط مشارکت‌کننده
+        read and accept with tou: لطفاً توافق‌نامهٔ مشارکت‌کننده و شرایط استفاده را
+          مطالعه کنید و هر دو گزینه را علامت بزنید و سپس روی دکمهٔ ادامه کلیک کنید.
+        contributor_terms_explain: به‌موجب این توافقنامه، این شرایط مشارکت‌کننده برای
+          مشارکت‌های گذشته و آیندهٔ شما نافذ است.
+        read_ct: شرایط مشارکت‌کننده را که در بالا آمده، خوانده‌ام و آن را می‌پذیرم
+        tou_explain_html: این %{tou_link} دربارهٔ استفاده از وبگاه و سایر زیرساخت‌های
+          ارائه‌شده از سوی OSMF نافذ است. لطفاً روی پیوند کلیک کنید، متن را بخوانید
+          و آن را بپذیرید.
+        read_tou: شرایط استفاده را خوانده‌ام و آن را می‌پذیرم
+        continue: ادامه
+        you need to accept or decline: برای ادامه لطفاً بخوانید و سپس شرایط جدید مشارکت‌کننده
+          را بپذیرید یا رد کنید.
+        legale_select: 'كشور محل سكونت:'
+        legale_names:
+          france: فرانسه
+          italy: ایتالیا
+          rest_of_world: دیگر نقاط جهان
+      update:
+        terms accepted: از اینکه شرایط جدید مشارکت‌کننده را پذیرفتید، سپاسگزاریم!
+      terms_declined_flash:
+        terms_declined_html: از اینکه تصمیم گرفته‌اید شرایط جدید مشارکت‌کننده را نپذیرید،
+          متأسف هستیم. برای اطلاعات بیشتر، لطفاً %{terms_declined_link} را ببینید.
+        terms_declined_link: این صفحهٔ ویکی
+    pd_declarations:
+      show:
+        title: مشارکت‌های من را در مالکیت عمومی در نظر بگیر
+        consider_pd: من مشارکت‌های خود را در مالکیت عمومی در نظر می‌گیرم
+        consider_pd_why: چرا باید بخواهم که مشارکت‌هایم در مالکیت عمومی قرار گیرد؟
+        confirm: تأیید
+      create:
+        successfully_declared: شما با موفقیت اعلام کردید که ویرایش‌های خود را در مالکیت
+          عمومی در نظر می‌گیرید.
+        already_declared: شما هم‌اکنون اعلام کرده‌اید که ویرایش‌های خود را در مالکیت
+          عمومی در نظر می‌گیرید.
+        did_not_confirm: شما این که مشارکت‌هایتان در مالکیت عمومی قرار گیرد را تأیید
+          نکرده‌اید.
   browse:
-    created: ایجاد شد
-    closed: بسته شد
+    deleted_ago_by_html: '%{time_ago} %{user} حذفش کرد'
+    edited_ago_by_html: '%{time_ago} %{user} ویرایشش کرد'
     version: نسخهٔ
     in_changeset: بستهٔ تغییر
     anonymous: گمنام
     no_comment: (بدون توضیح)
     part_of: بخشی از
     part_of_relations:
-      one: 1 رابطه
+      one: '%{count} رابطه'
       other: '%{count} رابطه'
     part_of_ways:
-      one: 1 راه
+      one: '%{count} راه'
       other: '%{count} راه'
     download_xml: بارگیری XML
     view_history: نمایش تاریخچه
     view_details: نمایش جزئیات
     location: 'مکان: ‪'
-    changeset:
-      title: 'بستهٔ تغییر: %{id}'
-      belongs_to: پدیدآور
-      node: گره‌ها (%{count})
-      node_paginated: گره‌ها (%{x}-%{y} از %{count})
-      way: راه‌ها (%{count})
-      way_paginated: راه‌ها (%{x}-%{y} از %{count})
-      relation: رابطه‌ها (%{count})
-      relation_paginated: رابطه‌ها (%{x}-%{y} از %{count})
-      comment: نظرها (%{count})
-      changesetxml: Changeset XML
-      osmchangexml: osmChange XML
-      feed:
-        title: بستهٔ تغییر %{id}
-        title_comment: بستهٔ تغییر %{id} - %{comment}
-      join_discussion: وارد شوید تا به بحث بپیوندید
-      discussion: بحث
-      still_open: بستهٔ تغییر هنوز باز است - امکان بحث پس از بستن آن باز می‌شود.
     node:
       title_html: 'گره: %{name}'
-      history_title_html: 'تاریخچهٔ گره: %{name}'
     way:
       title_html: 'راه: %{name}'
-      history_title_html: 'تاریخچهٔ راه: %{name}'
       nodes: گره‌ها
       nodes_count:
+        one: '%{count} گره'
         other: '%{count} گره'
       also_part_of_html:
         one: بخشی از راه %{related_ways}
         other: ' بخشی از راه‌های %{related_ways}'
     relation:
       title_html: 'رابطه: %{name}'
-      history_title_html: 'تاریخچهٔ رابطه: %{name}'
       members: اعضا
       members_count:
-        one: 1 عضو
+        one: '%{count} عضو'
         other: '%{count} عضو'
     relation_member:
       entry_role_html: '%{type} %{name} با نقش %{role}'
@@ -400,17 +418,9 @@ fa:
         way: راه
         relation: رابطه
     containing_relation:
-      entry_html: رابطهٔ %{relation_name}
       entry_role_html: رابطهٔ %{relation_name} (با نقش %{relation_role})
     not_found:
       title: یافت نشد
-      sorry: 'شوربختانه %{type} #%{id} یافت نشد.'
-      type:
-        node: گره
-        way: راه
-        relation: رابطه
-        changeset: بستهٔ تغییر
-        note: یادداشت
     timeout:
       title: خطای پایان مهلت
       sorry: شوربختانه بازیابی دادهٔ مربوط به %{type} با شناسهٔ %{id}، خیلی زمان‌بر
@@ -432,7 +442,7 @@ fa:
     start_rjs:
       feature_warning: در حال بارکردن %{num_features} عارضه. این کار ممکن است مرورگرتان
         را کُند یا ناپاسخگو کند. با این حال، داده نمایش داده شود؟
-      load_data: بارگیری داده
+      load_data: بارکردن داده
       loading: در حال بارکردن...
     tag_details:
       tags: برچسب‌ها
@@ -444,30 +454,37 @@ fa:
       wikimedia_commons_link: آیتم %{page} در ویکی‌انبار
       telephone_link: ' تماس با %{phone_number}'
       colour_preview: پیش‌نمایش رنگ %{colour_value}
-    query:
+      email_link: فرستادن رایانامه به %{email}
+  feature_queries:
+    show:
       title: پرس‌وجوی عارضه‌ها
       introduction: روی نقشه کلیک کنید تا عارضه‌های نزدیک را بیابید
       nearby: عارضه‌های نزدیک
       enclosing: عارضه‌های دربرگیر
+  old_elements:
+    index:
+      node:
+        title_html: 'تاریخچهٔ گره: %{name}'
+      way:
+        title_html: 'تاریخچهٔ راه: %{name}'
+      relation:
+        title_html: 'تاریخچهٔ رابطه: %{name}'
+  changeset_comments:
+    feeds:
+      comment:
+        comment: نظر جدید روی بستهٔ تغییر %{changeset_id} از %{author}
+        commented_at_by_html: '%{when} %{user} روزآمدش کرد'
+      show:
+        title_all: بحث بستهٔ تغییر OpenStreetMap
+        title_particular: 'بحث بستهٔ تغییر #%{changeset_id} در OpenStreetMap'
+      timeout:
+        sorry: شوربختانه بازیابی نظرات بستهٔ تغییر که درخواست نموده‌اید، خیلی طولانی
+          شد.
   changesets:
-    changeset_paging_nav:
-      showing_page: صفحهٔ %{page}
-      next: بعدی »
-      previous: « قبلی
-    changeset:
-      anonymous: گمنام
-      no_edits: (بدون ویرایش)
-      view_changeset_details: نمایش جزئیات بستهٔ تغییر
-    changesets:
-      id: شناسه
-      saved_at: ذخیره‌شده در
-      user: کاربر
-      comment: نظر
-      area: منطقه
     index:
       title: بسته‌های تغییر
-      title_user: بسته‌های تغییر از %{user}
-      title_friend: بسته‌های تغییر دوستان من
+      title_user: بسته‌های تغییر %{user}
+      title_user_link_html: بسته‌های تغییر %{user_link}
       title_nearby: بسته‌های تغییر کاربران نزدیک
       empty: هیچ بستۀ تغییری یافت نشد.
       empty_area: هیچ بستهٔ تغییری در این ناحیه یافت نشد.
@@ -475,40 +492,53 @@ fa:
       no_more: بستهٔ تغییر دیگری یافت نشد.
       no_more_area: بستهٔ تغییر دیگری در این ناحیه یافت نشد.
       no_more_user: بستهٔ تغییر دیگری از این کاربر یافت نشد.
-      load_more: بیشتر بار کن
+      feed:
+        title: بستهٔ تغییر %{id}
+        title_comment: بستهٔ تغییر %{id} - %{comment}
+        created: ایجاد شد
+        closed: بسته شد
+        belongs_to: پدیدآور
+    show:
+      title: 'بستهٔ تغییر: %{id}'
+      created_ago_html: ایجاد شد %{time_ago}
+      closed_ago_html: بسته شد %{time_ago}
+      created_ago_by_html: '%{time_ago} %{user} ایجادش کرد'
+      closed_ago_by_html: '%{time_ago} %{user} بستش'
+      discussion: بحث
+      join_discussion: وارد شوید تا به بحث بپیوندید
+      still_open: بستهٔ تغییر هنوز باز است - امکان بحث پس از بستن آن باز می‌شود.
+      subscribe: اشتراک
+      unsubscribe: لغو اشتراک
+      comment_by_html: نظر از %{user}‏ %{time_ago}
+      hidden_comment_by_html: نظر پنهان؛ نوشتهٔ %{user}‏ %{time_ago}
+      hide_comment: نهفتن
+      unhide_comment: نمایش
+      comment: نظر
+      changesetxml: Changeset XML
+      osmchangexml: osmChange XML
+    paging_nav:
+      nodes_paginated: گره‌ها (%{x}-%{y} از %{count})
+      ways_paginated: راه‌ها (%{x}-%{y} از %{count})
+      relations_paginated: رابطه‌ها (%{x}-%{y} از %{count})
     timeout:
       sorry: شوربختانه بازیابی بسته‌های تغییر که درخواست نموده‌اید، خیلی طولانی شد.
-  changeset_comments:
-    comment:
-      comment: نظر جدید روی بستهٔ تغییر %{changeset_id} از %{author}
-      commented_at_by_html: '%{when} %{user} آن را روزآمد کرد'
-    comments:
-      comment: نظر جدید روی بستهٔ تغییر %{changeset_id} از %{author}
-    index:
-      title_all: بحث بستهٔ تغییر OpenStreetMap
-      title_particular: 'بحث بستهٔ تغییر #%{changeset_id} در OpenStreetMap'
-    timeout:
-      sorry: شوربختانه بازیابی نظرات بستهٔ تغییر که درخواست نموده‌اید، خیلی طولانی
-        شد.
   dashboards:
     contact:
       km away: ‏%{count} کیلومتر فاصله
       m away: ‏%{count} متر فاصله
+      latest_edit_html: 'آخرین ویرایش (%{ago}):'
+      no_edits: (بدون ویرایش)
+      view_changeset_details: نمایش جزئیات بستهٔ تغییر
     popup:
       your location: مکان شما
       nearby mapper: نقشه‌کش نزدیک
-      friend: دوست
     show:
       title: پیشخوان من
       no_home_location_html: '%{edit_profile_link} و موقعیت خانهٔ خود را تنظیم کنید
         تا کاربران نزدیک را ببینید.'
       edit_your_profile: ویرایش پروفایل
-      my friends: دوستان من
-      no friends: هنوز هیچ دوستی اضافه نکرده‌اید
       nearby users: دیگر کاربران نزدیک
       no nearby users: در این حوالی هیچ کاربری  نقشه  ترسیم نکرده است
-      friends_changesets: بسته‌های تغییر دوستان
-      friends_diaries: روزنوشت‌های دوستان
       nearby_changesets: ویرایش‌های کاربران نزدیک
       nearby_diaries: روزنوشت‌های کاربران نزدیک
   diary_entries:
@@ -519,17 +549,12 @@ fa:
       use_map_link: استفاده از نقشه
     index:
       title: روزنوشت‌های کاربران
-      title_friends: روزنوشت‌های دوستان
       title_nearby: روزنوشت‌های کاربران نزدیک
       user_title: روزنوشت‌های %{user}
       in_language_title: روزنوشت‌های %{language}
-      new: روزنوشت تازه
-      new_title: ساخت روزنوشت تازه در روزنوشت‌های کاربری من
-      my_diary: روزنوشت‌های من
       no_entries: روزنوشتی نیست
+    page:
       recent_entries: روزنوشت‌های اخیر
-      older_entries: روزنوشت‌های قدیمی‌تر
-      newer_entries: روزنوشت‌های جدیدتر
     edit:
       title: ویرایش روزنوشت
       marker_text: مکان روزنوشت
@@ -545,14 +570,14 @@ fa:
       body: شوربختانه با شناسهٔ %{id} هیچ روزنوشت یا نظری یافت نشد. لطفاً نوشتار خود
         را بررسی کنید. همچنین ممکن است پیوندی که کلیک کرده‌اید اشتباه باشد.
     diary_entry:
-      posted_by_html: ارسالی از %{link_user} در %{created} به <bdi>%{language_link}</bdi>.
+      posted_by_html: ارسالی از %{link_user} در %{created} به %{language_link}.
       updated_at_html: آخرین به‌روزرسانی در %{updated}.
       comment_link: نظردادن به این روزنوشت
       reply_link: به نویسنده پیام بفرستید
       comment_count:
         one: '%{count} نظر'
-        zero: بدون نظر
         other: '%{count} نظر'
+      no_comments: بدون نظر
       edit_link: ویرایش این روزنوشت
       hide_link: پنهان‌سازی این روزنوشت
       unhide_link: آشکارسازی این روزنوشت
@@ -566,8 +591,6 @@ fa:
       report: گزارش این نظر
     location:
       location: 'مکان:'
-      view: نمایش
-      edit: ویرایش
     feed:
       user:
         title: ‫روزنوشت‌های %{user} در OpenStreetMap‬
@@ -578,39 +601,39 @@ fa:
       all:
         title: ‫روزنوشت‌های OpenStreetMap‬
         description: ‫روزنوشت‌های اخیر از کاربران OpenStreetMap‬
-    comments:
-      title: نظراتی که %{user} به روزنوشت‌ها داده است
-      heading: نظرات %{user} به روزنوشت‌ها
-      subheading_html: نظراتی که %{user} به روزنوشت‌ها داده است
-      no_comments: به روزنوشت‌ها نظری نداده است
-      post: فرسته
-      when: زمان
-      comment: نظر
-      newer_comments: نظرات جدیدتر
-      older_comments: نظرات قدیمی‌تر
+    subscribe:
+      button: اشتراک در بحث
+    unsubscribe:
+      button: لغو اشتراک در بحث
+    navigation:
+      my_diary: روزنوشت‌های من
+      new: روزنوشت تازه
+      new_title: ساخت روزنوشت تازه در روزنوشت‌های کاربری من
   doorkeeper:
     flash:
       applications:
         create:
           notice: برنامه ثبت شد.
-  friendships:
-    make_friend:
-      heading: افزودن %{user} به‌عنوان دوست؟
-      button: افزودن به‌عنوان دوست
-      success: '%{name} اکنون دوست شماست!'
-      failed: پوزش، افزودن %{name} به دوستان شما انجام نشد.
-      already_a_friend: شما و %{name}از قبل دوست هستید.
-      limit_exceeded: تازگی افراد خیلی زیادی را به‌عنوان دوست اضافه کرده‌اید. لطفاً
-        تا مدتی دست نگه دارید.
-    remove_friend:
-      heading: لغو دوستی %{user}؟
-      button: لغو دوستی
-      success: '%{name} از دوستان شما حذف شد.'
-      not_a_friend: '%{name} یکی از دوستان شما نیست.'
+  errors:
+    contact:
+      contact_url: https://wiki.openstreetmap.org/wiki/fa:Contact
+      contact_url_title: راه‌های ارتباطی متنوعی شرح داده شده
+      contact: تماس بگیرید
+      contact_the_community_html: اگر متوجه پیوند شکسته یا اشکالی شده‌اید لطفاً با
+        جامعهٔ OpenStreetMap %{contact_link}. نشانی دقیق درخواست خود را یادداشت کنید.
+    forbidden:
+      title: ممنوع
+      description: عملیاتی که در سرور OpenStreetMap درخواست کردید فقط برای مدیران
+        در دسترس است (HTTP 403)
+    internal_server_error:
+      title: خطای برنامه
+      description: سرور OpenStreetMap با وضعیت غیرمنتظره‌ای روبه‌رو شد که آن را از
+        انجام درخواست باز داشت (HTTP 500)
+    not_found:
+      title: پرونده پیدا نشد
+      description: پرونده/پوشه/عملیات API با آن نام در سرور OpenStreetMap پیدا نشد
+        (HTTP 404)
   geocoder:
-    search:
-      title:
-        latlon: داخلی
     search_osm_nominatim:
       prefix:
         aerialway:
@@ -846,6 +869,7 @@ fa:
           bridleway: راه حیوان رو
           bus_guideway: خط هدایت کننده اتوبوس
           bus_stop: ایستگاه اتوبوس
+          busway: مسیر اتوبوس
           construction: راه در دست ساخت
           corridor: راهرو
           cycleway: مسیر دوچرخه
@@ -932,7 +956,7 @@ fa:
           commercial: منطقهٔ تجاری
           conservation: منطقه حفاظت‌شده
           construction: منطقه در دست ساخت
-          farmland: زمین های کشاورزی
+          farmland: زمین‌های کشاورزی
           farmyard: محوطه مزرعه
           forest: جنگل
           garages: گاراژ
@@ -968,7 +992,7 @@ fa:
           fitness_station: ایستگاه تناسب اندام
           garden: باغ
           golf_course: زمین گلف
-          horse_riding: اسب سواری
+          horse_riding: مرکز اسب‌سواری
           ice_rink: رینک یخ
           marina: لنگرگاه
           miniature_golf: گلف کوچک
@@ -1101,6 +1125,7 @@ fa:
           lawyer: وکیل
           newspaper: دفتر روزنامه
           ngo: دفتر سازمان غیر دولتی
+          religion: دفتر مذهبی
           research: دفتر خدمات مشاوره‌ای
           tax_advisor: مشاور مالیاتی
           telecommunication: دفتر مخابرات
@@ -1160,9 +1185,11 @@ fa:
           turntable: صفحه‌گردان
           yard: محوطه راه آهن
         shop:
+          agrarian: فروشگاه کشاورزی
           alcohol: Off License
           antiques: عتیقه‌جات
           art: فروشگاه لوازم هنری
+          baby_goods: کالای کودک
           bakery: نانوایی
           beauty: فروشگاه زیبایی
           beverages: فروشگاه نوشیدنی‌ها و عرقیات
@@ -1309,46 +1336,52 @@ fa:
         level9: مرز منطقه شهری
         level10: مرز دهستان/شهر
         level11: محدوده محله
-      types:
-        cities: شهرها
-        towns: شهرها
-        places: مکان‌ها
-    results:
-      no_results: نتیجه‌ای یافت نشد
-      more_results: نتایج بیشتر
+  searches:
+    show:
+      title:
+        latlon: داخلی
+    queries:
+      create:
+        no_results: نتیجه‌ای یافت نشد
+        more_results: نتایج بیشتر
+  directions:
+    show:
+      title: راهنمای مسیر
+      distance: مسافت
+      time: مدت
+      ascend: فراز
+      descend: فرود
+      directions_courtesy_html: راهنمای مسیر با همکاری %{link}
   issues:
     index:
       title: مسئله‌ها
       select_status: انتخاب وضعیت
       select_type: انتخاب نوع
-      select_last_updated_by: انتخاب آخرین روزآمدکننده
       reported_user: کاربر گزارش‌شده
-      not_updated: روزآمدنشده
       search: جستجو
       search_guidance: 'جستجوی مسئله‌ها:'
+      states:
+        ignored: نادیده‌گرفته‌شده
+        open: باز
+        resolved: حل‌شده
+    page:
       user_not_found: کاربر وجود ندارد
       issues_not_found: چنین مسئله‌ای یافت نشد
       status: وضعیت
       reports: گزارش‌ها
       last_updated: آخرین روزآمدسازی
-      link_to_reports: دیدن گزارش‌ها
       reports_count:
-        one: 1 گزارش
+        one: '%{count} گزارش'
         other: '%{count} گزارش'
       reported_item: مورد گزارش‌شده
-      states:
-        ignored: نادیده‌گرفته‌شده
-        open: باز
-        resolved: حل‌شده
     show:
-      title: '%{status} موضوع #%{issue_id}'
       reports:
-        zero: گزارشی یافت نشد
-        one: ۱ گزارش
+        one: '%{count} گزارش'
         other: '%{count} گزارش'
-      report_created_at: اولین بار %{datetime} گزارش شد
-      last_resolved_at: آخرین بار %{datetime} حل شد
-      last_updated_at: آخرین روزآمدسازی در %{datetime} به دست %{displayname}
+      no_reports: گزارشی پیدا نشد
+      report_created_at_html: اولین بار %{datetime} گزارش شد
+      last_resolved_at_html: آخرین بار %{datetime} حل شد
+      last_updated_at_html: آخرین روزآمدسازی در %{datetime} به دست %{displayname}
       resolve: حل شد
       ignore: نادیده‌گیری
       reopen: بازگشایی
@@ -1366,14 +1399,15 @@ fa:
       reopened: وضعیت مسئله روی «باز» تنظیم شد
     comments:
       comment_from_html: نظر از %{user_link} در %{comment_created_at}
-      reassign_param: مشکل تخصیص مجدد؟
     reports:
-      reported_by_html: در %{updated_at}،‏ %{user} آن را به‌عنوان %{category} گزارش
-        کرد
+      reported_by_html: در %{updated_at}،‏ %{user} به‌عنوان %{category} گزارشش کرد
     helper:
       reportable_title:
         diary_comment: '%{entry_title}، نظر #%{comment_id}'
         note: یادداشت %{note_id}
+    reporters:
+      reporters:
+        more_reporters: و %{count} مورد بیشتر
   issue_comments:
     create:
       comment_created: نظر شما با موفقیت ثبت شد
@@ -1427,39 +1461,19 @@ fa:
     history: تاریخچه
     export: برون‌ریزی
     issues: مسئله‌ها
-    data: داده
-    export_data: برون‌ریزی داده
     gps_traces: ردهای GPS
-    gps_traces_tooltip: مدیریت ردهای GPS
     user_diaries: روزنوشت‌های کاربر
-    user_diaries_tooltip: دیدن روزنوشت‌های کاربر
     edit_with: ویرایش با %{editor}
-    tag_line: نقشهٔ ویکی‌گونه و آزاد جهان
     intro_header: به OpenStreetMap خوش آمدید!
     intro_text: OpenStreetMap نقشه‌ای از جهان است که افرادی مانند شما آن را ساخته‌اند
       و آزادید آن را تحت پروانه‌ای آزاد استفاده کنید.
-    intro_2_create_account: ساخت حساب کاربری
-    hosting_partners_html: میزبانی وب را %{ucl}،‏ %{fastly}،‏ %{bytemark} و سایر %{partners}
-      پشتیبانی می‌کنند.
-    partners_ucl: UCL
-    partners_bytemark: Bytemark Hosting
     partners_partners: شرکای تجاری
     tou: شرایط استفاده
-    osm_offline: پایگاه دادهٔ OpenStreetMap هم‌اکنون برون‌خط است تا کارهای ضروری برای
-      نگهداری آن انجام گیرد.
-    osm_read_only: پایگاه دادهٔ OpenStreetMap هم‌اکنون در حالت فقط‌خواندنی است تا
-      کارهای ضروری برای نگهداری آن انجام گیرد.
-    donate: با %{link} به «صندوق ارتقای سخت‌افزار»، OpenStreetMap را حمایت کنید.
+    nothing_to_preview: چیزی برای پیش‌نمایش وجود ندارد.
     help: راهنما
     about: درباره
     copyright: حق نشر
     communities: جوامع
-    community: جامعه
-    community_blogs: بلاگ‌های جامعه
-    community_blogs_title: بلاگ‌هایی از اعضای جامعهٔ OpenStreetMap
-    make_a_donation:
-      title: OpenStreetMap را با کمک مالی حمایت کنید
-      text: کمک مالی کنید
     learn_more: اطلاعات بیشتر
     more: بیشتر
   user_mailer:
@@ -1474,6 +1488,8 @@ fa:
       footer_html: '‫همچنین می‌توانید نظر را در اینجا بخوانید: %{readurl}؛ اینجا به
         آن نظر دهید: %{commenturl}؛ یا از اینجا به نویسنده پیام بدهید: %{replyurl}
         ‬'
+      footer_unsubscribe: می‌توانید در %{unsubscribeurl} اشتراک خود در این بحث را
+        لغو کنید
     message_notification:
       subject: '[OpenStreetMap] %{message_title}'
       hi: ‫سلام %{to_user}،‬
@@ -1485,32 +1501,12 @@ fa:
         به نویسنده پیام بدهید: %{replyurl} ‬'
       footer_html: '‫همچنین می‌توانید این پیام را در اینجا بخوانید: %{readurl} و از
         اینجا به نویسنده پیام بدهید: %{replyurl} ‬'
-    friendship_notification:
+    follow_notification:
       hi: ‫سلام %{to_user}،‬
-      subject: '[OpenStreetMap] ‫%{user} شما را به‌عنوان دوست اضافه کرد‬'
-      had_added_you: ‫%{user} در اوپن‌استریت‌مپ شما را به‌عنوان دوست اضافه کرد.‬
       see_their_profile: '‫می‌توانید نمایهٔ کاربری او را در اینجا ببینید: %{userurl}
         ‬'
       see_their_profile_html: '‫می‌توانید نمایهٔ کاربری او را در اینجا ببینید: %{userurl}
         ‬'
-      befriend_them: '‫شما نیز می‌توانید از اینجا او را به‌عنوان دوست اضافه کنید:
-        %{befriendurl} ‬'
-      befriend_them_html: '‫شما نیز می‌توانید از اینجا او را به‌عنوان دوست اضافه کنید:
-        %{befriendurl} ‬'
-    gpx_description:
-      description_with_tags_html: |-
-        به‌نظر می‌رسد پروندهٔ GPX شما:
-         %{trace_name}
-        با این توصیف:
-         %{trace_description}
-        و برچسب‌های زیر:
-        %{tags}
-      description_with_no_tags_html: |-
-        به‌نظر می‌رسد پروندهٔ GPX شما:
-         %{trace_name}
-        با این توصیف:
-         %{trace_description}
-        و بدون برچسب
     gpx_failure:
       hi: ‫سلام %{to_user}،‬
       failed_to_import: 'درون‌برد انجام نشد. این خطا رخ داد:'
@@ -1589,7 +1585,6 @@ fa:
       details_html: '‫جزئیات بیشتر دربارهٔ یادداشت را اینجا ببینید: %{url}‬'
     changeset_comment_notification:
       hi: ‫سلام %{to_user}، ‬
-      greeting: سلام،‏
       commented:
         subject_own: '[OpenStreetMap] ‫%{commenter} روی یکی از بسته‌های تغییر شما
           نظر داد‬'
@@ -1622,11 +1617,14 @@ fa:
         را تأیید نمایید. سپس می‌توانید نقشه‌کشی را آغاز کنید.
       press confirm button: برای فعال‌سازی حسابتان روی دکمهٔ تأیید زیر کلیک کنید.
       button: تأیید
-      success: ' تشکر بابت ثبت نام! حساب کاربری شما تایید شد.'
+      success: ' تشکر بابت ثبت نام! حساب کاربری شما تأیید شد.'
       already active: این حساب کاربری قبلاً تأیید شده است.
       unknown token: کد تأیید منقضی شده یا وجود ندارد.
+      if_need_resend: اگر می‌خواهید ایمیل تأییدیه را دوباره برای شما بفرستیم، روی
+        دکمهٔ زیر کلیک کنید.
+      resend_button: ارسال مجدد ایمیل تأییدیه
     confirm_resend:
-      failure: کاربر %{name} یافت نشد.
+      failure: کاربر %{name} پیدا نشد.
     confirm_email:
       heading: تأیید تغییر نشانی رایانامه
       press confirm button: برای تأیید رایانامهٔ جدیدتان دکمهٔ تأیید زیر را فشار دهید.
@@ -1641,28 +1639,6 @@ fa:
         لطفاً مطمئن شوید که %{sender} را در لیست سفید قرار دهید زیرا نمی‌توانیم به
         هرگونه درخواست تأیید پاسخ دهیم.
   messages:
-    inbox:
-      title: صندوق دریافت
-      my_inbox: صندوق دریافت
-      my_outbox: صندوق ارسال
-      messages: '%{new_messages} و %{old_messages} دارید'
-      new_messages:
-        one: '%{count} پیام تازه'
-        other: '%{count} پیام تازه'
-      old_messages:
-        one: '%{count} پیام قدیمی'
-        other: '%{count} پیام قدیمی'
-      from: از
-      subject: عنوان
-      date: تاریخ
-      no_messages_yet_html: هنوز پیامی ندارید. چطور است با چند نفر از %{people_mapping_nearby_link}
-        تماس بگیرید؟
-      people_mapping_nearby: کسانی که نزدیک شما نقشه می‌کشند
-    message_summary:
-      unread_button: نشان بزن نخواندم
-      read_button: نشان بزن که خواندم
-      reply_button: پاسخ
-      destroy_button: حذف
     new:
       title: فرستادن پیام
       send_message_to_html: فرستادن پیام تازه به %{name}
@@ -1675,23 +1651,6 @@ fa:
       title: چنین پیغامی وجود ندارد
       heading: چنین پیغامی وجود ندارد
       body: متأسفانه هیچ پیامی با این شناسه وجود ندارد.
-    outbox:
-      title: صندوق ارسال
-      my_inbox: صندوق دریافت
-      my_outbox: صندوق ارسال
-      messages:
-        one: '%{count} پیام ارسالی دارید'
-        other: '%{count} پیام ارسالی دارید'
-      to: به
-      subject: موضوع
-      date: تاریخ
-      no_sent_messages_html: هنوز پیامی نفرستاده‌اید. چطور است با چند نفر از %{people_mapping_nearby_link}
-        تماس بگیرید؟
-      people_mapping_nearby: کسانی که نزدیک شما نقشه می‌کشند
-    reply:
-      wrong_user: شما با نام کاربری %{user} وارد سامانه شده‌اید، اما پیامی که درخواست
-        پاسخ به آن را دارید به این کابر ارسال نشده است. برای پاسخ‌دادن لطفاً با نام
-        کاربری صحیح وارد سامانه شوید.
     show:
       title: خواندن پیام
       reply_button: پاسخ
@@ -1701,46 +1660,90 @@ fa:
       wrong_user: شما با نام کاربری %{user} وارد سامانه شده‌اید، اما پیامی که درخواست
         خواندن آن را دارید از/به این کابر ارسال نشده است. لطفاً با نام کاربری صحیح
         وارد سامانه شوید تا بتوانید آن را بخوانید.
-    sent_message_summary:
-      destroy_button: حذف
-    mark:
-      as_read: پیام به‌عنوان خوانده علامت‌گذاری شد
-      as_unread: پیام به عنوان نخوانده علامت‌گذاری شد
     destroy:
       destroyed: پیام حذف شد
+    read_marks:
+      create:
+        notice: پیام به‌عنوان خوانده علامت‌گذاری شد
+      destroy:
+        notice: پیام به عنوان نخوانده علامت‌گذاری شد
+    mailboxes:
+      heading:
+        my_inbox: صندوق دریافت
+        my_outbox: صندوق ارسال
+      messages_table:
+        from: از
+        to: به
+        subject: عنوان
+        date: تاریخ
+      message:
+        unread_button: نشان بزن نخواندم
+        read_button: نشان بزن که خواندم
+        destroy_button: حذف
+    inboxes:
+      show:
+        title: صندوق دریافت
+        messages: '%{new_messages} و %{old_messages} دارید'
+        new_messages:
+          one: '%{count} پیام تازه'
+          other: '%{count} پیام تازه'
+        old_messages:
+          one: '%{count} پیام قدیمی'
+          other: '%{count} پیام قدیمی'
+        no_messages_yet_html: هنوز پیامی ندارید. چطور است با چند نفر از %{people_mapping_nearby_link}
+          تماس بگیرید؟
+        people_mapping_nearby: کسانی که نزدیک شما نقشه می‌کشند
+    outboxes:
+      show:
+        title: صندوق ارسال
+        messages:
+          one: '%{count} پیام ارسالی دارید'
+          other: '%{count} پیام ارسالی دارید'
+        no_sent_messages_html: هنوز پیامی نفرستاده‌اید. چطور است با چند نفر از %{people_mapping_nearby_link}
+          تماس بگیرید؟
+        people_mapping_nearby: کسانی که نزدیک شما نقشه می‌کشند
+      message:
+        destroy_button: حذف
+    replies:
+      new:
+        wrong_user: شما با نام کاربری %{user} وارد سامانه شده‌اید، اما پیامی که درخواست
+          پاسخ به آن را دارید به این کابر ارسال نشده است. برای پاسخ دادن لطفاً با
+          نام کاربری صحیح وارد سامانه شوید.
   passwords:
-    lost_password:
+    new:
       title: فراموشی رمز عبور
       heading: رمز عبور خودتان را فراموش کرده‌اید؟
-      email address: 'نشانی رایانامه:'
+      email address: نشانی رایانامه
       new password button: بازنشانی رمز عبور
       help_text: رایانامه‌ای که با آن نام‌نویسی کرده‌اید را وارد کنید. ما پیوندی به
         آن می‌فرستیم تا بتوانید به وسیلهٔ آن گذرواژه‌تان را بازنشانی کنید.
-      notice email on way: متأسفیم که آن را گم کرده‌اید :-( اما رایانامه‌ای در راه
-        است که می‌توانید به‌زودی آن را مجدد تنظیم کنید.
-      notice email cannot find: چنین رایانامه‌ای پیدا نشد، متأسفیم.
-    reset_password:
+    edit:
       title: بازنشانی رمز عبور
       heading: بازنشانی رمز عبور برای %{user}
       reset: بازنشانی رمز عبور
-      flash changed: رمز عبورتان عوض شد.
       flash token bad: توکن را نیافتید؟ نشانی را بررسی کنید شاید بیابید.
+    update:
+      flash changed: رمز عبورتان عوض شد.
   preferences:
     show:
       title: ترجیحات من
-      preferred_editor: ویرایشگر مورد ترجیح
-      preferred_languages: زبان مورد ترجیح
-      edit_preferences: ویرایش ترجیحات
-    edit:
-      title: ویرایش ترجیحات
+      preferred_site_color_scheme: طرح رنگ مورد ترجیح وبگاه
+      site_color_schemes:
+        auto: خودکار
+        light: روشن
+        dark: تاریک
+      preferred_map_color_scheme: طرح رنگ نقشهٔ مورد ترجیح
+      map_color_schemes:
+        auto: خودکار
+        light: روشن
+        dark: تاریک
       save: ذخیره‌کردن ترجیحات
-      cancel: لغو
     update:
       failure: ذخیره‌سازی ترجیحات انجام نشد.
     update_success_flash:
       message: ترجیحات ذخیره شد.
   profiles:
-    edit:
+    show:
       title: ویرایش نمایه
       save: ذخیره‌کردن نمایه
       cancel: لغو
@@ -1759,55 +1762,34 @@ fa:
       no home location: شما محل خانهٔ خودتان را وارد نکرده‌اید.
       update home location on click: وقتی روی نقشه کلیک می‌کنم موقعیت خانه روزآمد
         شود.
+      delete: حذف
+      social_links:
+        remove: حذف
     update:
       success: نمایه ذخیره شد.
       failure: ذخیره‌سازی نمایه انجام نشد.
   sessions:
     new:
-      title: ورود
-      heading: ورود
-      email or username: 'نشانی رایانامه یا نام کاربری:'
-      password: 'رمز عبور:'
-      openid_html: '%{logo} OpenID:'
+      tab_title: ورود به سامانه
+      email or username: نشانی رایانامه یا نام کاربری
+      password: رمز عبور
       remember: مرا به خاطر بسپار
       lost password link: رمز عبورتان را فراموش کرده‌اید؟
       login_button: ورود
-      register now: اکنون نام‌نویسی کنید
       with external: 'به‌جای ثبت نام، از روش شخص ثالث استفاده کنید:'
-      no account: حساب کاربری ندارید؟
       auth failure: متأسفانه با این اطلاعات نمی‌توان وارد شد.
-      openid_logo_alt: ورود با OpenID
-      auth_providers:
-        openid:
-          title: ورود با OpenID
-          alt: ورود با نشانی OpenID
-        google:
-          title: ورود با گوگل
-          alt: ورود با OpenID گوگل
-        facebook:
-          title: ورود با فیسبوک
-          alt: ورود با حساب فیسبوک
-        windowslive:
-          title: ورود با Windows Live
-          alt: ورود با حساب Windows Live
-        github:
-          title: ورود با GitHub
-          alt: ورود با حساب GitHub
-        wikipedia:
-          title: ورود با ویکی‌پدیا
-          alt: ورود با حساب ویکی‌پدیا
-        wordpress:
-          title: ورود با وردپرس
-          alt: ورود با OpenID وردپرس
-        aol:
-          title: ورود با AOL
-          alt: ورود با AOL OpenID
     destroy:
       title: خروج
       heading: خروج از OpenStreetMap
       logout_button: خروج
+    suspended_flash:
+      suspended: پوزش، حساب شما به دلیل فعالیت مشکوک تعلیق شده است.
+      contact_support_html: اگر مایلید در این باره بحث کنید، لطفاً با %{support_link}
+        تماس بگیرید.
+      support: پشتیبانی
   shared:
     markdown_help:
+      heading_html: تجزیه‌شده با %{kramdown_link}
       headings: عنوان‌‌بندی
       heading: عنوان
       subheading: عنوان فرعی
@@ -1823,9 +1805,20 @@ fa:
     richtext_field:
       edit: ویرایش
       preview: پیش‌نمایش
+      help: راهنما
+    pagination:
+      diary_comments:
+        older: نظرات قدیمی‌تر
+        newer: نظرات جدیدتر
+      diary_entries:
+        older: روزنوشت‌های قدیمی‌تر
+        newer: روزنوشت‌های جدیدتر
+      traces:
+        older: ردهای کهنه‌تر
+        newer: ردهای تازه‌تر
   site:
     about:
-      next: بعدی
+      heading_html: مشارکت‌کنندگان %{br} %{copyright}OpenStreetMap
       used_by_html: '%{name} برای هزاران وبگاه، کارهٔ تلفن همراه و افزارهٔ سخت‌افزاری
         دادهٔ نقشه فراهم می‌کند.'
       lede_text: OpenStreetMap را جامعه‌ای از نقشه‌کشان ساخته‌اند که در ایجاد و نگهداری
@@ -1836,12 +1829,21 @@ fa:
         با استفاده از تصاویر هوایی، دستگاه‌های GPS و نقشه‌های میدانی با فناوری سطح
         پایین، درستی و روزآمدی OSM را می‌سنجند.
       community_driven_title: حرکت جامعه‌محور
+      community_driven_1_html: |2-
+         جامعهٔ OpenStreetMap متنوع، پرشور و هر روز در حال رشد است.
+        افراد بسیاری در این پروژه با ما همکاری می‌کنند؛ شامل نقشه‌کشان علاقه‌مند، متخصصان GIS، مهندسانی که سرورهای OSM را بر پا می‌دارند، بشردوستانی که مناطق فاجعه‌زده را نقشه‌کشی می‌کنند و بسیاری دیگر.
+        برای آنکه از جامعه بیشتر بدانید، %{osm_blog_link}، %{user_diaries_link}، %{community_blogs_link} و وبگاه %{osm_foundation_link} را ببینید.
+      community_driven_osm_blog: وبلاگ OpenStreetMap
+      community_driven_user_diaries: روزنوشت‌های کاربران
+      community_driven_community_blogs: وبلاگ‌های جامعه
+      community_driven_osm_foundation: بنیاد OSM
       open_data_title: دادهٔ آزاد
       legal_title: قانونی
       legal_1_1_terms_of_use: شرایط استفاده
       legal_1_1_privacy_policy: سیاست محرمانگی
       partners_title: شرکای تجاری
     copyright:
+      title: حق نشر و پروانه
       foreign:
         title: دربارهٔ این ترجمه
         html: اگر بین برگردان فارسی و %{english_original_link} ناسازگاری باشد، صفحهٔ
@@ -1855,14 +1857,16 @@ fa:
         native_link: نسخهٔ فارسی
         mapping_link: شروع به نقشه‌کشی
       legal_babble:
-        title_html: حق نشر و پروانه
         credit_title_html: چگونه از OpenStreetMap یاد کنیم
         credit_1_html: 'جایی که دارید از داده‌های اوپن‌استریت‌مپ استفاده می‌کنید،
           لازم است دو کار زیر را انجام دهید:'
         attribution_example:
           alt: مثالی از شیوهٔ انتساب به OpenStreetMap در صفحهٔ وبی.
           title: مثال انتساب
-        more_title_html: کسب اطلاعات بیشتر
+        infringement_title_html: نقض حق نشر
+        infringement_1_html: به مشارکت‌کنندگان OSM یادآوری شده است که هرگز از منابع
+          دارای حق نشر داده اضافه نکنند (مثلاً نقشه‌های گوگل یا نقشه‌های چاپی)، مگر
+          با اجازهٔ صریح و آشکار از صاحبان حق نشر.
         contributors_title_html: همکاران ما
         contributors_intro_html: 'مشارکت‌کنندگانی که با ما همکاری می‌کنند هزاران شخص
           هستند. داده‌هایی با پروانهٔ آزاد از سازمان‌های نقشه‌برداری ملی و دیگر منابع
@@ -1870,6 +1874,10 @@ fa:
         contributors_at_austria: اتریش
         contributors_au_australia: استرالیا
         contributors_ca_canada: کانادا
+        contributors_cz_czechia: جمهوری چک
+        contributors_cz_cc_licence: اجازه‌نامه کرییتیو کامنز ارجاع بین‌المللی ۴.۰  (CC
+          BY 4.0)
+        contributors_cz_cc_licence_url: https://creativecommons.org/licenses/by/4.0/deed.fa
         contributors_fi_finland: فنلاند
         contributors_fr_france: فرانسه
         contributors_nl_netherlands: هلند
@@ -1881,40 +1889,26 @@ fa:
         contributors_footer_2_html: ورود داده در OpenStreetMap به این معنی نیست که
           فراهم‌کنندهٔ اصلی داده OpenStreetMap را تأیید می‌کند، ضمانتی می‌دهد، یا
           مسئولیتی می‌پذیرد.
-        infringement_title_html: نقض حق نشر
-        infringement_1_html: به مشارکت‌کنندگان OSM یادآوری شده است که هرگز از منابع
-          دارای حق نشر داده اضافه نکنند (مثلاً نقشه‌های گوگل یا نقشه‌های چاپی)، مگر
-          با اجازهٔ صریح و آشکار از صاحبان حق نشر.
     index:
       js_1: شما در حال استفاده از مرورگری هستید که جاوااسکریپت را پشتیبانی نمی‌کند،
         یا جاوااسکریپت را غیرفعال کرده‌اید.
-      js_2: OpenStreetMap برای <abbr title="slippy map">نقشهٔ لغزان</abbr> از جاوااسکریپت
-        استفاده می‌کند.
-      permalink: پیوند پایدار
-      shortlink: پیوند کوتاه
-      createnote: افزودن یادداشت
+      js_2: OpenStreetMap برای نقشهٔ لغزان از جاوااسکریپت استفاده می‌کند.
       license:
         copyright: حق نشر OpenStreetMap و مشارکت‌کنندگان، تحت یک پروانهٔ آزاد
       remote_failed: ویرایش انجام نشد - مطمئن شوید JOSM یا Merkaartor باز و گزینهٔ
         کنترل از دور فعال باشد
-    edit:
+    not_public_flash:
       not_public: تنظیم نکرده‌اید که ویرایش‌هایتان عمومی باشد.
       not_public_description_html: دیگر نمی‌توانید نقشه را ویرایش کنید مگر آنکه این
         کار را انجام دهید. در %{user_page} خود می‌توانید ویرایش‌هایتان را به‌عنوان
         عمومی تنظیم کنید.
       user_page_link: صفحهٔ کاربری
       anon_edits_link_text: بفهمید چرا این‌طور است.
+    edit:
       id_not_configured: iD پیکربندی نشده است
-      no_iframe_support: مرورگر شما فریم‌های HTML را، که برای این ویژگی لازم است،
-        پشتیبانی نمی‌کند.
     export:
       title: برون‌ریزی
-      area_to_export: محدوده برای برون‌ریزی
       manually_select: به‌صورت دستی منطقهٔ دیگری انتخاب کنید
-      format_to_export: قالب برون‌ریزی
-      osm_xml_data: OpenStreetMap XML Data
-      map_image: تصویر نقشه (لایهٔ استاندارد را نشان می‌دهد)
-      embeddable_html: HTML توکار
       licence: پروانه
       too_large:
         advice: 'اگر برون‌ریزی بالا انجام نشد، لطفاً یکی از منابع زیر را استفاده کنید:'
@@ -1935,17 +1929,6 @@ fa:
         other:
           title: سایر منابع
           description: منابع بیشتر در ویکی OpenStreetMap ذکر شده است
-      options: گزینه‌ها
-      format: قالب
-      scale: مقیاس
-      max: حداکثر
-      image_size: اندازهٔ تصویر
-      zoom: بزگ‌نمایی
-      add_marker: افزودن نشانگر به نقشه
-      latitude: 'عرض:'
-      longitude: 'طول:'
-      output: خروجی
-      paste_html: برای استفادهٔ توکار در وبگاه، HTML را جایگذاری کنید
       export_button: برون‌ریزی
     fixthemap:
       title: گزارش مشکل / اصلاح نقشه
@@ -1971,9 +1954,6 @@ fa:
         url: https://wiki.openstreetmap.org/wiki/Fa:Beginners%27_guide
         title: راهنمای مبتدیان
         description: راهنمایی برای تازه‌واردان که اعضای جامعه آماده کرده‌اند.
-      help:
-        title: انجمن کمک
-        description: در وبگاه پرسش‌وپاسخ OSM سؤال بپرسید یا بین پاسخ‌ها بگردید.
       mailing_lists:
         title: فهرست‌های پستی
         description: در فهرست‌های پستی متنوعِ موضوعی یا منطقه‌ای سوال بپرسید یا دربارهٔ
@@ -1996,10 +1976,8 @@ fa:
       title: سؤالی دارید؟
     sidebar:
       search_results: نتایج جستجو
-      close: بستن
     search:
       search: جستجو
-      get_directions: دریافت مسیر
       get_directions_title: یافتن مسیرهای بین دو نقطه
       from: از
       to: به
@@ -2007,76 +1985,9 @@ fa:
       where_am_i_title: با استفاده از موتور جستجو مکان فعلی را توصیف کنید
       submit_text: برو
       reverse_directions_text: برعکس‌کردن مسیر
-    key:
-      table:
-        entry:
-          motorway: آزادراه
-          main_road: جادهٔ اصلی
-          trunk: بزرگراه
-          primary: جادهٔ درجه یک
-          secondary: جادهٔ درجه دو
-          unclassified: جاده
-          track: رد
-          bridleway: راه حیوان رو
-          cycleway: مسیر دوچرخه
-          cycleway_national: مسیر ملی دوچرخه
-          cycleway_regional: مسیر منطقه‌ای دوچرخه
-          cycleway_local: مسیر محلی دوچرخه
-          footway: راه پیاده
-          rail: راه‌آهن
-          subway: مترو
-          tram:
-          - راه‌آهن سبک
-          - قطار برقی
-          cable:
-          - تله‌فریک
-          - صندلی بالابر
-          runway:
-          - باند فرودگاه
-          - خزش‌راه
-          apron:
-          - پیشگاه فرودگاه
-          - پایانه
-          admin: مرز اداری
-          forest: جنگل
-          wood: چوب
-          golf: زمین گلف
-          park: پارک
-          resident: منطقهٔ مسکونی
-          common:
-          - مشاع
-          - علفزار
-          retail: منطقه خرده فروشی
-          industrial: منطقه صنعتی
-          commercial: منطقه تجاری
-          heathland: Heathland
-          lake:
-          - دریاچه
-          - مخزن
-          farm: مزرعه
-          brownfield: سایت قهوه‌ای
-          cemetery: گورستان
-          allotments: اراضی اختصاص‌یافته
-          pitch: زمین ورزشی
-          centre: مرکز ورزشی
-          reserve: طبیعت حفاظت شده
-          military: منطقه نظامی
-          school:
-          - مدرسه
-          - دانشگاه
-          building: ساختمان مهم
-          station: ایستگاه راه آهن
-          summit:
-          - چکاد
-          - قله
-          tunnel: لبهٔ خط‌چین‌دار = تونل
-          bridge: لبهٔ سیاه = پل
-          private: دسترسی شخصی
-          destination: دسترسی مقصد
-          construction: جاده در دست ساخت
-          bicycle_shop: فروشگاه دوچرخه
-          bicycle_parking: پارکینگ دوچرخه
-          toilets: سرویس های بهداشتی
+      modes:
+        bicycle: دوچرخه
+        car: خودرو
     welcome:
       title: خوش آمدید!
       introduction: به OpenStreetMap، نقشهٔ آزاد و قابل ویرایش جهان، خوش آمدید. اکنون
@@ -2091,13 +2002,71 @@ fa:
       rules:
         title: قوانین!
       start_mapping: نقشه‌کشی را آغاز کنید
-      add_a_note:
-        title: زمانی برای ویرایش ندارید؟ یادداشت اضافه کنید!
-        para_1: |-
-          اگر فقط می‌خواهید چیز کوچکی را درست کنید و وقت  کافی برای نام‌نویسی و یادگیری ویرایش ندارید، خیلی راحت
-          یک یادداشت بنویسید.
+    add_a_note:
+      title: زمانی برای ویرایش ندارید؟ یادداشت اضافه کنید!
+      para_1: |-
+        اگر فقط می‌خواهید چیز کوچکی را درست کنید و وقت  کافی برای نام‌نویسی و یادگیری ویرایش ندارید، خیلی راحت
+        یک یادداشت بنویسید.
     communities:
       title: جوامع
+  map_keys:
+    show:
+      entries:
+        motorway: آزادراه
+        main_road: جادهٔ اصلی
+        trunk: بزرگراه
+        primary: جادهٔ درجه یک
+        secondary: جادهٔ درجه دو
+        unclassified: جاده
+        track: رد
+        bridleway: راه حیوان رو
+        cycleway: مسیر دوچرخه
+        national_bike_route: مسیر ملی دوچرخه
+        regional_bike_route: مسیر منطقه‌ای دوچرخه
+        local_bike_route: مسیر محلی دوچرخه
+        footway: راه پیاده
+        rail: راه‌آهن
+        subway: مترو
+        cable_car: تله‌فریک
+        chair_lift: صندلی بالابر
+        runway: باند فرودگاه
+        taxiway: خزش‌راه
+        apron: پیشگاه فرودگاه
+        admin: مرز اداری
+        forest: جنگل
+        wood: چوب
+        golf: زمین گلف
+        park: پارک
+        common: مشاع
+        resident: منطقهٔ مسکونی
+        retail: منطقه خرده فروشی
+        industrial: منطقه صنعتی
+        commercial: منطقه تجاری
+        heathland: Heathland
+        lake: دریاچه
+        reservoir: مخزن
+        farm: مزرعه
+        brownfield: سایت قهوه‌ای
+        cemetery: گورستان
+        allotments: اراضی اختصاص‌یافته
+        pitch: زمین ورزشی
+        centre: مرکز ورزشی
+        reserve: طبیعت حفاظت شده
+        military: منطقه نظامی
+        school: مدرسه
+        university: دانشگاه
+        building: ساختمان مهم
+        station: ایستگاه راه آهن
+        summit: چکاد
+        peak: قله
+        tunnel: لبهٔ خط‌چین‌دار = تونل
+        bridge: لبهٔ سیاه = پل
+        private: دسترسی شخصی
+        destination: دسترسی مقصد
+        construction: جاده در دست ساخت
+        bicycle_shop: فروشگاه دوچرخه
+        bicycle_parking: پارکینگ دوچرخه
+        toilets: سرویس‌های بهداشتی
   traces:
     visibility:
       private: خصوصی (همرسانی فقط به‌صورت گمنام، نقاط نامرتب)
@@ -2131,8 +2100,6 @@ fa:
       visibility_help_url: https://wiki.openstreetmap.org/wiki/Fa:Visibility_of_GPS_traces
     update:
       updated: رد روزآمد شد
-    trace_optionals:
-      tags: برچسب‌ها
     show:
       title: در حال دیدن رد %{name}
       heading: در حال دیدن رد %{name}
@@ -2153,10 +2120,6 @@ fa:
       trace_not_found: رد یافت نشد!
       visibility: 'پدیداری:'
       confirm_delete: این رد حذف شود؟
-    trace_paging_nav:
-      showing_page: صفحهٔ %{page}
-      older: ردهای کهنه‌تر
-      newer: ردهای تازه‌تر
     trace:
       pending: در انتظار
       count_points:
@@ -2170,8 +2133,6 @@ fa:
       identifiable: قابل شناسایی
       private: خصوصی
       trackable: قابل ردیابی
-      by: از
-      in: در
     index:
       public_traces: ردهای GPS عمومی
       public_traces_from: ردهای GPS عمومی از %{user}
@@ -2180,122 +2141,70 @@ fa:
       upload_trace: بارگذاری یک رد
       all_traces: همهٔ ردها
       my_traces: ردهای من
-      traces_from: ردهای عمومی %{user}
+      traces_from_html: ردهای عمومی %{user}
       remove_tag_filter: حذف پالایهٔ برچسب
     destroy:
       scheduled_for_deletion: این رد در زمان‌بندی حذف قرار گرفت
-    make_public:
-      made_public: رد عمومی شد
     offline_warning:
       message: سامانهٔ بارگذاری GPX در حال حاضر در دسترس نیست
     offline:
       heading: ذخیره‌گاه GPX برون‌خط است
       message: ذخیره‌گاه پروندهٔ GPX و سامانهٔ بارگذاری هم‌اکنون در دسترس نیستند.
-    georss:
-      title: ‫ردهای جی‌پی‌اس OpenStreetMap‬
-    description:
-      description_with_count:
-        one: ‫فایل GPX با %{count} نقطه از %{user}‬
-        other: ' ‫فایل GPX با %{count} نقطه از %{user}‬'
-      description_without_count: پروندهٔ GPX از %{user}
+    feeds:
+      show:
+        title: ‫ردهای جی‌پی‌اس OpenStreetMap‬
+      description:
+        description_with_count:
+          one: ‫فایل GPX با %{count} نقطه از %{user}‬
+          other: ' ‫فایل GPX با %{count} نقطه از %{user}‬'
+        description_without_count: پروندهٔ GPX از %{user}
   application:
     permission_denied: شما اجازهٔ دسترسی به آن کنش را ندارید.
     require_cookies:
       cookies_needed: به‌نظر می‌رسد کوکی‌ها را غیرفعال کرده‌اید - لطفاً قبل از ادامه
         کوکی‌های مرورگرتان را فعال کنید.
-    require_admin:
-      not_an_admin: برای انجام آن کنش باید مدیر باشید.
     setup_user_auth:
       blocked_zero_hour: در وبگاه OpenStreetMap یک پیام خیلی مهم دارید. برای اینکه
         بتوانید ویرایش‌های خود را ذخیره کنید باید ابتدا آن را بخوانید.
       blocked: دسترسی شما به API مسدود شده. برای یافتن اطلاعات بیشتر لطفاً به رابط
         کاربری وب وارد شوید.
-      need_to_see_terms: دسترسی شما به API به‌طور موقت معلق شده‌است. لطفاً در رابط
+      need_to_see_terms: دسترسی شما به API به‌طور موقت معلق شده است. لطفاً در رابط
         کاربری وب وارد شوید تا شرایط مشارکت‌کننده را ببینید. لازم نیست آن را بپذیرید،
         ولی حتماً باید آن را ببینید.
     settings_menu:
       account_settings: تنظیمات حساب
-      oauth1_settings: تنظیمات OAuth 1
       oauth2_applications: برنامه‌های OAuth 2
       oauth2_authorizations: مجوزهای OAuth 2
+    auth_providers:
+      google:
+        title: ورود با گوگل
+        alt: ورود با OpenID گوگل
+      facebook:
+        title: ورود با فیسبوک
+        alt: ورود با حساب فیسبوک
+      microsoft:
+        title: ورود با مایکروسافت
+        alt: ورود با حساب مایکروسافت
+      github:
+        title: ورود با GitHub
+        alt: ورود با حساب GitHub
+      wikipedia:
+        title: ورود با ویکی‌پدیا
+        alt: ورود با حساب ویکی‌پدیا
   oauth:
-    authorize:
-      title: اجازهٔ دسترسی به حسابتان را صادر کنید
-      request_access_html: برنامهٔ %{app_name} درخواست دسترسی به حساب کاربری شما (%{user})
-        دارد. لطفاً بررسی کنید که آیا مایلید برنامه به قابلیت‌های زیر دسترسی داشته
-        باشد. می‌توانید همه یا فقط مواردی را که دوست دارید انتخاب کنید.
-      allow_to: 'برنامهٔ کارخواه مجاز است که:'
-      allow_read_prefs: ترجیحات کاربری شما را بخواند.
-      allow_write_prefs: ترجیحات کاربری شما را تغییر دهد.
-      allow_write_diary: روزنوشت ایجاد کند، نظر ثبت کند و دوست اضافه کند.
-      allow_write_api: نقشه را تغییر دهد.
-      allow_read_gpx: ردهای GPS خصوصی شما را بخواند.
-      allow_write_gpx: ردهای GPS را بارگذاری کند.
-      allow_write_notes: یادداشت‌ها را تغییر دهد.
-      grant_access: دسترسی می‌دهم
-    authorize_success:
-      title: درخواست اجازه قبول شد
-      allowed_html: دسترسی برنامهٔ %{app_name} به حسابتان را مجاز کرده‌اید.
-      verification: کد تأیید %{code} است.
-    authorize_failure:
-      title: درخواست اجازه انجام نشد
-      denied: دسترسی برنامهٔ %{app_name} به حسابتان را رد کرده‌اید.
-      invalid: توکن مجوز معتبر نیست.
-    revoke:
-      flash: توکن مربوط به %{application} را باطل کرده‌اید
     permissions:
       missing: اجازهٔ دسترسی به این امکان را به برنامه نداده‌اید
     scopes:
       read_prefs: خواندن ترجیحات کاربری
       write_prefs: تغییر ترجیحات کاربری
-      write_diary: ایجاد روزنوشت، نظردهی و افزودن دوست
+      write_diary: ایجاد روزنوشت و نظردهی
       write_api: اصلاح نقشه
       read_gpx: خواندن ردهای جی‌پی‌اس خصوصی
       write_gpx: بارگذاری ردهای جی‌پی‌اس
       write_notes: اصلاح یادداشت‌ها
+      write_blocks: ایجاد و برداشتن قطع دسترسی‌های کاربر
       read_email: خواندن نشانی رایانامهٔ کاربر
       skip_authorization: برنامه با تأیید خودکار
-  oauth_clients:
-    new:
-      title: ثبت برنامهٔ جدید
-    edit:
-      title: ویرایش برنامه‌تان
-    show:
-      title: جزئیات OAuth برای %{app_name}
-      key: 'کلید مصرف‌کننده:'
-      secret: 'کد مخفی مصرف‌کننده:'
-      url: 'نشانی وب توکن درخواست:'
-      access_url: 'نشانی وب توکن دسترسی:'
-      authorize_url: 'Authorise URL:'
-      support_notice: از امضاهای HMAC-SHA1 (توصیه‌شده) و RSA-SHA1 پشتیبانی می‌کنیم.
-      edit: ویرایش جزئیات
-      delete: حذف کارخواه
-      confirm: آیا مطمئن هستید؟
-      requests: 'مجوزهای زیر از کاربر درخواست می‌شود:'
-    index:
-      title: جزئیات OAuth من
-      my_tokens: برنامه‌های مجاز من
-      list_tokens: 'توکن‌های زیر با نام شما برای برنامه‌های زیر صادر شده است:'
-      application: نام برنامه
-      issued_at: تاریخ صدور
-      revoke: باطل شود!
-      my_apps: برنامه‌های کارخواه من
-      no_apps_html: آیا برنامه‌ای دارید که می‌خواهید برای استفاده با ما از طریق استاندارد
-        %{oauth} ثبتش کنید؟ پیش از آنکه برنامهٔ وب شما بتواند درخواست‌های OAuth انجام
-        دهد باید آن را ثبت کنید.
-      oauth: OAuth
-      registered_apps: 'برنامه‌های کارخواه زیر را ثبت کرده‌اید:'
-      register_new: برنامه‌تان را ثبت کنید
-    form:
-      requests: 'مجوزهای زیر را از کاربر درخواست کن:'
-    not_found:
-      sorry: شوربختانه آن %{type} یافت نشد.
-    create:
-      flash: اطلاعات با موفقیت ثبت شد
-    update:
-      flash: اطلاعات کارخواه با موفقیت روزآمد شد
-    destroy:
-      flash: نام‌نویسی برنامهٔ کارخواه از بین رفت
   oauth2_applications:
     index:
       title: برنامه‌های کارخواه من
@@ -2347,47 +2256,17 @@ fa:
   users:
     new:
       title: ثبت نام
+      tab_title: ثبت نام
       no_auto_account_create: متأسفانه در حال حاضر نمی‌توانیم به‌صورت خودکار برای
         شما حساب کاربری بسازیم.
       about:
         header: آزاد و قابل‌ویرایش
       display name description: نام کاربری شما که دیگران آن را می‌بینند. می‌توانید
         بعداً آن را در تنظیمات تغییر دهید.
-      external auth: 'احراز هویت شخص ثالث:'
-      use external auth: به‌جای ثبت نام، از روش شخص ثالث استفاده کنید
-      auth no password: در اعتبارسنجی به‌روش شخص ثالث نیازی به رمز عبور اوپن‌استریت‌مپ
-        ندارید اما شاید میزبان انتخابی شما رمز عبور خودش را بخواهد.
+      by_signing_up:
+        privacy_policy: سیاست محرمانگی
       continue: ثبت نام
-      terms accepted: از اینکه شرایط جدید مشارکت‌کننده را پذیرفتید، سپاسگزاریم!
-      privacy_policy: سیاست محرمانگی
-    terms:
-      title: شرایط
-      heading: شرایط
-      heading_ct: شرایط مشارکت‌کننده
-      read and accept with tou: لطفاً توافق‌نامهٔ مشارکت‌کننده و شرایط استفاده را
-        مطالعه کنید و هر دو گزینه را علامت بزنید و سپس روی دکمهٔ ادامه کلیک کنید.
-      contributor_terms_explain: به‌موجب این توافقنامه، این شرایط مشارکت‌کننده برای
-        مشارکت‌های گذشته و آیندهٔ شما نافذ است.
-      read_ct: شرایط مشارکت‌کننده را که در بالا آمده، خوانده‌ام و آن را می‌پذیرم
-      tou_explain_html: این %{tou_link} دربارهٔ استفاده از وبگاه و سایر زیرساخت‌های
-        ارائه‌شده از سوی OSMF نافذ است. لطفاً روی پیوند کلیک کنید، متن را بخوانید
-        و آن را بپذیرید.
-      read_tou: شرایط استفاده را خوانده‌ام و آن را می‌پذیرم
-      consider_pd: علاوه بر موارد بالا، می‌پذیرم که مشارکت‌هایم در مالکیت عمومی باشد.
-      consider_pd_why: این چیست؟
-      continue: ادامه
-      decline: نمی‌پذیرم
-      you need to accept or decline: برای ادامه لطفاً بخوانید و سپس شرایط جدید مشارکت‌کننده
-        را بپذیرید یا رد کنید.
-      legale_select: 'كشور محل سكونت:'
-      legale_names:
-        france: فرانسه
-        italy: ایتالیا
-        rest_of_world: دیگر نقاط جهان
-    terms_declined_flash:
-      terms_declined_html: از اینکه تصمیم گرفته‌اید شرایط جدید مشارکت‌کننده را نپذیرید،
-        متأسف هستیم. برای اطلاعات بیشتر، لطفاً %{terms_declined_link} را ببینید.
-      terms_declined_link: این صفحهٔ ویکی
+      use external auth: به‌جای ثبت نام، از روش شخص ثالث استفاده کنید
     no_such_user:
       title: چنین کاربری وجود ندارد
       heading: کاربر %{user} وجود ندارد
@@ -2401,7 +2280,7 @@ fa:
       my notes: یادداشت‌های من
       my messages: پیام‌های من
       my profile: نمایهٔ من
-      my settings: تنظیمات من
+      my_account: حساب من
       my comments: نظرات من
       my_preferences: ترجیحات من
       my_dashboard: پیشخوان من
@@ -2413,13 +2292,10 @@ fa:
       edits: ویرایش‌ها
       traces: ردها
       notes: یادداشت‌های نقشه
-      remove as friend: لغو دوستی
-      add as friend: افزودن دوست
       mapper since: 'آغاز نقشه‌کشی از:'
       ct status: 'شرایط مشارکت‌کننده:'
       ct undecided: بلاتکلیف
       ct declined: رد شده
-      latest edit: 'آخرین ویرایش (%{ago}):'
       email address: 'نشانی رایانامه:'
       created from: 'ایجادشده از:'
       status: 'وضعیت:'
@@ -2449,17 +2325,49 @@ fa:
     go_public:
       flash success: تمام ویرایش‌های شما اکنون عمومی‌اند و حالا اجازه دارید ویرایش
         کنید.
-    index:
-      title: کاربران
-      heading: کاربران
-      showing:
-        one: صفحهٔ %{page} (%{first_item} از %{items})
-        other: صفحهٔ %{page} (%{first_item}-%{last_item} از %{items})
-      summary_html: '%{name} با آی‌پی %{ip_address} در %{date} ایجاد شد'
-      summary_no_ip_html: '%{name} در %{date} ایجاد شد'
-      confirm: تأیید کاربران انتخاب‌شده
-      hide: پنهان‌کردن کاربران انتخاب‌شده
-      empty: هیچ کاربر منطبقی یافت نشد
+    issued_blocks:
+      show:
+        title: مسدودسازی‌های %{name}
+        heading_html: فهرست مسدودسازی‌های %{name}
+        empty: '%{name} تا کنون مسدود نکرده است.'
+    received_blocks:
+      show:
+        title: مسدودی‌های %{name}
+        heading_html: فهرست مسدودی‌های %{name}
+        empty: '%{name} تا کنون مسدود نشده است.'
+    lists:
+      show:
+        title: کاربران
+        heading: کاربران
+        select_status: انتخاب وضعیت
+        states:
+          pending: در انتظار
+          active: فعال
+          confirmed: تأییدشده
+          suspended: تعلیق‌شده
+          deleted: حذف‌شده
+        name_or_email: نام یا ایمیل
+        ip_address: نشانی آی‌پی
+        search: جستجو
+      page:
+        confirm: تأیید کاربران انتخاب‌شده
+        hide: پنهان‌کردن کاربران انتخاب‌شده
+        empty: هیچ کاربر منطبقی یافت نشد
+      user:
+        summary_html: '%{name} با آی‌پی %{ip_address} در %{date} ایجاد شد'
+        summary_no_ip_html: '%{name} در %{date} ایجاد شد'
+    comments:
+      index:
+        diary_entries: مدخل‌های روزنوشت
+    changeset_comments:
+      page:
+        when: زمان
+        comment: نظر
+    diary_comments:
+      index:
+        title: نظراتی که %{user} به روزنوشت‌ها داده است
+      page:
+        post: فرسته
     suspended:
       title: حساب معلق شده است
       heading: تعلیق حساب
@@ -2485,21 +2393,11 @@ fa:
       doesnt_have_role: کاربر نقش %{role} را ندارد.
       not_revoke_admin_current_user: امکان ابطال نقش مدیر برای کاربر جاری وجود ندارد.
     grant:
-      title: تأیید اعطای نقش
-      heading: تأیید اعطای نقش
       are_you_sure: آیا اطمینان دارید که می‌خواهید نقش '%{role}' را به کاربر '%{name}'
         اعطا  کنید؟
-      confirm: تأیید
-      fail: نمی‌توان نقش %{role} را به کاربر %{name} اعطا کرد. لطفاً مطمئن شوید که
-        کاربر و نقش هر دو معتبر باشند.
     revoke:
-      title: تأیید ابطال نقش
-      heading: تأیید ابطال نقش
-      are_you_sure: آیا اطمینان دارید که می خواهید نقش `%{role}' را برای کاربر '%{name}'
+      are_you_sure: آیا اطمینان دارید که می‌خواهید نقش `%{role}' را برای کاربر '%{name}'
         باطل نمایید؟
-      confirm: تأیید
-      fail: نمی‌توان نقش %{role} را برای کاربر %{name} باطل کرد. لطفاً مطمئن شوید
-        که کاربر و نقش هر دو معتبر باشند.
   user_blocks:
     model:
       non_moderator_update: برای ایجاد یا روزآمدسازیِ یک مسدودی باید ناظم باشید.
@@ -2511,34 +2409,24 @@ fa:
       title: در حال مسدودکردن %{name}
       heading_html: مسدودکردن %{name}
       period: مدت‌زمان مسدودی کاربر از API (شروع از حالا).
-      back: دیدن تمام مسدودی‌ها
     edit:
       title: ویرایش مسدودی کاربر %{name}
       heading_html: ویرایش مسدودی %{name}
       period: مدت‌زمان مسدودی کاربر از API (شروع از حالا).
-      show: دیدن این مسدودی
-      back: دیدن تمام مسدودی‌ها
     filter:
-      block_expired: مسدودی قبلاً منقضی شده و قابل ویرایش نیست.
       block_period: دورهٔ مسدودی باید یکی از مقدارهای قابل انتخاب در لیست بازشو باشد.
     create:
       flash: یک مسدودی روی کاربری %{name} ایجاد شد.
     update:
       only_creator_can_edit: فقط ناظمی که این مسدودی را ایجاد کرده می‌تواند آن را
         ویرایش کند.
+      inactive_block_cannot_be_reactivated: این قطع دسترسی غیرفعال است و نمی‌توان
+        آن را مجدداً فعال کرد.
       success: مسدودی روزآمد شد.
     index:
       title: مسدودی‌های کاربر
       heading: لیست مسدودی‌های کاربری
       empty: هنوز مسدودیتی ساخته نشده.
-    revoke:
-      title: ابطال مسدودی %{block_on}
-      heading_html: ابطال مسدودی %{block_on}، مسدودشده به دست %{block_by}
-      time_future: این مسدودی در %{time} پایان می یابد.
-      past: این مسدودی %{time} پایان یافته و اکنون قابل‌ابطال نیست.
-      confirm: مطمئنید می‌خواهید این مسدودی را باطل کنید؟
-      revoke: باطل شود!
-      flash: این مسدودی باطل شد.
     helper:
       time_future_html: '%{time} دیگر پایان می‌یابد.'
       until_login: تا وقتی کاربر وارد شود فعال می‌ماند.
@@ -2553,42 +2441,37 @@ fa:
         weeks: '%{count} هفته'
         months: '%{count} ماه'
         years: '%{count} سال'
-    blocks_on:
-      title: مسدودی‌های %{name}
-      heading_html: فهرست مسدودی‌های %{name}
-      empty: '%{name} تا کنون مسدود نشده است.'
-    blocks_by:
-      title: مسدودسازی‌های %{name}
-      heading_html: فهرست مسدودسازی‌های %{name}
-      empty: '%{name} تا کنون مسدود نکرده است.'
     show:
       title: '%{block_on} به دست %{block_by} مسدود شده'
       heading_html: '%{block_on} به دست %{block_by} مسدود شده'
       created: 'ایجاد شده:'
       duration: 'مدت:'
       status: 'وضعیت:'
-      show: نمایش
       edit: ویرایش
-      revoke: باطل شود!
-      confirm: آیا مطمئن هستید؟
       reason: 'دلیل مسدودی:'
-      back: دیدن تمام مسدودی‌ها
       revoker: 'باطل‌کننده:'
-      needs_view: برای پاک‌شدن این مسدودی کاربر باید وارد حسابش شود.
     block:
-      not_revoked: (باطل نشده)
       show: نمایش
       edit: ویرایش
-      revoke: باطل شود!
-    blocks:
+    page:
       display_name: کاربر مسدود
       creator_name: ایجادکننده
       reason: دلیل مسدودی
       status: وضعیت
-      revoker_name: باطل‌کننده
-      showing_page: صفحهٔ %{page}
-      next: بعدی »
-      previous: « قبلی
+    navigation:
+      all_blocks: تمام قطع دسترسی‌ها
+      blocks_on_me: قطع دسترسی‌های من
+      blocks_on_user_html: قطع دسترسی‌های %{user}
+      blocks_by_me: |-
+        Blocks by Me
+        بسته شدها یا مسدود شدهها
+      blocks_by_user_html: |-
+        Blocks by %{user}
+
+        بستن توسط یا مسدود شدن توسط
+      block: |-
+        Block #%{id}
+        مسدود کردن یا بستن آی دی
   notes:
     index:
       title: یادداشت‌هایی که %{user} ارسال کرده یا روی آن‌ها نظر داده
@@ -2606,6 +2489,7 @@ fa:
       open_title: 'یادداشت حل‌نشده #%{note_name}'
       closed_title: 'یادداشت حل‌شده #%{note_name}'
       hidden_title: 'یادداشت پنهان #%{note_name}'
+      description_when_there_is_no_opening_comment: ناشناخته
       report: این یادداشت را گزارش کنید
       anonymous_warning: این یادداشت حاوی نظر کاربران گمنام است و باید به‌طور مستقل
         راستی‌آزمایی شود.
@@ -2625,6 +2509,8 @@ fa:
       advice: همهٔ افراد این یادداشت شما را می‌بینند. بنابراین اطلاعات خصوصی یا اطلاعات
         برداشت‌شده از منابع دارای حق نشر را اینجا ننویسید.
       add: افزودن یادداشت
+    notes_paging_nav:
+      showing_page: صفحهٔ %{page}
   javascripts:
     close: بستن
     share:
@@ -2647,7 +2533,6 @@ fa:
       center_marker: مرکز نقشه در نشانگر
       paste_html: برای استفادهٔ توکار در وبگاه، HTML را جایگذاری کنید
       view_larger_map: دیدن نقشهٔ بزرگتر
-      only_standard_layer: فقط لایهٔ استاندارد را می‌توان در قالب عکس برون‌برد کرد.
     embed:
       report_problem: گزارش مشکل
     key:
@@ -2687,27 +2572,11 @@ fa:
       map_data_zoom_in_tooltip: برای دیدن دادهٔ نقشه بزرگ‌نمایی کنید
       queryfeature_tooltip: پرس‌وجوی عارضه‌ها
       queryfeature_disabled_tooltip: برای پرس‌وجوی عارضه‌ها بزرگ‌نمایی کنید
-    changesets:
-      show:
-        comment: نظر
-        subscribe: اشتراک
-        unsubscribe: لغو اشتراک
-        hide_comment: نهفتن
-        unhide_comment: نمایش
+    social_links:
+      remove: حذف
     edit_help: نقشه را جابه‌جا کنید و روی مکانی که می‌خواهید ویرایش نمایید بزرگ‌نمایی
       کنید. سپس اینجا کلیک کنید.
     directions:
-      ascend: فراز
-      engines:
-        fossgis_osrm_bike: دوچرخه (OSRM)
-        fossgis_osrm_car: خودرو (OSRM)
-        fossgis_osrm_foot: پا (OSRM)
-        graphhopper_bicycle: دوچرخه (GraphHopper)
-        graphhopper_car: خودرو (GraphHopper)
-        graphhopper_foot: پیاده (GraphHopper)
-      descend: فرود
-      directions: راهنمای مسیر
-      distance: مسافت
       errors:
         no_route: بین این دو مکان، مسیری پیدا نشد.
         no_place: متأسفیم - %{place} پیدا نشد.
@@ -2765,7 +2634,6 @@ fa:
         roundabout_with_exit_ordinal: در میدان، از خروجی %{exit} به %{name} بروید
         exit_roundabout: از میدان به‌طرف %{name} خارج شوید
         unnamed: معبر بی‌نام
-        courtesy: راهنمای مسیر با همکاری %{link}
         exit_counts:
           first: اول
           second: دوم
@@ -2777,7 +2645,6 @@ fa:
           eighth: هشتم
           ninth: نهم
           tenth: دهم
-      time: مدت
     query:
       node: گره
       way: راه
@@ -2794,6 +2661,9 @@ fa:
       show_address: نمایش نشانی
       query_features: پرس‌وجو برای عارضه‌ها
       centre_map: اینجا را مرکز نقشه کن
+    home:
+      marker_title: محل خانهٔ من
+      not_set: محل خانهٔ حساب شما تنظیم نشده است
   redactions:
     edit:
       heading: ویرایش پاک‌سازی

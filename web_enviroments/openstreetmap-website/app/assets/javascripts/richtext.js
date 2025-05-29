@@ -1,68 +1,77 @@
-$(document).ready(function () {
-  /* Hide the preview panes */
-  $(".richtext_preview").hide();
-
+(function () {
   /*
    * When the text in an edit pane is changed, clear the contents of
    * the associated preview pne so that it will be regenerated when
    * the user next switches to it.
    */
-  $(".richtext_content textarea").change(function () {
-    $(this).parents(".richtext_container").find(".richtext_preview").empty();
-  });
+  $(document).on("change", ".richtext_container textarea", function () {
+    const container = $(this).closest(".richtext_container");
+    const preview = container.find(".tab-pane[id$='_preview']");
 
-  /* Disable all the edit buttons */
-  $(".richtext_doedit").prop("disabled", true);
-
-  /* Enable the preview buttons */
-  $(".richtext_dopreview").prop("disabled", false);
-
-  /*
-   * Install a click handler to switch to edit mode when the
-   * edit button is pressed.
-   */
-  $(".richtext_doedit").click(function (event) {
-    var editor = $(this).parents(".richtext_container").find("textarea");
-    var preview = $(this).parents(".richtext_container").find(".richtext_preview");
-
-    preview.hide();
-    editor.show();
-
-    $(this).siblings(".richtext_dopreview").prop("disabled", false);
-    $(this).prop("disabled", true);
-
-    event.preventDefault();
+    preview.children(".richtext_placeholder").attr("hidden", true).removeClass("delayed-fade-in");
+    preview.children(".richtext").empty();
   });
 
   /*
-   * Install a click handler to switch to preview mode when the
-   * preview button is pressed.
+   * Install a handler to set the minimum preview pane height
+   * when switching away from an edit pane
    */
-  $(".richtext_dopreview").click(function (event) {
-    var editor = $(this).parents(".richtext_container").find("textarea");
-    var preview = $(this).parents(".richtext_container").find(".richtext_preview");
-    var width = editor.outerWidth() - preview.outerWidth() + preview.width();
-    var minHeight = editor.outerHeight() - preview.outerHeight() + preview.height();
+  $(document).on("hide.bs.tab", ".richtext_container button[data-bs-target$='_edit']", function () {
+    const container = $(this).closest(".richtext_container");
+    const editor = container.find("textarea");
+    const preview = container.find(".tab-pane[id$='_preview']");
+    const minHeight = editor.outerHeight() - preview.outerHeight() + preview.height();
 
-    if (preview.contents().length === 0) {
-      preview.oneTime(500, "loading", function () {
-        preview.addClass("loading");
-      });
-
-      preview.load(editor.data("previewUrl"), { text: editor.val() }, function () {
-        preview.stopTime("loading");
-        preview.removeClass("loading");
-      });
-    }
-
-    editor.hide();
-    preview.width(width);
     preview.css("min-height", minHeight + "px");
-    preview.show();
-
-    $(this).siblings(".richtext_doedit").prop("disabled", false);
-    $(this).prop("disabled", true);
-
-    event.preventDefault();
   });
-});
+
+  /*
+   * Install a handler to switch to preview mode
+   */
+  $(document).on("show.bs.tab", ".richtext_container button[data-bs-target$='_preview']", function () {
+    const container = $(this).closest(".richtext_container");
+    const editor = container.find("textarea");
+    const preview = container.find(".tab-pane[id$='_preview']");
+
+    if (preview.children(".richtext").contents().length === 0) {
+      preview.children(".richtext_placeholder").removeAttr("hidden").addClass("delayed-fade-in");
+
+      fetch(editor.data("previewUrl"), {
+        method: "POST",
+        body: new URLSearchParams({ text: editor.val(), ...OSM.csrf })
+      })
+        .then(r => r.text())
+        .then(html => {
+          preview.children(".richtext").html(html);
+          preview.children(".richtext_placeholder").attr("hidden", true).removeClass("delayed-fade-in");
+        });
+    }
+  });
+
+  $(window).on("resize", updateHelp);
+
+  $(document).on("turbo:load", function () {
+    $(".richtext_container textarea").on("invalid", invalidTextareaListener);
+    updateHelp();
+  });
+
+  function invalidTextareaListener() {
+    const container = $(this).closest(".richtext_container");
+
+    container.find("button[data-bs-target$='_edit']").tab("show");
+  }
+
+  function updateHelp() {
+    $(".richtext_container .richtext_help_sidebar:not(:visible):not(:empty)").each(function () {
+      const container = $(this).closest(".richtext_container");
+      $(this).children().appendTo(container.find(".tab-pane[id$='_help']"));
+    });
+    $(".richtext_container .richtext_help_sidebar:visible:empty").each(function () {
+      const container = $(this).closest(".richtext_container");
+      container.find(".tab-pane[id$='_help']").children().appendTo($(this));
+      if (container.find("button[data-bs-target$='_help'].active").length) {
+        container.find("button[data-bs-target$='_edit']").tab("show");
+      }
+    });
+  }
+}());

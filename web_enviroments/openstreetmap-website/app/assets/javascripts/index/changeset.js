@@ -1,74 +1,73 @@
 OSM.Changeset = function (map) {
-  var page = {},
-      content = $("#sidebar_content"),
-      currentChangesetId;
+  const page = {},
+        content = $("#sidebar_content");
 
-  page.pushstate = page.popstate = function (path, id) {
+  page.pushstate = page.popstate = function (path) {
     OSM.loadSidebarContent(path, function () {
-      page.load(path, id);
+      page.load();
     });
   };
 
-  page.load = function (path, id) {
-    if (id) currentChangesetId = id;
-    initialize();
-    addChangeset(currentChangesetId, true);
-  };
+  page.load = function () {
+    const changesetData = content.find("[data-changeset]").data("changeset");
+    changesetData.type = "changeset";
 
-  function addChangeset(id, center) {
-    map.addObject({ type: "changeset", id: parseInt(id, 10) }, function (bounds) {
-      if (!window.location.hash && bounds.isValid() &&
-          (center || !map.getBounds().contains(bounds))) {
+    const hashParams = OSM.parseHash();
+    initialize();
+    map.addObject(changesetData, function (bounds) {
+      if (!hashParams.center && bounds.isValid()) {
         OSM.router.withoutMoveListener(function () {
           map.fitBounds(bounds);
         });
       }
     });
-  }
+  };
 
-  function updateChangeset(form, method, url, include_data) {
-    var data;
+  function updateChangeset(method, url, include_data) {
+    const data = new URLSearchParams();
 
-    $(form).find("input[type=submit]").prop("disabled", true);
+    content.find("#comment-error").prop("hidden", true);
+    content.find("button[data-method][data-url]").prop("disabled", true);
 
     if (include_data) {
-      data = { text: $(form.text).val() };
-    } else {
-      data = {};
+      data.set("text", content.find("textarea").val());
     }
 
-    $.ajax({
-      url: url,
-      type: method,
-      oauth: true,
-      data: data,
-      success: function () {
-        OSM.loadSidebarContent(window.location.pathname, page.load);
-      }
-    });
+    fetch(url, {
+      method: method,
+      headers: { ...OSM.oauth },
+      body: data
+    })
+      .then(response => {
+        if (response.ok) return response;
+        return response.text().then(text => {
+          throw new Error(text);
+        });
+      })
+      .then(() => {
+        OSM.loadSidebarContent(location.pathname, page.load);
+      })
+      .catch(error => {
+        content.find("button[data-method][data-url]").prop("disabled", false);
+        content.find("#comment-error")
+          .text(error.message)
+          .prop("hidden", false)
+          .get(0).scrollIntoView({ block: "nearest" });
+      });
   }
 
   function initialize() {
-    content.find("input[name=comment]").on("click", function (e) {
+    content.find("button[data-method][data-url]").on("click", function (e) {
       e.preventDefault();
-      var data = $(e.target).data();
-      updateChangeset(e.target.form, data.method, data.url, true);
-    });
-
-    content.find(".action-button").on("click", function (e) {
-      e.preventDefault();
-      var data = $(e.target).data();
-      updateChangeset(e.target.form, data.method, data.url);
+      const data = $(e.target).data();
+      const include_data = e.target.name === "comment";
+      updateChangeset(data.method, data.url, include_data);
     });
 
     content.find("textarea").on("input", function (e) {
-      var form = e.target.form;
-
-      if ($(e.target).val() === "") {
-        $(form.comment).prop("disabled", true);
-      } else {
-        $(form.comment).prop("disabled", false);
-      }
+      const form = e.target.form,
+            disabled = $(e.target).val() === "";
+      form.comment.disabled = disabled;
     });
 
     content.find("textarea").val("").trigger("input");

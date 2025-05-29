@@ -24,19 +24,10 @@ xml.changeset(attrs) do |changeset_xml_node|
 
   # include discussion if requested
 
-  if @include_discussion
+  if @comments
     changeset_xml_node.discussion do |discussion_xml_node|
-      changeset.comments.includes(:author).each do |comment|
-        cattrs = {
-          "date" => comment.created_at.xmlschema
-        }
-        if comment.author.data_public?
-          cattrs["uid"] = comment.author.id
-          cattrs["user"] = comment.author.display_name
-        end
-        discussion_xml_node.comment(cattrs) do |comment_xml_node|
-          comment_xml_node.text(comment.body)
-        end
+      @comments.each do |comment|
+        discussion_xml_node << render(comment)
       end
     end
   end

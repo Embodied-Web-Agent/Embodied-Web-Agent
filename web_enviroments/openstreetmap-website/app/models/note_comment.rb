@@ -2,20 +2,21 @@
 #
 # Table name: note_comments
 #
-#  id         :bigint(8)        not null, primary key
-#  note_id    :bigint(8)        not null
+#  id         :bigint           not null, primary key
+#  note_id    :bigint           not null
 #  visible    :boolean          not null
 #  created_at :datetime         not null
 #  author_ip  :inet
-#  author_id  :bigint(8)
+#  author_id  :bigint
 #  body       :text
 #  event      :enum
 #
 # Indexes
 #
-#  index_note_comments_on_body        (to_tsvector('english'::regconfig, body)) USING gin
-#  index_note_comments_on_created_at  (created_at)
-#  note_comments_note_id_idx          (note_id)
+#  index_note_comments_on_author_id_and_created_at  (author_id,created_at)
+#  index_note_comments_on_body                      (to_tsvector('english'::regconfig, body)) USING gin
+#  index_note_comments_on_created_at                (created_at)
+#  note_comments_note_id_idx                        (note_id)
 #
 # Foreign Keys
 #
@@ -25,7 +26,7 @@
 
 class NoteComment < ApplicationRecord
   belongs_to :note, :touch => true
-  belongs_to :author, :class_name => "User", :optional => true
+  belongs_to :author, :class_name => "User", :optional => true, :counter_cache => true
 
   validates :id, :uniqueness => true, :presence => { :on => :update },
                  :numericality => { :on => :update, :only_integer => true }

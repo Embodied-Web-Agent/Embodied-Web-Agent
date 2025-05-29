@@ -1,0 +1,21 @@
+<% prefered_auth_button_available = Auth.providers.include?(@preferred_auth_provider) %>
+
+<div>
+  <%= tag.div :id => "login_auth_buttons",
+              :class => ["collapse show row row-cols-1", { "row-cols-sm-2" => prefered_auth_button_available }, "g-2 mb-3"] do %>
+
+    <% if prefered_auth_button_available %>
+      <div class="col justify-content-center d-flex align-items-center flex-wrap">
+        <%= auth_button_preferred @preferred_auth_provider %>
+      </div>
+    <% end %>
+
+    <div class="col justify-content-center d-flex align-items-center flex-wrap gap-2">
+      <% Auth.providers.each do |provider| %>
+        <% if provider != @preferred_auth_provider %>
+          <%= auth_button provider %>
+        <% end %>
+      <% end -%>
+    </div>
+  <% end %>
+</div>

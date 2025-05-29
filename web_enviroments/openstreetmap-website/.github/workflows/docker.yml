@@ -8,10 +8,10 @@ concurrency:
 jobs:
   test:
     name: Docker
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout source
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Poke config
       run: |
         cp config/example.storage.yml config/storage.yml
@@ -19,17 +19,17 @@ jobs:
         touch config/settings.local.yml
     - name: Build Docker Image
       run: |
-        docker-compose build
-    - name: Start Docker-Compose
+        docker compose build
+    - name: Start Docker Compose
       run: |
-        docker-compose up -d
+        docker compose up -d
         sleep 15 # let the DB warm up a little
     - name: Prepare Database
       run: |
-        docker-compose run --rm web bundle exec rails db:migrate
-        docker-compose run --rm web bundle exec rails i18n:js:export
-        docker-compose run --rm web bundle exec rails assets:precompile
-        docker-compose run --rm web osmosis --rx docker/null-island.osm.xml --wd host=db database=openstreetmap user=openstreetmap password=openstreetmap validateSchemaVersion=no
+        docker compose run --rm web bundle exec rails db:migrate
+        docker compose run --rm web bundle exec i18n export
+        docker compose run --rm web bundle exec rails assets:precompile
+        docker compose run --rm web osmosis --rx docker/null-island.osm.xml --wd host=db database=openstreetmap user=openstreetmap password=openstreetmap validateSchemaVersion=no
     - name: Test Basic Website
       run: |
         curl -siL http://127.0.0.1:3000 | egrep '^HTTP/1.1 200 OK'
@@ -37,5 +37,5 @@ jobs:
         curl -siL http://127.0.0.1:3000/api/0.6/node/1 | grep 'Null Island'
     - name: Test Complete Suite
       run: |
-        docker-compose run --rm web bundle exec rails db:test:prepare
-        docker-compose run --rm web bundle exec rails test:all
+        docker compose run --rm web bundle exec rails db:test:prepare
+        docker compose run --rm web bundle exec rails test:all

@@ -2,9 +2,9 @@
 #
 # Table name: diary_comments
 #
-#  id             :bigint(8)        not null, primary key
-#  diary_entry_id :bigint(8)        not null
-#  user_id        :bigint(8)        not null
+#  id             :bigint           not null, primary key
+#  diary_entry_id :bigint           not null
+#  user_id        :bigint           not null
 #  body           :text             not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -15,6 +15,7 @@
 #
 #  diary_comment_user_id_created_at_index  (user_id,created_at)
 #  diary_comments_entry_id_idx             (diary_entry_id,id) UNIQUE
+#  index_diary_comments_on_user_id_and_id  (user_id,id)
 #
 # Foreign Keys
 #
@@ -23,12 +24,12 @@
 #
 
 class DiaryComment < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, :counter_cache => true
   belongs_to :diary_entry
 
   scope :visible, -> { where(:visible => true) }
 
-  validates :body, :presence => true, :characters => true
+  validates :body, :presence => true, :characters => true, :length => 1..65536
   validates :diary_entry, :user, :associated => true
 
   after_save :spam_check
@@ -37,13 +38,12 @@ class DiaryComment < ApplicationRecord
     RichText.new(self[:body_format], self[:body])
   end
 
-  def digest
-    md5 = Digest::MD5.new
-    md5 << diary_entry_id.to_s
-    md5 << user_id.to_s
-    md5 << created_at.xmlschema
-    md5 << body
-    md5.hexdigest
+  def notification_token(subscriber)
+    sha256 = Digest::SHA256.new
+    sha256 << Rails.application.key_generator.generate_key("openstreetmap/diary_comment")
+    sha256 << id.to_s
+    sha256 << subscriber.to_s
+    Base64.urlsafe_encode64(sha256.digest)[0, 8]
   end
 
   private

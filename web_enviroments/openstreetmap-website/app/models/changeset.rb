@@ -2,8 +2,8 @@
 #
 # Table name: changesets
 #
-#  id          :bigint(8)        not null, primary key
-#  user_id     :bigint(8)        not null
+#  id          :bigint           not null, primary key
+#  user_id     :bigint           not null
 #  created_at  :datetime         not null
 #  min_lat     :integer
 #  max_lat     :integer
@@ -14,11 +14,12 @@
 #
 # Indexes
 #
-#  changesets_bbox_idx                (min_lat,max_lat,min_lon,max_lon) USING gist
-#  changesets_closed_at_idx           (closed_at)
-#  changesets_created_at_idx          (created_at)
-#  changesets_user_id_created_at_idx  (user_id,created_at)
-#  changesets_user_id_id_idx          (user_id,id)
+#  changesets_bbox_idx                        (min_lat,max_lat,min_lon,max_lon) USING gist
+#  changesets_closed_at_idx                   (closed_at)
+#  changesets_created_at_idx                  (created_at)
+#  changesets_user_id_created_at_idx          (user_id,created_at)
+#  changesets_user_id_id_idx                  (user_id,id)
+#  index_changesets_on_user_id_and_closed_at  (user_id,closed_at)
 #
 # Foreign Keys
 #
@@ -40,7 +41,8 @@ class Changeset < ApplicationRecord
   has_many :old_relations
 
   has_many :comments, -> { where(:visible => true).order(:created_at) }, :class_name => "ChangesetComment"
-  has_and_belongs_to_many :subscribers, :class_name => "User", :join_table => "changesets_subscribers", :association_foreign_key => "subscriber_id"
+  has_many :subscriptions, :class_name => "ChangesetSubscription"
+  has_many :subscribers, :through => :subscriptions
 
   validates :id, :uniqueness => true, :presence => { :on => :update },
                  :numericality => { :on => :update, :only_integer => true }
@@ -71,7 +73,7 @@ class Changeset < ApplicationRecord
     # note that this may not be a hard limit - due to timing changes and
     # concurrency it is possible that some changesets may be slightly
     # longer than strictly allowed or have slightly more changes in them.
-    ((closed_at > Time.now.utc) && (num_changes <= MAX_ELEMENTS))
+    (closed_at > Time.now.utc) && (num_changes <= MAX_ELEMENTS)
   end
 
   def set_closed_time_now
@@ -129,6 +131,8 @@ class Changeset < ApplicationRecord
   def update_bbox!(bbox_update)
     bbox.expand!(bbox_update)
 
+    raise OSM::APISizeLimitExceeded if bbox.linear_size > size_limit
+
     # update active record. rails 2.1's dirty handling should take care of
     # whether this object needs saving or not.
     self.min_lon, self.min_lat, self.max_lon, self.max_lat = @bbox.to_a.collect(&:round) if bbox.complete?
@@ -170,7 +174,7 @@ class Changeset < ApplicationRecord
       save!
 
       tags = self.tags
-      ChangesetTag.where(:changeset_id => id).delete_all
+      ChangesetTag.where(:changeset => id).delete_all
 
       tags.each do |k, v|
         tag = ChangesetTag.new
@@ -211,5 +215,11 @@ class Changeset < ApplicationRecord
     self.tags = other.tags
 
     save_with_tags!
+  end
+
+  def size_limit
+    @size_limit ||= ActiveRecord::Base.connection.select_value(
+      "SELECT api_size_limit($1)", "api_size_limit", [user_id]
+    )
   end
 end

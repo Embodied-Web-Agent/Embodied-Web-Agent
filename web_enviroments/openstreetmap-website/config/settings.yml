@@ -23,10 +23,26 @@ api_version: "0.6"
 #   database_offline - database offline with site in emergency mode
 #   gpx_offline - gpx storage offline
 status: "online"
+# Expected services restoration date added to offline flash messages
+#status_expected_restore_date: "2024-12-18 12:00:00Z"
+# Application status announcement url added to offline flash messages
+#status_announcement_url: "https://en.osm.town/@osm_tech"
 # The maximum area you're allowed to request, in square degrees
 max_request_area: 0.25
 # Number of GPS trace/trackpoints returned per-page
 tracepoints_per_page: 5000
+# Default limit on the number of changesets returned by the changeset query api method
+default_changeset_query_limit: 100
+# Maximum limit on the number of changesets returned by the changeset query api method
+max_changeset_query_limit: 100
+# Default limit on the number of changeset comments returned by the api
+default_changeset_comment_query_limit: 100
+# Maximum limit on the number of changesets comments returned by the api
+max_changeset_comment_query_limit: 10000
+# Default limit on the number of changeset comments in feeds
+default_changeset_comments_feed_query_limit: 100
+# Maximum limit on the number of changesets comments in feeds
+max_changeset_comments_feed_query_limit: 10000
 # Maximum number of nodes that will be returned by the api in a map request
 max_number_of_nodes: 50000
 # Maximum number of nodes that can be in a way (checked on save)
@@ -35,6 +51,14 @@ max_number_of_way_nodes: 2000
 max_number_of_relation_members: 32000
 # The maximum area you're allowed to request notes from, in square degrees
 max_note_request_area: 25
+# Default limit on the number of notes returned by the note search api method
+default_note_query_limit: 100
+# Maximum limit on the number of notes returned by the note search api method
+max_note_query_limit: 10000
+# Maximum value of open issues counter for moderators, anything equal or greater to this value "n" is shown as "n+"
+max_issues_count: 99
+# Maximum number of points in a GPX trace
+max_trace_size: 1000000
 # Zoom level to use for postcode results from the geocoder
 postcode_zoom: 15
 # Timeout for API calls in seconds
@@ -43,10 +67,36 @@ api_timeout: 300
 web_timeout: 30
 # Periods (in hours) which are allowed for user blocks
 user_block_periods: [0, 1, 3, 6, 12, 24, 48, 96, 168, 336, 731, 4383, 8766, 87660]
+# Account deletion cooldown period (in hours) since last changeset close; null to disable, 0 to make sure there aren't any open changesets when the deletion happens
+user_account_deletion_delay: null
 # Rate limit for message sending
 max_messages_per_hour: 60
-# Rate limit for friending
-max_friends_per_hour: 60
+# Default limit on the number of messages returned by inbox and outbox message api
+default_message_query_limit: 100
+# Maximum number of messages returned by inbox and outbox message api
+max_message_query_limit: 100
+# Rate limit for following
+max_follows_per_hour: 60
+# Rate limit for changeset comments
+min_changeset_comments_per_hour: 1
+initial_changeset_comments_per_hour: 6
+max_changeset_comments_per_hour: 60
+comments_to_max_changeset_comments: 200
+moderator_changeset_comments_per_hour: 36000
+# Rate limit for changes
+min_changes_per_hour: 100
+initial_changes_per_hour: 1000
+max_changes_per_hour: 100000
+days_to_max_changes: 7
+importer_changes_per_hour: 1000000
+moderator_changes_per_hour: 1000000
+# Size limit for changes
+min_size_limit: 10000000
+initial_size_limit: 30000000
+max_size_limit: 5400000000
+days_to_max_size_limit: 28
+importer_size_limit: 5400000000
+moderator_size_limit: 5400000000
 # Domain for handling message replies
 #messages_domain: "messages.openstreetmap.org"
 # MaxMind GeoIPv2 database
@@ -69,12 +119,8 @@ attachments_dir: ":rails_root/public/attachments"
 #logstash_path: ""
 # List of memcache servers to use for caching
 #memcache_servers: []
-# Enable HTTP basic authentication support
-basic_auth_support: true
-# Enable legacy OAuth 1.0 support
-oauth_10_support: true
 # URL of Nominatim instance to use for geocoding
-nominatim_url: "http://metis.lti.cs.cmu.edu:8085/"
+nominatim_url: "https://nominatim.openstreetmap.org/"
 # Default editor
 default_editor: "id"
 # OAuth application for the web site
@@ -82,34 +128,40 @@ default_editor: "id"
 # OAuth application for iD
 #id_application: ""
 # Imagery to return in capabilities as blacklisted
-imagery_blacklist:
-  # Current Google imagery URLs have google or googleapis in the domain
-  - ".*\\.google(apis)?\\..*/.*"
-  # Blacklist VWorld
-  - "http://xdworld\\.vworld\\.kr:8080/.*"
-  # Blacklist here
-  - ".*\\.here\\.com[/:].*"
+imagery_blacklist: []
 # URL of Overpass instance to use for feature queries
 overpass_url: "https://overpass-api.de/api/interpreter"
 overpass_credentials: false
 # Routing endpoints
 graphhopper_url: "https://graphhopper.com/api/1/route"
-fossgis_osrm_url: "http://metis.lti.cs.cmu.edu:"
+fossgis_osrm_url: "https://routing.openstreetmap.de/"
 fossgis_valhalla_url: "https://valhalla1.openstreetmap.de/route"
+# Main website hosts to match in linkify
+linkify_hosts: ["www.openstreetmap.org", "www.osm.org", "www.openstreetmap.com", "openstreetmap.org", "osm.org", "openstreetmap.com"]
+# Shorter host to replace main hosts
+linkify_hosts_replacement: "osm.org"
+# Wiki website hosts to match in linkify
+linkify_wiki_hosts: ["wiki.openstreetmap.org", "wiki.osm.org", "wiki.openstreetmap.com", "wiki.openstreetmaps.org", "osm.wiki", "www.osm.wiki", "wiki.osm.wiki"]
+# Shorter host to replace wiki hosts
+linkify_wiki_hosts_replacement: "osm.wiki"
+# Regexp for wiki prefix that can be removed
+linkify_wiki_optional_path_prefix: "^/wiki(?=/[A-Z])"
 # External authentication credentials
 #google_auth_id: ""
 #google_auth_secret: ""
 #google_openid_realm: ""
 #facebook_auth_id: ""
 #facebook_auth_secret: ""
-#windowslive_auth_id: ""
-#windowslive_auth_secret: ""
 #github_auth_id: ""
 #github_auth_secret: ""
+#microsoft_auth_id: ""
+#microsoft_auth_secret: ""
 #wikipedia_auth_id: ""
 #wikipedia_auth_secret: ""
 # Thunderforest authentication details
 #thunderforest_key: ""
+# Tracestrack authentication details
+#tracestrack_key: ""
 # Key for generating TOTP tokens
 #totp_key: ""
 # Enforce Content-Security-Policy
@@ -138,3 +190,13 @@ smtp_user_name: null
 smtp_password: null
 # Matomo settings for analytics
 #matomo:
+# Signup rate limits
+#signup_ip_per_day:
+#signup_ip_max_burst:
+#signup_email_per_day:
+#signup_email_max_burst:
+# Private key for signing id_tokens
+#doorkeeper_signing_key: |
+#  -----BEGIN PRIVATE KEY-----
+#  ...
+#  -----END PRIVATE KEY-----

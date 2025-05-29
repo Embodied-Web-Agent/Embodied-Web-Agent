@@ -29,7 +29,6 @@ class Oauth2AuthorizationsControllerTest < ActionDispatch::IntegrationTest
                                  :redirect_uri => application.redirect_uri,
                                  :response_type => "code",
                                  :scope => "write_api")
-    assert_response :redirect
     assert_redirected_to login_path(:referer => oauth_authorization_path(:client_id => application.uid,
                                                                          :redirect_uri => application.redirect_uri,
                                                                          :response_type => "code",
@@ -52,7 +51,6 @@ class Oauth2AuthorizationsControllerTest < ActionDispatch::IntegrationTest
                                  :redirect_uri => application.redirect_uri,
                                  :response_type => "code",
                                  :scope => "write_api")
-    assert_response :redirect
     assert_redirected_to login_path(:referer => oauth_authorization_path(:client_id => application.uid,
                                                                          :redirect_uri => application.redirect_uri,
                                                                          :response_type => "code",
@@ -77,7 +75,7 @@ class Oauth2AuthorizationsControllerTest < ActionDispatch::IntegrationTest
                                  :redirect_uri => "https://bad.example.com/",
                                  :response_type => "code",
                                  :scope => "write_api")
-    assert_response :success
+    assert_response :bad_request
     assert_template "oauth2_authorizations/error"
     assert_select "p", "The requested redirect uri is malformed or doesn't match client redirect URI."
   end
@@ -91,7 +89,7 @@ class Oauth2AuthorizationsControllerTest < ActionDispatch::IntegrationTest
                                  :redirect_uri => application.redirect_uri,
                                  :response_type => "code",
                                  :scope => "bad_scope")
-    assert_response :success
+    assert_response :bad_request
     assert_template "oauth2_authorizations/error"
     assert_select "p", "The requested scope is invalid, unknown, or malformed."
 
@@ -99,9 +97,23 @@ class Oauth2AuthorizationsControllerTest < ActionDispatch::IntegrationTest
                                  :redirect_uri => application.redirect_uri,
                                  :response_type => "code",
                                  :scope => "write_prefs")
-    assert_response :success
+    assert_response :bad_request
     assert_template "oauth2_authorizations/error"
     assert_select "p", "The requested scope is invalid, unknown, or malformed."
+  end
+
+  def test_new_db_readonly
+    application = create(:oauth_application, :scopes => "write_api")
+
+    session_for(create(:user))
+
+    with_settings(:status => "database_readonly") do
+      get oauth_authorization_path(:client_id => application.uid,
+                                   :redirect_uri => application.redirect_uri,
+                                   :response_type => "code",
+                                   :scope => "write_api")
+      assert_redirected_to offline_path
+    end
   end
 
   def test_create
@@ -119,7 +131,6 @@ class Oauth2AuthorizationsControllerTest < ActionDispatch::IntegrationTest
                                   :redirect_uri => application.redirect_uri,
                                   :response_type => "code",
                                   :scope => "write_api")
-    assert_response :redirect
     assert_redirected_to(/^#{Regexp.escape(application.redirect_uri)}\?code=/)
   end
 
@@ -160,7 +171,6 @@ class Oauth2AuthorizationsControllerTest < ActionDispatch::IntegrationTest
                                     :redirect_uri => application.redirect_uri,
                                     :response_type => "code",
                                     :scope => "write_api")
-    assert_response :redirect
     assert_redirected_to(/^#{Regexp.escape(application.redirect_uri)}\?error=access_denied/)
   end
 

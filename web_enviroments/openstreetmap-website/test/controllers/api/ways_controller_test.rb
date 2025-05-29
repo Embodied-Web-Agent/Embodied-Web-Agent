@@ -6,16 +6,16 @@ module Api
     # test all routes which lead to this controller
     def test_routes
       assert_routing(
-        { :path => "/api/0.6/way/create", :method => :put },
+        { :path => "/api/0.6/ways", :method => :get },
+        { :controller => "api/ways", :action => "index" }
+      )
+      assert_routing(
+        { :path => "/api/0.6/ways.json", :method => :get },
+        { :controller => "api/ways", :action => "index", :format => "json" }
+      )
+      assert_routing(
+        { :path => "/api/0.6/ways", :method => :post },
         { :controller => "api/ways", :action => "create" }
-      )
-      assert_routing(
-        { :path => "/api/0.6/way/1/full", :method => :get },
-        { :controller => "api/ways", :action => "full", :id => "1" }
-      )
-      assert_routing(
-        { :path => "/api/0.6/way/1/full.json", :method => :get },
-        { :controller => "api/ways", :action => "full", :id => "1", :format => "json" }
       )
       assert_routing(
         { :path => "/api/0.6/way/1", :method => :get },
@@ -26,47 +26,120 @@ module Api
         { :controller => "api/ways", :action => "show", :id => "1", :format => "json" }
       )
       assert_routing(
+        { :path => "/api/0.6/way/1/full", :method => :get },
+        { :controller => "api/ways", :action => "show", :full => true, :id => "1" }
+      )
+      assert_routing(
+        { :path => "/api/0.6/way/1/full.json", :method => :get },
+        { :controller => "api/ways", :action => "show", :full => true, :id => "1", :format => "json" }
+      )
+      assert_routing(
         { :path => "/api/0.6/way/1", :method => :put },
         { :controller => "api/ways", :action => "update", :id => "1" }
       )
       assert_routing(
         { :path => "/api/0.6/way/1", :method => :delete },
-        { :controller => "api/ways", :action => "delete", :id => "1" }
+        { :controller => "api/ways", :action => "destroy", :id => "1" }
       )
-      assert_routing(
-        { :path => "/api/0.6/ways", :method => :get },
-        { :controller => "api/ways", :action => "index" }
+
+      assert_recognizes(
+        { :controller => "api/ways", :action => "create" },
+        { :path => "/api/0.6/way/create", :method => :put }
       )
-      assert_routing(
-        { :path => "/api/0.6/ways.json", :method => :get },
-        { :controller => "api/ways", :action => "index", :format => "json" }
-      )
+    end
+
+    ##
+    # test fetching multiple ways
+    def test_index
+      way1 = create(:way)
+      way2 = create(:way, :deleted)
+      way3 = create(:way)
+      way4 = create(:way)
+
+      # check error when no parameter provided
+      get api_ways_path
+      assert_response :bad_request
+
+      # check error when no parameter value provided
+      get api_ways_path(:ways => "")
+      assert_response :bad_request
+
+      # test a working call
+      get api_ways_path(:ways => "#{way1.id},#{way2.id},#{way3.id},#{way4.id}")
+      assert_response :success
+      assert_select "osm" do
+        assert_select "way", :count => 4
+        assert_select "way[id='#{way1.id}'][visible='true']", :count => 1
+        assert_select "way[id='#{way2.id}'][visible='false']", :count => 1
+        assert_select "way[id='#{way3.id}'][visible='true']", :count => 1
+        assert_select "way[id='#{way4.id}'][visible='true']", :count => 1
+      end
+
+      # test a working call with json format
+      get api_ways_path(:ways => "#{way1.id},#{way2.id},#{way3.id},#{way4.id}", :format => "json")
+
+      js = ActiveSupport::JSON.decode(@response.body)
+      assert_not_nil js
+      assert_equal 4, js["elements"].count
+      assert_equal 4, (js["elements"].count { |a| a["type"] == "way" })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == way1.id && a["visible"].nil? })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == way2.id && a["visible"] == false })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == way3.id && a["visible"].nil? })
+      assert_equal 1, (js["elements"].count { |a| a["id"] == way4.id && a["visible"].nil? })
+
+      # check error when a non-existent way is included
+      get api_ways_path(:ways => "#{way1.id},#{way2.id},#{way3.id},#{way4.id},0")
+      assert_response :not_found
     end
 
     # -------------------------------------
     # Test showing ways.
     # -------------------------------------
 
-    def test_show
-      # check that a visible way is returned properly
-      get api_way_path(create(:way))
-      assert_response :success
+    def test_show_not_found
+      get api_way_path(0)
+      assert_response :not_found
+    end
 
-      # check that an invisible way is not returned
+    def test_show_deleted
       get api_way_path(create(:way, :deleted))
       assert_response :gone
+    end
 
-      # check chat a non-existent way is not returned
-      get api_way_path(:id => 0)
-      assert_response :not_found
+    def test_show
+      way = create(:way, :timestamp => "2021-02-03T00:00:00Z")
+      node = create(:node, :timestamp => "2021-04-05T00:00:00Z")
+      create(:way_node, :way => way, :node => node)
+
+      get api_way_path(way)
+
+      assert_response :success
+      assert_not_nil @response.header["Last-Modified"]
+      assert_equal "2021-02-03T00:00:00Z", Time.parse(@response.header["Last-Modified"]).utc.xmlschema
+    end
+
+    def test_show_json
+      way = create(:way_with_nodes, :nodes_count => 3)
+
+      get api_way_path(way, :format => "json")
+
+      assert_response :success
+
+      js = ActiveSupport::JSON.decode(@response.body)
+      assert_not_nil js
+      assert_equal 1, js["elements"].count
+      js_ways = js["elements"].filter { |e| e["type"] == "way" }
+      assert_equal 1, js_ways.count
+      assert_equal way.id, js_ways[0]["id"]
+      assert_equal 1, js_ways[0]["version"]
     end
 
     ##
     # check the "full" mode
-    def test_full
+    def test_show_full
       way = create(:way_with_nodes, :nodes_count => 3)
 
-      get way_full_path(way)
+      get api_way_path(way, :full => true)
 
       assert_response :success
 
@@ -81,56 +154,44 @@ module Api
       end
     end
 
-    def test_full_deleted
-      way = create(:way, :deleted)
+    def test_show_full_json
+      way = create(:way_with_nodes, :nodes_count => 3)
 
-      get way_full_path(way)
+      get api_way_path(way, :full => true, :format => "json")
 
-      assert_response :gone
-    end
-
-    ##
-    # test fetching multiple ways
-    def test_index
-      way1 = create(:way)
-      way2 = create(:way, :deleted)
-      way3 = create(:way)
-      way4 = create(:way)
-
-      # check error when no parameter provided
-      get ways_path
-      assert_response :bad_request
-
-      # check error when no parameter value provided
-      get ways_path, :params => { :ways => "" }
-      assert_response :bad_request
-
-      # test a working call
-      get ways_path, :params => { :ways => "#{way1.id},#{way2.id},#{way3.id},#{way4.id}" }
       assert_response :success
-      assert_select "osm" do
-        assert_select "way", :count => 4
-        assert_select "way[id='#{way1.id}'][visible='true']", :count => 1
-        assert_select "way[id='#{way2.id}'][visible='false']", :count => 1
-        assert_select "way[id='#{way3.id}'][visible='true']", :count => 1
-        assert_select "way[id='#{way4.id}'][visible='true']", :count => 1
-      end
 
-      # test a working call with json format
-      get ways_path, :params => { :ways => "#{way1.id},#{way2.id},#{way3.id},#{way4.id}", :format => "json" }
-
+      # Check the way is correctly returned
       js = ActiveSupport::JSON.decode(@response.body)
       assert_not_nil js
       assert_equal 4, js["elements"].count
-      assert_equal 4, (js["elements"].count { |a| a["type"] == "way" })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == way1.id && a["visible"].nil? })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == way2.id && a["visible"] == false })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == way3.id && a["visible"].nil? })
-      assert_equal 1, (js["elements"].count { |a| a["id"] == way4.id && a["visible"].nil? })
+      js_ways = js["elements"].filter { |e| e["type"] == "way" }
+      assert_equal 1, js_ways.count
+      assert_equal way.id, js_ways[0]["id"]
+      assert_equal 1, js_ways[0]["version"]
 
-      # check error when a non-existent way is included
-      get ways_path, :params => { :ways => "#{way1.id},#{way2.id},#{way3.id},#{way4.id},0" }
-      assert_response :not_found
+      # check that each node in the way appears once in the output as a
+      # reference and as the node element.
+      js_nodes = js["elements"].filter { |e| e["type"] == "node" }
+      assert_equal 3, js_nodes.count
+
+      way.nodes.each_with_index do |n, i|
+        assert_equal n.id, js_ways[0]["nodes"][i]
+        js_nodes_with_id = js_nodes.filter { |e| e["id"] == n.id }
+        assert_equal 1, js_nodes_with_id.count
+        assert_equal n.id, js_nodes_with_id[0]["id"]
+        assert_equal 1, js_nodes_with_id[0]["version"]
+        assert_equal n.lat, js_nodes_with_id[0]["lat"]
+        assert_equal n.lon, js_nodes_with_id[0]["lon"]
+      end
+    end
+
+    def test_show_full_deleted
+      way = create(:way, :deleted)
+
+      get api_way_path(way, :full => true)
+
+      assert_response :gone
     end
 
     # -------------------------------------
@@ -146,7 +207,7 @@ module Api
       changeset = create(:changeset, :user => user)
 
       ## First check that it fails when creating a way using a non-public user
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # use the first user's open changeset
       changeset_id = private_changeset.id
@@ -155,13 +216,13 @@ module Api
       xml = "<osm><way changeset='#{changeset_id}'>" \
             "<nd ref='#{node1.id}'/><nd ref='#{node2.id}'/>" \
             "<tag k='test' v='yes' /></way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # hope for failure
       assert_response :forbidden,
                       "way upload did not return forbidden status"
 
       ## Now use a public user
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # use the first user's open changeset
       changeset_id = changeset.id
@@ -170,7 +231,7 @@ module Api
       xml = "<osm><way changeset='#{changeset_id}'>" \
             "<nd ref='#{node1.id}'/><nd ref='#{node2.id}'/>" \
             "<tag k='test' v='yes' /></way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # hope for success
       assert_response :success,
                       "way upload did not return success status"
@@ -207,13 +268,13 @@ module Api
       closed_changeset = create(:changeset, :closed, :user => user)
 
       ## First test with a private user to make sure that they are not authorized
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # use the first user's open changeset
       # create a way with non-existing node
       xml = "<osm><way changeset='#{private_open_changeset.id}'>" \
             "<nd ref='0'/><tag k='test' v='yes' /></way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # expect failure
       assert_response :forbidden,
                       "way upload with invalid node using a private user did not return 'forbidden'"
@@ -221,7 +282,7 @@ module Api
       # create a way with no nodes
       xml = "<osm><way changeset='#{private_open_changeset.id}'>" \
             "<tag k='test' v='yes' /></way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # expect failure
       assert_response :forbidden,
                       "way upload with no node using a private userdid not return 'forbidden'"
@@ -229,19 +290,19 @@ module Api
       # create a way inside a closed changeset
       xml = "<osm><way changeset='#{private_closed_changeset.id}'>" \
             "<nd ref='#{node.id}'/></way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # expect failure
       assert_response :forbidden,
                       "way upload to closed changeset with a private user did not return 'forbidden'"
 
       ## Now test with a public user
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # use the first user's open changeset
       # create a way with non-existing node
       xml = "<osm><way changeset='#{open_changeset.id}'>" \
             "<nd ref='0'/><tag k='test' v='yes' /></way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # expect failure
       assert_response :precondition_failed,
                       "way upload with invalid node did not return 'precondition failed'"
@@ -250,7 +311,7 @@ module Api
       # create a way with no nodes
       xml = "<osm><way changeset='#{open_changeset.id}'>" \
             "<tag k='test' v='yes' /></way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # expect failure
       assert_response :precondition_failed,
                       "way upload with no node did not return 'precondition failed'"
@@ -259,7 +320,7 @@ module Api
       # create a way inside a closed changeset
       xml = "<osm><way changeset='#{closed_changeset.id}'>" \
             "<nd ref='#{node.id}'/></way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # expect failure
       assert_response :conflict,
                       "way upload to closed changeset did not return 'conflict'"
@@ -269,7 +330,7 @@ module Api
             "<nd ref='#{node.id}'/>" \
             "<tag k='foo' v='#{'x' * 256}'/>" \
             "</way></osm>"
-      put way_create_path, :params => xml, :headers => auth_header
+      post api_ways_path, :params => xml, :headers => auth_header
       # expect failure
       assert_response :bad_request,
                       "way upload to with too long tag did not return 'bad_request'"
@@ -279,7 +340,7 @@ module Api
     # Test deleting ways.
     # -------------------------------------
 
-    def test_delete
+    def test_destroy
       private_user = create(:user, :data_public => false)
       private_open_changeset = create(:changeset, :user => private_user)
       private_closed_changeset = create(:changeset, :closed, :user => private_user)
@@ -301,7 +362,7 @@ module Api
       assert_response :unauthorized
 
       # now set auth using the private user
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # this shouldn't work as with the 0.6 api we need pay load to delete
       delete api_way_path(private_way), :headers => auth_header
@@ -345,12 +406,12 @@ module Api
                       "shouldn't be able to delete a way used in a relation (#{@response.body}), when done by a private user"
 
       # this won't work since the way never existed
-      delete api_way_path(:id => 0), :headers => auth_header
+      delete api_way_path(0), :headers => auth_header
       assert_response :forbidden
 
       ### Now check with a public user
       # now set auth
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # this shouldn't work as with the 0.6 api we need pay load to delete
       delete api_way_path(way), :headers => auth_header
@@ -379,8 +440,7 @@ module Api
       # check the returned value - should be the new version number
       # valid delete should return the new version number, which should
       # be greater than the old version number
-      assert @response.body.to_i > way.version,
-             "delete request should return a new version number for way"
+      assert_operator @response.body.to_i, :>, way.version, "delete request should return a new version number for way"
 
       # this won't work since the way is already deleted
       xml = xml_for_way(deleted_way)
@@ -395,7 +455,7 @@ module Api
       assert_equal "Precondition failed: Way #{used_way.id} is still used by relations #{relation.id}.", @response.body
 
       # this won't work since the way never existed
-      delete api_way_path(:id => 0), :params => xml.to_s, :headers => auth_header
+      delete api_way_path(0), :params => xml.to_s, :headers => auth_header
       assert_response :not_found
     end
 
@@ -420,7 +480,7 @@ module Api
       ## Second test with the private user
 
       # setup auth
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       ## trying to break changesets
 
@@ -458,7 +518,7 @@ module Api
       ## Finally test with the public user
 
       # setup auth
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       ## trying to break changesets
 
@@ -542,7 +602,7 @@ module Api
 
       ## Try with the non-public user
       # setup auth
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # add an identical tag to the way
       tag_xml = XML::Node.new("tag")
@@ -560,7 +620,7 @@ module Api
 
       ## Now try with the public user
       # setup auth
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # add an identical tag to the way
       tag_xml = XML::Node.new("tag")
@@ -590,7 +650,7 @@ module Api
 
       ## Try with the non-public user
       # setup auth
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # add an identical tag to the way
       tag_xml = XML::Node.new("tag")
@@ -608,7 +668,7 @@ module Api
 
       ## Now try with the public user
       # setup auth
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # add an identical tag to the way
       tag_xml = XML::Node.new("tag")
@@ -636,7 +696,7 @@ module Api
 
       ## First test with the non-public user so should be rejected
       # setup auth
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # create duplicate tag
       tag_xml = XML::Node.new("tag")
@@ -656,7 +716,7 @@ module Api
 
       ## Now test with the public user
       # setup auth
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # create duplicate tag
       tag_xml = XML::Node.new("tag")
@@ -688,7 +748,7 @@ module Api
 
       ## First make sure that you can't with a non-public user
       # setup auth
-      auth_header = basic_authorization_header private_user.email, "test"
+      auth_header = bearer_authorization_header private_user
 
       # add the tag into the existing xml
       way_str = "<osm><way changeset='#{private_changeset.id}'>"
@@ -697,13 +757,13 @@ module Api
       way_str << "</way></osm>"
 
       # try and upload it
-      put way_create_path, :params => way_str, :headers => auth_header
+      post api_ways_path, :params => way_str, :headers => auth_header
       assert_response :forbidden,
                       "adding new duplicate tags to a way with a non-public user should fail with 'forbidden'"
 
       ## Now do it with a public user
       # setup auth
-      auth_header = basic_authorization_header user.email, "test"
+      auth_header = bearer_authorization_header user
 
       # add the tag into the existing xml
       way_str = "<osm><way changeset='#{changeset.id}'>"
@@ -712,46 +772,115 @@ module Api
       way_str << "</way></osm>"
 
       # try and upload it
-      put way_create_path, :params => way_str, :headers => auth_header
+      post api_ways_path, :params => way_str, :headers => auth_header
       assert_response :bad_request,
                       "adding new duplicate tags to a way should fail with 'bad request'"
       assert_equal "Element way/ has duplicate tags with key addr:housenumber", @response.body
     end
 
     ##
-    # test that a call to ways_for_node returns all ways that contain the node
-    # and none that don't.
-    def test_ways_for_node
-      node = create(:node)
-      way1 = create(:way)
-      way2 = create(:way)
-      create(:way_node, :way => way1, :node => node)
-      create(:way_node, :way => way2, :node => node)
-      # create an unrelated way
-      create(:way_with_nodes, :nodes_count => 2)
-      # create a way which used to use the node
-      way3_v1 = create(:old_way, :version => 1)
-      _way3_v2 = create(:old_way, :current_way => way3_v1.current_way, :version => 2)
-      create(:old_way_node, :old_way => way3_v1, :node => node)
+    # test initial rate limit
+    def test_initial_rate_limit
+      # create a user
+      user = create(:user)
 
-      get node_ways_path(node)
-      assert_response :success
-      ways_xml = XML::Parser.string(@response.body).parse
-      assert_not_nil ways_xml, "failed to parse ways_for_node response"
+      # create some nodes
+      node1 = create(:node)
+      node2 = create(:node)
 
-      # check that the set of IDs match expectations
-      expected_way_ids = [way1.id,
-                          way2.id]
-      found_way_ids = ways_xml.find("//osm/way").collect { |w| w["id"].to_i }
-      assert_equal expected_way_ids.sort, found_way_ids.sort,
-                   "expected ways for node #{node.id} did not match found"
+      # create a changeset that puts us near the initial rate limit
+      changeset = create(:changeset, :user => user,
+                                     :created_at => Time.now.utc - 5.minutes,
+                                     :num_changes => Settings.initial_changes_per_hour - 1)
 
-      # check the full ways to ensure we're not missing anything
-      expected_way_ids.each do |id|
-        way_xml = ways_xml.find("//osm/way[@id='#{id}']").first
-        assert_ways_are_equal(Way.find(id),
-                              Way.from_xml_node(way_xml))
+      # create authentication header
+      auth_header = bearer_authorization_header user
+
+      # try creating a way
+      xml = "<osm><way changeset='#{changeset.id}'>" \
+            "<nd ref='#{node1.id}'/><nd ref='#{node2.id}'/>" \
+            "<tag k='test' v='yes' /></way></osm>"
+      post api_ways_path, :params => xml, :headers => auth_header
+      assert_response :success, "way create did not return success status"
+
+      # get the id of the way we created
+      wayid = @response.body
+
+      # try updating the way, which should be rate limited
+      xml = "<osm><way id='#{wayid}' version='1' changeset='#{changeset.id}'>" \
+            "<nd ref='#{node2.id}'/><nd ref='#{node1.id}'/>" \
+            "<tag k='test' v='yes' /></way></osm>"
+      put api_way_path(wayid), :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "way update did not hit rate limit"
+
+      # try deleting the way, which should be rate limited
+      xml = "<osm><way id='#{wayid}' version='2' changeset='#{changeset.id}'/></osm>"
+      delete api_way_path(wayid), :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "way delete did not hit rate limit"
+
+      # try creating a way, which should be rate limited
+      xml = "<osm><way changeset='#{changeset.id}'>" \
+            "<nd ref='#{node1.id}'/><nd ref='#{node2.id}'/>" \
+            "<tag k='test' v='yes' /></way></osm>"
+      post api_ways_path, :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "way create did not hit rate limit"
+    end
+
+    ##
+    # test maximum rate limit
+    def test_maximum_rate_limit
+      # create a user
+      user = create(:user)
+
+      # create some nodes
+      node1 = create(:node)
+      node2 = create(:node)
+
+      # create a changeset to establish our initial edit time
+      changeset = create(:changeset, :user => user,
+                                     :created_at => Time.now.utc - 28.days)
+
+      # create changeset to put us near the maximum rate limit
+      total_changes = Settings.max_changes_per_hour - 1
+      while total_changes.positive?
+        changes = [total_changes, Changeset::MAX_ELEMENTS].min
+        changeset = create(:changeset, :user => user,
+                                       :created_at => Time.now.utc - 5.minutes,
+                                       :num_changes => changes)
+        total_changes -= changes
       end
+
+      # create authentication header
+      auth_header = bearer_authorization_header user
+
+      # try creating a way
+      xml = "<osm><way changeset='#{changeset.id}'>" \
+            "<nd ref='#{node1.id}'/><nd ref='#{node2.id}'/>" \
+            "<tag k='test' v='yes' /></way></osm>"
+      post api_ways_path, :params => xml, :headers => auth_header
+      assert_response :success, "way create did not return success status"
+
+      # get the id of the way we created
+      wayid = @response.body
+
+      # try updating the way, which should be rate limited
+      xml = "<osm><way id='#{wayid}' version='1' changeset='#{changeset.id}'>" \
+            "<nd ref='#{node2.id}'/><nd ref='#{node1.id}'/>" \
+            "<tag k='test' v='yes' /></way></osm>"
+      put api_way_path(wayid), :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "way update did not hit rate limit"
+
+      # try deleting the way, which should be rate limited
+      xml = "<osm><way id='#{wayid}' version='2' changeset='#{changeset.id}'/></osm>"
+      delete api_way_path(wayid), :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "way delete did not hit rate limit"
+
+      # try creating a way, which should be rate limited
+      xml = "<osm><way changeset='#{changeset.id}'>" \
+            "<nd ref='#{node1.id}'/><nd ref='#{node2.id}'/>" \
+            "<tag k='test' v='yes' /></way></osm>"
+      post api_ways_path, :params => xml, :headers => auth_header
+      assert_response :too_many_requests, "way create did not hit rate limit"
     end
 
     private

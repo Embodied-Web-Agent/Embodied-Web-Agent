@@ -61,10 +61,6 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
       { :controller => "site", :action => "offline" }
     )
     assert_routing(
-      { :path => "/key", :method => :get },
-      { :controller => "site", :action => "key" }
-    )
-    assert_routing(
       { :path => "/go/shortcode", :method => :get },
       { :controller => "site", :action => "permalink", :code => "shortcode" }
     )
@@ -89,19 +85,19 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
   # Test the index page redirects
   def test_index_redirect
     get root_path(:node => 123)
-    assert_redirected_to :controller => :browse, :action => :node, :id => 123
+    assert_redirected_to node_path(123)
 
     get root_path(:way => 123)
-    assert_redirected_to :controller => :browse, :action => :way, :id => 123
+    assert_redirected_to way_path(123)
 
     get root_path(:relation => 123)
-    assert_redirected_to :controller => :browse, :action => :relation, :id => 123
+    assert_redirected_to relation_path(123)
 
     get root_path(:note => 123)
     assert_redirected_to :controller => :notes, :action => :show, :id => 123
 
     get root_path(:query => "test")
-    assert_redirected_to :controller => :geocoder, :action => :search, :query => "test"
+    assert_redirected_to search_path(:query => "test")
 
     get root_path(:lat => 4, :lon => 5)
     assert_redirected_to :controller => :site, :action => :index, :anchor => "map=5/4/5"
@@ -122,48 +118,31 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
   # Test the permalink redirect
   def test_permalink
     get permalink_path(:code => "wBz3--")
-    assert_response :redirect
     assert_redirected_to :controller => :site, :action => :index, :anchor => "map=3/4.8779296875/3.955078125"
 
     get permalink_path(:code => "wBz3--", :m => "")
-    assert_response :redirect
     assert_redirected_to :controller => :site, :action => :index, :mlat => "4.8779296875", :mlon => "3.955078125", :anchor => "map=3/4.8779296875/3.955078125"
 
     get permalink_path(:code => "wBz3--", :layers => "T")
-    assert_response :redirect
     assert_redirected_to :controller => :site, :action => :index, :anchor => "map=3/4.8779296875/3.955078125&layers=T"
 
     get permalink_path(:code => "wBz3--", :node => 1)
-    assert_response :redirect
-    assert_redirected_to :controller => :browse, :action => :node, :id => 1, :anchor => "map=3/4.8779296875/3.955078125"
+    assert_redirected_to node_path(1, :anchor => "map=3/4.8779296875/3.955078125")
 
     get permalink_path(:code => "wBz3--", :way => 2)
-    assert_response :redirect
-    assert_redirected_to :controller => :browse, :action => :way, :id => 2, :anchor => "map=3/4.8779296875/3.955078125"
+    assert_redirected_to way_path(2, :anchor => "map=3/4.8779296875/3.955078125")
 
     get permalink_path(:code => "wBz3--", :relation => 3)
-    assert_response :redirect
-    assert_redirected_to :controller => :browse, :action => :relation, :id => 3, :anchor => "map=3/4.8779296875/3.955078125"
+    assert_redirected_to relation_path(3, :anchor => "map=3/4.8779296875/3.955078125")
 
     get permalink_path(:code => "wBz3--", :changeset => 4)
-    assert_response :redirect
-    assert_redirected_to :controller => :browse, :action => :changeset, :id => 4, :anchor => "map=3/4.8779296875/3.955078125"
-  end
-
-  # Test the key page
-  def test_key
-    get key_path, :xhr => true
-
-    assert_response :success
-    assert_template "key"
-    assert_template :layout => false
+    assert_redirected_to changeset_path(4, :anchor => "map=3/4.8779296875/3.955078125")
   end
 
   # Test the edit page redirects when you aren't logged in
   def test_edit
     get edit_path
 
-    assert_response :redirect
     assert_redirected_to login_path(:referer => "/edit")
   end
 
@@ -175,7 +154,7 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_template "edit"
-    assert_select "a[href='https://wiki.openstreetmap.org/wiki/Disabling_anonymous_edits']"
+    assert_select "a[href='https://wiki.openstreetmap.org/wiki/Anonymous_edits']"
   end
 
   # Test the right editor gets used when the user hasn't set a preference
@@ -437,7 +416,6 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
   # Test the welcome page
   def test_welcome
     get welcome_path
-    assert_response :redirect
     assert_redirected_to login_path(:referer => "/welcome")
 
     session_for(create(:user))
@@ -500,7 +478,7 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
   def test_offline
     get offline_path
     assert_response :success
-    assert_template "offline"
+    assert_select ".alert-warning"
   end
 
   # Test the rich text preview
@@ -530,7 +508,6 @@ class SiteControllerTest < ActionDispatch::IntegrationTest
   def test_id_without_login
     get id_path
 
-    assert_response :redirect
     assert_redirected_to login_path(:referer => "/id")
   end
 end
